@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MIRG">
+<title>Protocolos MIRG</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--primary:#0F1F33;--blue:#1B3A5C;--teal:#065A82;--accent:#2874A6;--uro:#6C3483;--red:#C0392B;--amber:#D4872E;--green:#2E7D32;--onco:#CB4335;--text:#1a2a3a;--textL:#5a6b7c;--bg:#f2f5f8;--card:#fff;--border:#e8ecf0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+.header{padding:calc(env(safe-area-inset-top,20px) + 16px) 16px 20px;text-align:center;color:#fff}
+.header-home{background:linear-gradient(135deg,#0F1F33,#1B3A5C)}
+.header small{display:block;font-size:11px;font-weight:600;letter-spacing:1px;opacity:.55;margin-bottom:4px}
+.header h1{font-size:22px;font-weight:800}
+.header p{font-size:13px;opacity:.7;margin-top:2px}
+.search{padding:12px 16px 8px;max-width:700px;margin:0 auto}
+.search input{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);font-size:14px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.04);outline:none}
+.search input:focus{border-color:var(--accent);box-shadow:0 2px 10px rgba(40,116,166,.15)}
+.list{padding:4px 16px 24px;max-width:700px;margin:0 auto}
+.proto-card{width:100%;display:flex;align-items:center;gap:14px;padding:16px;background:#fff;border:1px solid var(--border);border-radius:14px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:10px;text-align:left;transition:transform .15s,box-shadow .15s}
+.proto-card:active{transform:scale(.98)}
+.proto-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.proto-card .title{font-weight:700;font-size:15px;color:var(--text);margin-bottom:2px}
+.proto-card .sub{font-size:12px;color:var(--textL)}
+.proto-card .arrow{color:#ccc;font-size:18px;margin-left:auto}
+.back-btn{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;font-weight:600;margin-bottom:10px}
+.back-btn:active{opacity:.7}
+.detail-header{padding:calc(env(safe-area-inset-top,20px) + 12px) 16px 22px;color:#fff}
+.detail-header .icon{font-size:30px;margin-bottom:4px}
+.detail-header h1{font-size:20px;font-weight:700}
+.detail-header p{font-size:12px;opacity:.8;margin-top:2px}
+.sections{padding:14px 16px 30px;max-width:700px;margin:0 auto}
+.section{background:#fff;border-radius:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid var(--border);overflow:hidden}
+.section-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border:none;background:transparent;cursor:pointer;text-align:left}
+.section-head.open{background:#f0f4f8}
+.section-head .left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.section-head .ico{font-size:18px}
+.section-head .ttl{font-weight:700;font-size:14px;color:var(--text)}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;color:#fff;font-size:10px;font-weight:700;letter-spacing:.3px;margin-left:6px;vertical-align:middle}
+.chevron{font-size:14px;color:#aaa;transition:transform .2s;flex-shrink:0}
+.chevron.open{transform:rotate(180deg)}
+.section-body{padding:6px 12px 12px}
+.item-row{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 12px;background:#fafbfc;border-radius:8px;margin-bottom:5px;gap:10px}
+.item-row .lbl{flex:0 0 auto;max-width:48%;font-weight:600;font-size:12.5px;color:var(--text)}
+.item-row .val{flex:1;text-align:right;font-size:12.5px;color:var(--accent);font-weight:500}
+.item-row .note{font-size:10.5px;color:#999;font-weight:400;margin-top:2px}
+.sub-title{font-size:12px;font-weight:700;color:var(--accent);padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:5px;margin-top:6px}
+.note-box{background:#FFF8E1;border-left:4px solid #F0AD4E;padding:9px 12px;border-radius:0 6px 6px 0;font-size:12px;color:#6D5200;margin-top:6px;line-height:1.5}
+.footer{text-align:center;padding:10px 16px 20px;font-size:11px;color:#aaa}
+.empty{text-align:center;padding:40px 0;color:#999;font-size:14px}
+.pinned-banner{background:#FFF3E0;border:2px solid #E65100;border-radius:12px;padding:14px 16px;margin:0 16px 14px;max-width:668px;margin-left:auto;margin-right:auto;box-shadow:0 2px 10px rgba(230,81,0,.15);position:sticky;top:0;z-index:10}
+.pinned-banner .pinned-title{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px;color:#BF360C;margin-bottom:6px}
+.pinned-banner .pinned-note{background:#FFF8E1;border-left:3px solid #E65100;padding:6px 10px;border-radius:0 6px 6px 0;font-size:12.5px;color:#4E2600;margin-top:5px;line-height:1.5;font-weight:600}
+.service-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;justify-content:center}
+.badge{padding:3px 10px;border-radius:4px;color:#fff;font-size:10px;font-weight:700;letter-spacing:.3px}
+@media(min-width:600px){.item-row{padding:10px 14px}.section-head{padding:14px 16px}}
+.rockwood-scale{padding:8px 0}
+.rw-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;margin-bottom:4px;transition:background .15s}
+.rw-row:nth-child(odd){background:#fafbfc}
+.rw-num{width:30px;height:30px;border-radius:50%;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rw-bar{width:4px;height:34px;border-radius:2px;flex-shrink:0}
+.rw-info{flex:1;min-width:0}
+.rw-name{font-weight:700;font-size:12.5px;color:var(--text)}
+.rw-desc{font-size:11px;color:var(--textL);line-height:1.4;margin-top:1px}
+.rw-meter{width:60px;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;flex-shrink:0}
+.rw-meter-fill{height:100%;border-radius:4px}
+.rw-legend{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding:8px 10px;background:#EBF5FB;border-radius:8px;border-left:4px solid #2980B9}
+.rw-legend span{font-size:11px;font-weight:600;color:#1A5276}
+.rw-cutoff{background:#FFF3E0;border:2px dashed #E65100;border-radius:8px;padding:8px 12px;margin:8px 0;text-align:center;font-size:12px;font-weight:700;color:#BF360C}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// ============ DATA ============
+const protocols = [
+  {
+    id:"horarios",title:"Horarios de Medicación",icon:"💊",color:"#065A82",
+    subtitle:"Medicina Interna — G10C",
+    sections:[
+      {title:"Medicación Oral",icon:"💊",
+        items:[
+          {l:"Cada 24h",v:"9h"},
+          {l:"Cada 12h",v:"9h — 21h"},
+          {l:"Cada 8h (general)",v:"De — Co — Ce"},
+          {l:"Cada 8h (margen estrecho)",v:"9h — 16h — 23h",n:"ATB, antiepilépticos, etc."},
+          {l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
+        ],
+        notes:["Acenocumarol (Sintrom): 20h (recomendado). Se puede mantener horario habitual del paciente.","De = Desayuno | Co = Comida | Ce = Cena"]
+      },
+      {title:"Medicación Intravenosa",icon:"💉",
+        items:[
+          {l:"Cada 24h",v:"9h"},
+          {l:"Cada 12h",v:"9h — 21h"},
+          {l:"Cada 8h",v:"8h — 16h — 24h"},
+          {l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
+        ],
+        subs:[
+          {title:"Furosemida",items:[
+            {l:"Con sondaje vesical",v:"8h — 16h — 24h"},
+            {l:"Sin sondaje vesical",v:"De — Co — Ce"}
+          ]},
+          {title:"Metoclopramida",items:[
+            {l:"Dieta absoluta",v:"8h — 16h — 24h"},
+            {l:"Alimentación vía oral",v:"De — Co — Ce"}
+          ]}
+        ]
+      },
+      {title:"Heparina Subcutánea",icon:"🩸",
+        items:[{l:"Cada 24h",v:"17h"},{l:"Cada 12h",v:"9h — 21h"}]
+      },
+      {title:"Aerosolterapia",icon:"🫁",
+        items:[{l:"Cada 12h",v:"9h — 21h"},{l:"Cada 8h",v:"9h — 16h — 23h"}]
+      },
+      {title:"Insulinoterapia",icon:"🔬",
+        items:[
+          {l:"Dieta absoluta / NE continua",v:"9h — 16h — 23h"},
+          {l:"No dieta absoluta / NE discontinua",v:"De — Co — Ce"}
+        ]
+      },
+      {title:"Hemocomponentes e Inmunoglobulinas",icon:"🏥",items:[],
+        notes:["Prescribir cada unidad de producto / vial por separado para que enfermería pueda confirmar correctamente la administración."]
+      },
+      {title:"Sueroterapia",icon:"💧",
+        items:[
+          {l:"500 ml/24h",v:"9h"},
+          {l:"1000 ml/24h",v:"9h — 21h"},
+          {l:"1500 ml/24h",v:"8h — 16h — 24h"},
+          {l:"2000 ml/24h",v:"6h — 12h — 18h — 24h"},
+          {l:"2500 ml/24h",v:"7h — 12h — 17h — 21h — 2h"},
+          {l:"3000 ml/24h",v:"8h — 12h — 16h — 20h — 24h — 4h"}
+        ]
+      },
+      {title:"Sueroterapia Alterna (SSF/SG)",icon:"💧",
+        items:[
+          {l:"1000 ml/24h",v:"SSF 9→21h | SG 21→9h"},
+          {l:"1500 ml/24h",v:"SSF 8→16h y 0→8h | SG 16→0h"},
+          {l:"2000 ml/24h",v:"SSF 0→6h y 12→18h | SG 6→12h y 18→0h"},
+          {l:"2500 ml/24h",v:"SSF 7→12h, 17→21h, 2→7h | SG 12→17h, 21→2h"}
+        ],
+        notes:["SSF = Suero Salino Fisiológico | SG = Suero Glucosado"]
+      }
+    ]
+  },
+  {
+    id:"ingresos",title:"Ingresos Programados",icon:"🛏️",color:"#1B3A5C",
+    subtitle:"Gestión de ingresos a cargo del Servicio",
+    sections:[
+      {title:"Norma Fundamental",icon:"⚠️",pinned:true,items:[],
+        notes:["Todos los ingresos deben ser solicitados y gestionados a través de la Secretaría de Medicina Interna (HG13, HC3 o HT5).","NO contactar directamente con Control de Camas ni realizar ingresos sin conocimiento de la Secretaría."]
+      },
+      {title:"Ingreso Urgente Inmediato",icon:"🔴",tag:"URGENTE",tagC:"#C0392B",
+        items:[
+          {l:"Definición",v:"Paciente que requiere ingreso sin demora para tratamiento inmediato"},
+          {l:"Momento",v:"Por la mañana"},
+          {l:"Proceso",v:"Secretaría llama directamente a Gestión de Camas"}
+        ],
+        notes:["Sin límite diario, pero siempre solicitar y registrar por Secretaría."]
+      },
+      {title:"Ingreso Urgente Demorable",icon:"🟠",tag:"DEMORABLE",tagC:"#D4872E",
+        items:[
+          {l:"Definición",v:"Ingreso prioritario para evitar paso por Urgencias, puede esperar"},
+          {l:"Momento",v:"Por la tarde o primera hora de la mañana siguiente"},
+          {l:"Ejemplo",v:"Paciente con prueba diagnóstica al día siguiente"}
+        ],
+        notes:["Si tiene prueba citada, indicar en observaciones: \"Paciente con prueba programada\"."]
+      },
+      {title:"Ingreso Programable",icon:"🟢",tag:"PROGRAMABLE",tagC:"#2E7D32",
+        items:[
+          {l:"Definición",v:"Ingreso planificable según disponibilidad"},
+          {l:"Cupo",v:"Máximo 2 programables por día"},
+          {l:"Condición",v:"Si ya hay ≥2 urgentes ese día, no se tramitan programables"}
+        ],
+        notes:["Cupo asignado por la Unidad de Camas del Hospital."]
+      },
+      {title:"Gestión por Secretaría",icon:"📋",
+        items:[
+          {l:"Listado",v:"Registro actualizado de todas las peticiones"},
+          {l:"Priorización",v:"Según prioridad clínica y disponibilidad de camas"},
+          {l:"Notificación",v:"A pacientes y solicitante"}
+        ],
+        notes:["Ext: 47126 / 72542 / 47108"]
+      }
+    ]
+  },
+  {
+    id:"noingreso",title:"No Ingreso CB / C3",icon:"🚫",color:"#8B1A1A",
+    subtitle:"Criterios de no ingreso en CB y C3",
+    sections:[
+      {title:"Criterios Críticos (1-4)",icon:"🔴",tag:"CRÍTICO",tagC:"#C0392B",
+        items:[
+          {l:"1. Inestabilidad hemodinámica",v:"Compromiso hemodinámico con necesidad de monitorización"},
+          {l:"2. Ventilación mecánica",v:"Soporte ventilatorio mecánico"},
+          {l:"3. Sangrado activo",v:"Hemorragia activa"},
+          {l:"4. Cirugía urgente/preferente",v:"Intervención quirúrgica durante ingreso"}
+        ]
+      },
+      {title:"Criterios Logísticos (5-8)",icon:"🟠",tag:"LOGÍSTICO",tagC:"#D4872E",
+        items:[
+          {l:"5. Especialista no presente",v:"Valoración por especialista no disponible en estos centros"},
+          {l:"6. Pruebas no posponibles",v:"Consultas/pruebas citadas no posponibles"},
+          {l:"7. Obesidad > 140 kg",v:"Limitación infraestructura"},
+          {l:"8. Técnicas especiales",v:"No disponibles en CB/C3"}
+        ]
+      },
+      {title:"Hospitalización a Domicilio",icon:"🏠",
+        items:[{l:"Caso especial",v:"Susceptibles de HaD con impedimento no médico → trasladables"}],
+        notes:["Requiere valoración caso a caso en Mesa de Camas."]
+      },
+      {title:"Horarios de Traslado",icon:"🚑",
+        items:[
+          {l:"Hora límite",v:"Antes de las 22:00h"},
+          {l:"Si ambulancia se retrasa",v:"Posponer a mañana siguiente"},
+          {l:"Excepción",v:"Alta presión asistencial: el hospital avisa a guardia CB/C3"}
+        ],
+        notes:["Excepción por presión asistencial NO debería darse desde hospitalización.","Criterios orientativos: valoración individual en Mesa de Camas."]
+      }
+    ]
+  },
+  {
+    id:"urologia",title:"Criterios Urología",icon:"🔬",color:"#6C3483",
+    subtitle:"Acuerdo de criterios de ingreso desde Urgencias — Patología urológica",
+    sections:[
+      {title:"1. Uropatía Obstructiva",icon:"🟣",
+        items:[{l:"Urología",v:"Pacientes que requieran colocación de catéter de derivación urinaria (doble J / nefrostomía)",n:"Uropatía obstructiva demostrada mediante prueba de imagen. Sea cual sea la causa de la indicación."}]
+      },
+      {title:"2. Infección tras Manipulación",icon:"🦠",
+        items:[
+          {l:"Definición",v:"Infección urinaria tras manipulación reciente (7 días previos) de vía urinaria"},
+          {l:"Procedimientos",v:"Colocación de catéter, RTU, cistoscopia, biopsia prostática, etc."},
+          {l:"Valoración",v:"Serán valorados por Urología en Urgencias"},
+          {l:"Si requiere ingreso",v:"Ingresa a cargo de Urología"},
+          {l:"Si plantean alta",v:"Urología gestiona el alta y da explicaciones al paciente/familiares"}
+        ],
+        notes:["El facultativo de Urgencias puede ayudar en la elaboración del informe de alta, pero Urología se encarga de dar las explicaciones al paciente y/o familiares."]
+      },
+      {title:"3. ITU Repetición + Dispositivo",icon:"🔁",
+        items:[
+          {l:"Sonda vesical permanente",v:"M. Interna o Geriatría según Escala de Rockwood",n:"Rockwood ≥ 5 → Geriatría. Se valorará traslado en mesa de camas."},
+          {l:"Nefrostomía/DJ con dilatación",v:"Urología (realizar prueba de imagen)"},
+          {l:"Nefrostomía/DJ sin dilatación",v:"M. Interna o Geriatría (igual que sonda vesical)"}
+        ]
+      },
+      {title:"4. Hematuria",icon:"🩸",
+        subs:[
+          {title:"→ Manejo inicial en Urgencias",items:[
+            {l:"Corrección coagulación",v:"Urgencias se encarga"},
+            {l:"Sonda de 3 luces",v:"Colocación e inicio de lavados"},
+            {l:"Aviso inicial",v:"A Urología"},
+            {l:"Estancia máxima",v:"48 horas en Urgencias"}
+          ]},
+          {title:"→ Criterios de ingreso en Urología",items:[
+            {l:"Anemización",v:"+2 puntos Hgb en 48h"},
+            {l:"Persistencia",v:"Hematuria persistente"},
+            {l:"Intervención",v:"Necesidad de intervención quirúrgica"}
+          ]}
+        ],
+        notes:["Pendiente consensuar con Anestesia posibilidad de cistoscopia previa a ingreso (paso por sala de exploración con sedación y salida a URPA o directamente a planta)."]
+      },
+      {title:"5. Neoplasia de Próstata",icon:"🏥",
+        items:[
+          {l:"Seguimiento Urología",v:"→ Ingresa en Urología"},
+          {l:"Seguimiento Oncología",v:"→ Oncología (posible MI tras Mesa de Camas)"}
+        ]
+      },
+      {title:"6. Absceso Renal/Prostático",icon:"⚠️",
+        items:[
+          {l:"Urología",v:"Todos los pacientes con abscesos objetivados en prueba de imagen, con independencia del estado clínico"}
+        ]
+      },
+      {title:"Anexo: Escala de Fragilidad de Rockwood",icon:"📊",type:"rockwood",
+        rockwood:[
+          {n:1,name:"Muy en forma",desc:"Personas fuertes, activas, con energía y motivación. Practican ejercicio regularmente.",c:"#27AE60",auto:100},
+          {n:2,name:"En forma",desc:"Sin síntomas de enfermedad activa, pero menos en forma que el nivel 1. Ejercicio esporádico.",c:"#2ECC71",auto:88},
+          {n:3,name:"En buen estado",desc:"Problemas médicos bien controlados. Actividad física limitada a pasear.",c:"#F1C40F",auto:75},
+          {n:4,name:"Vulnerable",desc:"No dependen de otros, pero los síntomas limitan sus actividades. Sensación de «ir lento».",c:"#F39C12",auto:62},
+          {n:5,name:"Fragilidad leve",desc:"Enlentecimiento evidente. Necesitan ayuda en actividades instrumentales (transporte, compras, medicación).",c:"#E67E22",auto:50},
+          {n:6,name:"Fragilidad moderada",desc:"Necesitan ayuda fuera del hogar y en tareas domésticas. Mínima ayuda para vestirse.",c:"#E74C3C",auto:37},
+          {n:7,name:"Fragilidad grave",desc:"Completamente dependientes para el cuidado personal por causa física o cognitiva.",c:"#C0392B",auto:25},
+          {n:8,name:"Fragilidad muy grave",desc:"Completamente dependientes. Se acercan al final de la vida. No podrían recuperarse de una enfermedad leve.",c:"#8E44AD",auto:12},
+          {n:9,name:"Enfermo terminal",desc:"Esperanza de vida menor de 6 meses. No necesariamente frágil.",c:"#2C3E50",auto:3}
+        ]
+      }
+    ]
+  },
+  {
+    id:"urgencias",title:"Urgencias CB y C3",icon:"🚨",color:"#990011",
+    subtitle:"Procedimiento de actuación ante emergencias en CB y C3",
+    sections:[
+      {title:"Objetivo y Alcance",icon:"🎯",
+        items:[
+          {l:"Objetivo",v:"Pautas ante accidente o incidente que requiera atención sanitaria inmediata en CB y C3"},
+          {l:"Alcance",v:"Pacientes, acompañantes, visitantes y trabajadores"}
+        ],
+        notes:["Incluye consultas, zonas comunes, parking, entradas exteriores y zonas ajardinadas (CB). Incluye personas que acuden de forma puntual buscando asistencia de emergencia."]
+      },
+      {title:"Toma de Contacto — C3",icon:"📞",tag:"C3",tagC:"#2F3C7E",
+        items:[
+          {l:"L-V 8:00–15:00",v:"Busca MI: 841995"},
+          {l:"L-V 15:00–8:00 / Festivos / Fines de semana",v:"Guardia 1: 856001 | Guardia 2: 846002 | Residente: 858775"}
+        ],
+        notes:["El médico responsable puede solicitar ayuda a cualquier especialista del hospital, quien tiene obligación de acudir."]
+      },
+      {title:"Toma de Contacto — CB",icon:"📞",tag:"CB",tagC:"#990011",
+        items:[
+          {l:"L-V 8:00–15:00",v:"Tf. rotatorio: 889955 (MI / Neumología / Geriatría)"},
+          {l:"15:00–8:00 / Festivos / Fines de semana",v:"Guardia 1: 848077 | Guardia 2: 843287 | Residente: 844899"}
+        ],
+        notes:["Supervisora tarde/noche y fines de semana: ext. 852626"]
+      },
+      {title:"Traslado al Box de Atención",icon:"🚑",
+        items:[
+          {l:"C3",v:"Box de urgencias del Hospital de Día (junto a extracciones)"},
+          {l:"CB",v:"Consulta de enfermería — CCEE planta baja Pab. Quirúrgico"},
+          {l:"SSGG C3",v:"Ext. 857163"},
+          {l:"SSGG CB",v:"Ext. 843408"}
+        ],
+        notes:["Si el facultativo lo determina → traslado a Hospital de referencia vía SUMMA 112.","Tardes y fines de semana: avisar a seguridad si el espacio está cerrado."]
+      },
+      {title:"Recursos Materiales — C3",icon:"🧳",tag:"C3",tagC:"#2F3C7E",
+        items:[
+          {l:"Box de urgencias",v:"Material de urgencias, carro de parada, desfibrilador"},
+          {l:"Fuera de horario",v:"Carro y DESA en habitación 2 del Hospital de Día"},
+          {l:"Llave en seguridad",v:"Ext. 845999"},
+          {l:"Maletín portátil",v:"Para salidas al entorno hospitalario"}
+        ]
+      },
+      {title:"Recursos Materiales — CB",icon:"🧳",tag:"CB",tagC:"#990011",
+        items:[
+          {l:"CCEE Pab. Quirúrgico",v:"Maletín de emergencias (soporte vital inmediato)"},
+          {l:"DESA semiautomático",v:"Cada unidad dispone de uno, incluidas CCEE"},
+          {l:"Guardias localizadas",v:"Seguridad abre CCEE — Ext. 487631"},
+          {l:"Quirófano (Pab. Quirúrgico PB)",v:"Desfibrilador completo, kit intubación difícil, kit vía central"}
+        ],
+        notes:["El pabellón San Ramón y el Administrativo carecen de desfibrilador."]
+      },
+      {title:"Responsabilidades",icon:"👥",
+        items:[
+          {l:"Celadores",v:"Acudir al lugar y avisar a contactos designados"},
+          {l:"Supervisión Enfermería",v:"Acudir al lugar. Mantenimiento de mochila de emergencia y DESA"},
+          {l:"Facultativos",v:"Acudir al lugar. Cualquier especialista tiene obligación de acudir si es requerido"},
+          {l:"Seguridad",v:"Conocer el protocolo. Comunicar incidencia al responsable más cercano. Facilitar acceso a material"}
+        ]
+      },
+      {title:"Directorio C3",icon:"📋",tag:"C3",tagC:"#2F3C7E",
+        subs:[
+          {title:"Supervisores Enfermería (L-V 8-15h)",items:[
+            {l:"CCEE",v:"856012"},{l:"3ª Planta",v:"846013"},{l:"4ª Planta",v:"846014"},{l:"5ª Planta",v:"846015"}
+          ]},
+          {title:"Supervisor guardia (tardes/noches/festivos)",items:[
+            {l:"",v:"856018"}
+          ]},
+          {title:"Facultativos",items:[
+            {l:"L-V 8-15h",v:"841995"},{l:"Guardia 1",v:"856001"},{l:"Guardia 2",v:"846002"},{l:"Residente",v:"858775"}
+          ]},
+          {title:"Servicios Generales",items:[
+            {l:"Encargado turno",v:"857163"},{l:"Celador retén",v:"846026"},{l:"Noches/festivos",v:"846026 / 856034"}
+          ]},
+          {title:"Seguridad",items:[
+            {l:"",v:"Ext. 845999"}
+          ]}
+        ]
+      },
+      {title:"Directorio CB",icon:"📋",tag:"CB",tagC:"#990011",
+        subs:[
+          {title:"Supervisores Enfermería (L-V 8-15h)",items:[
+            {l:"SAF",v:"842706"},{l:"Q1º",v:"847022"},{l:"Q2º",v:"846984"},{l:"S. Luis",v:"847025"},{l:"S. Francisco",v:"847023"},{l:"S. José",v:"842674"}
+          ]},
+          {title:"Supervisor guardia (tardes/noches/festivos)",items:[
+            {l:"",v:"852626"}
+          ]},
+          {title:"Facultativos",items:[
+            {l:"L-V 8-15h",v:"889955"},{l:"Guardia 1",v:"848077"},{l:"Guardia 2",v:"843287"},{l:"Residente",v:"844899"}
+          ]},
+          {title:"Servicios Generales",items:[
+            {l:"Jefe equipo",v:"843408"},{l:"Tf. fijo",v:"487565"},{l:"Vigilantes 24h",v:"487631"},{l:"Centralita",v:"487555"}
+          ]}
+        ]
+      }
+    ]
+  },
+  {
+    id:"huelga",title:"Protocolo de Huelga",icon:"📢",color:"#B85042",
+    subtitle:"Procedimiento interno de gestión y desarrollo de huelgas",
+    sections:[
+      {title:"Antes de la huelga",icon:"📅",
+        items:[
+          {l:"Paso A",v:"Recibida la convocatoria oficial de RRHH-HULP, el Jefe de Servicio establece los Servicios Mínimos / Guardias de Presencia Física"},
+          {l:"Paso B",v:"Fichero Excel de NO DISPONIBILIDAD actualizado",n:"Responsabilidad del facultativo comunicar con antelación cualquier cambio (libranzas, vacaciones, guardias, etc.)"},
+          {l:"Paso C",v:"Designación informada por email corporativo",n:"Responder si hay incidencia antes del día previo a la huelga. Sin respuesta = conforme."}
+        ]
+      },
+      {title:"El día de la huelga",icon:"📆",
+        subs:[
+          {title:"→ Ejerce la huelga",items:[
+            {l:"Antes de las 08:00h",v:"Comunicar voluntariamente por email a Secretaría (con copia al Jefe de Servicio)"},
+            {l:"Nota",v:"Es un aviso voluntario para facilitar la organización del servicio"}
+          ]},
+          {title:"→ No ejerce la huelga",items:[
+            {l:"Jornada normal",v:"No es necesario ningún trámite adicional"}
+          ]}
+        ]
+      },
+      {title:"Gestión administrativa (08:00h)",icon:"📧",
+        items:[
+          {l:"Secretaría",v:"Comunica a RRHH-HULP los facultativos que van a secundar la huelga"}
+        ],
+        notes:["El calendario y encuadre de designaciones están disponibles a través de la Secretaría del Servicio.","Los pasos 3, 4 y 5 se llevarán a cabo tantos días como jornadas dure la huelga."]
+      }
+    ]
+  },
+  {
+    id:"traslados",title:"Traslados C3/CB a La Paz",icon:"🔄",color:"#028090",
+    subtitle:"Procedimiento de traslado de paciente desde Carlos III o Cantoblanco a La Paz",
+    sections:[
+      {title:"¿Cómo traslado un paciente?",icon:"🚑",
+        items:[
+          {l:"Paso 1",v:"Contactar con Gestión de Camas",n:"Teléfonos: 851566 / 441566 / 441567"},
+          {l:"Paso 2",v:"Indicar a Gestión de Camas que el paciente sea asignado al jefe de servicio"},
+          {l:"Paso 3",v:"El traslado entra en el reparto del día siguiente → asignación a un facultativo de LP"}
+        ]
+      }
+    ]
+  }
+];
+
+protocols.sort((a,b)=>a.title.localeCompare(b.title,'es'));
+
+// ============ RENDER ENGINE ============
+const $=id=>document.getElementById(id);
+const app=$('app');
+let openSections={};
+
+function h(tag,attrs,...children){
+  const el=document.createElement(tag);
+  if(attrs)Object.entries(attrs).forEach(([k,v])=>{
+    if(k==='onclick')el.addEventListener('click',v);
+    else if(k==='class')el.className=v;
+    else if(k==='style'&&typeof v==='object')Object.assign(el.style,v);
+    else if(k==='html')el.innerHTML=v;
+    else el.setAttribute(k,v);
+  });
+  children.flat().forEach(c=>{if(c)el.appendChild(typeof c==='string'?document.createTextNode(c):c)});
+  return el;
+}
+
+function renderHome(filter=''){
+  const fl=filter.toLowerCase();
+  const filtered=protocols.filter(p=>{
+    if(!fl)return true;
+    if(p.title.toLowerCase().includes(fl)||p.subtitle.toLowerCase().includes(fl))return true;
+    return p.sections.some(s=>
+      s.title.toLowerCase().includes(fl)||
+      (s.items&&s.items.some(i=>(i.l+i.v).toLowerCase().includes(fl)))||
+      (s.notes&&s.notes.some(n=>n.toLowerCase().includes(fl)))
+    );
+  });
+
+  app.innerHTML='';
+  // Header
+  const hdr=h('div',{class:'header header-home'},
+    h('small',null,'MEDICINA INTERNA'),
+    h('h1',null,'Protocolos MIRG'),
+    h('p',null,'Guía rápida del servicio')
+  );
+  app.appendChild(hdr);
+
+  // Search
+  const searchDiv=h('div',{class:'search'});
+  const inp=h('input',{type:'text',placeholder:'Buscar protocolo o medicación...',value:filter});
+  inp.addEventListener('input',e=>renderHome(e.target.value));
+  searchDiv.appendChild(inp);
+  app.appendChild(searchDiv);
+
+  // List
+  const list=h('div',{class:'list'});
+  if(filtered.length===0){
+    list.appendChild(h('div',{class:'empty'},'No se encontraron resultados para "'+filter+'"'));
+  }
+  filtered.forEach(p=>{
+    const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
+      h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
+      h('div',null,
+        h('div',{class:'title'},p.title),
+        h('div',{class:'sub'},p.subtitle)
+      ),
+      h('span',{class:'arrow'},'→')
+    );
+    list.appendChild(card);
+  });
+  app.appendChild(list);
+
+  // Footer
+  app.appendChild(h('div',{class:'footer'},'Servicio de Medicina Interna'));
+
+  // Refocus search
+  if(filter){const i=app.querySelector('.search input');if(i){i.focus();i.setSelectionRange(filter.length,filter.length);}}
+}
+
+function renderDetail(p){
+  app.innerHTML='';
+
+  // Header
+  const hdr=h('div',{class:'detail-header',style:{background:'linear-gradient(135deg,'+p.color+','+p.color+'dd)'}},
+    h('button',{class:'back-btn',onclick:()=>{openSections={};renderHome();}},'← Volver'),
+    h('div',{class:'icon'},p.icon),
+    h('h1',null,p.title),
+    h('p',null,p.subtitle)
+  );
+  app.appendChild(hdr);
+
+  // Pinned sections (always visible as banner)
+  const pinnedSections=p.sections.filter(s=>s.pinned);
+  pinnedSections.forEach(s=>{
+    const banner=h('div',{class:'pinned-banner'});
+    banner.appendChild(h('div',{class:'pinned-title'},h('span',null,s.icon),h('span',null,s.title)));
+    if(s.notes){s.notes.forEach(n=>{banner.appendChild(h('div',{class:'pinned-note'},n));});}
+    app.appendChild(banner);
+  });
+
+  // Sections
+  const cont=h('div',{class:'sections'});
+  p.sections.filter(s=>!s.pinned).forEach((s,si)=>{
+    const sec=h('div',{class:'section'});
+    const key=p.id+'_'+si;
+    const isOpen=!!openSections[key];
+
+    // Head
+    const head=h('div',{class:'section-head'+(isOpen?' open':''),onclick:()=>{
+      openSections[key]=!openSections[key];renderDetail(p);
+    }});
+    const left=h('div',{class:'left'},
+      h('span',{class:'ico'},s.icon),
+      h('span',{class:'ttl'},s.title)
+    );
+    if(s.tag){
+      const tg=h('span',{class:'tag',style:{backgroundColor:s.tagC}},s.tag);
+      left.appendChild(tg);
+    }
+    head.appendChild(left);
+    head.appendChild(h('span',{class:'chevron'+(isOpen?' open':'')},'▼'));
+    sec.appendChild(head);
+
+    // Body
+    if(isOpen){
+      const body=h('div',{class:'section-body'});
+
+      if(s.type==='rockwood'&&s.rockwood){
+        const rw=h('div',{class:'rockwood-scale'});
+        s.rockwood.forEach((r,ri)=>{
+          if(ri===4){
+            rw.appendChild(h('div',{class:'rw-cutoff'},'⚠ Valor ≥ 5 → Ingreso en GERIATRÍA'));
+          }
+          const row=h('div',{class:'rw-row'});
+          row.appendChild(h('div',{class:'rw-num',style:{backgroundColor:r.c}},String(r.n)));
+          row.appendChild(h('div',{class:'rw-bar',style:{backgroundColor:r.c}}));
+          const info=h('div',{class:'rw-info'});
+          info.appendChild(h('div',{class:'rw-name',style:{color:r.c}},r.name));
+          info.appendChild(h('div',{class:'rw-desc'},r.desc));
+          row.appendChild(info);
+          const meter=h('div',{class:'rw-meter'});
+          meter.appendChild(h('div',{class:'rw-meter-fill',style:{width:r.auto+'%',backgroundColor:r.c}}));
+          row.appendChild(meter);
+          rw.appendChild(row);
+        });
+        const legend=h('div',{class:'rw-legend'});
+        legend.innerHTML='<span>📋 1-3: No frágil</span><span>⚡ 4: Vulnerable</span><span>🔶 5-8: Frágil → Geriatría</span><span>🏥 9: Terminal</span>';
+        rw.appendChild(legend);
+        body.appendChild(rw);
+      }
+
+      if(s.items&&s.items.length>0){
+        s.items.forEach(it=>{
+          const row=h('div',{class:'item-row'},
+            h('div',{class:'lbl'},it.l),
+            h('div',{class:'val'},it.v+(it.n?'<br><span class="note">'+it.n+'</span>':''))
+          );
+          row.querySelector('.val').innerHTML=it.v+(it.n?'<br><span class="note">'+it.n+'</span>':'');
+          body.appendChild(row);
+        });
+      }
+
+      if(s.subs){
+        s.subs.forEach(sub=>{
+          body.appendChild(h('div',{class:'sub-title'},sub.title));
+          sub.items.forEach(it=>{
+            const row=h('div',{class:'item-row'});
+            if(it.l)row.appendChild(h('div',{class:'lbl'},it.l));
+            const valDiv=h('div',{class:'val',style:it.l?{}:{textAlign:'left',maxWidth:'100%'}});
+            valDiv.innerHTML=it.v;
+            row.appendChild(valDiv);
+            body.appendChild(row);
+          });
+        });
+      }
+
+      if(s.notes){
+        s.notes.forEach(n=>{
+          body.appendChild(h('div',{class:'note-box'},n));
+        });
+      }
+
+      sec.appendChild(body);
+    }
+
+    cont.appendChild(sec);
+  });
+  app.appendChild(cont);
+
+  // Footer
+  app.appendChild(h('div',{class:'footer'},'Servicio de Medicina Interna'));
+}
+
+// Init
+renderHome();
+</script>
+</body>
+</html>
