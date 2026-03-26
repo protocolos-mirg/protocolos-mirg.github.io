@@ -51,6 +51,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 .note-box{background:#FFF8E1;border-left:4px solid #F0AD4E;padding:9px 12px;border-radius:0 6px 6px 0;font-size:12px;color:#6D5200;margin-top:6px;line-height:1.5}
 .footer{text-align:center;padding:10px 16px 20px;font-size:11px;color:#aaa}
 .empty{text-align:center;padding:40px 0;color:#999;font-size:14px}
+.cat-header{display:flex;align-items:center;gap:8px;padding:6px 4px 8px;margin-top:16px;margin-bottom:2px}
+.cat-header:first-child{margin-top:8px}
+.cat-icon{font-size:16px}
+.cat-label{font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--textL)}
 .pinned-banner{background:#FFF3E0;border:2px solid #E65100;border-radius:12px;padding:14px 16px;margin:0 16px 14px;max-width:668px;margin-left:auto;margin-right:auto;box-shadow:0 2px 10px rgba(230,81,0,.15);position:sticky;top:0;z-index:10}
 .pinned-banner .pinned-title{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px;color:#BF360C;margin-bottom:6px}
 .pinned-banner .pinned-note{background:#FFF8E1;border-left:3px solid #E65100;padding:6px 10px;border-radius:0 6px 6px 0;font-size:12.5px;color:#4E2600;margin-top:5px;line-height:1.5;font-weight:600}
@@ -80,7 +84,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 // ============ DATA ============
 const protocols = [
   {
-    id:"horarios",title:"Horarios de Medicación",icon:"💊",color:"#065A82",
+    id:"horarios",title:"Horarios de Medicación",icon:"💊",color:"#065A82",cat:"daily",
     subtitle:"Medicina Interna — G10C",
     sections:[
       {title:"Medicación Oral",icon:"💊",
@@ -148,7 +152,7 @@ const protocols = [
     ]
   },
   {
-    id:"ingresos",title:"Ingresos Programados",icon:"🛏️",color:"#1B3A5C",
+    id:"ingresos",title:"Ingresos Programados",icon:"🛏️",color:"#1B3A5C",cat:"gestion",
     subtitle:"Gestión de ingresos a cargo del Servicio",
     sections:[
       {title:"Norma Fundamental",icon:"⚠️",pinned:true,items:[],
@@ -189,7 +193,7 @@ const protocols = [
     ]
   },
   {
-    id:"noingreso",title:"No Ingreso CB / C3",icon:"🚫",color:"#8B1A1A",
+    id:"noingreso",title:"No Ingreso CB / C3",icon:"🚫",color:"#8B1A1A",cat:"gestion",
     subtitle:"Criterios de no ingreso en CB y C3",
     sections:[
       {title:"Criterios Críticos (1-4)",icon:"🔴",tag:"CRÍTICO",tagC:"#C0392B",
@@ -223,7 +227,7 @@ const protocols = [
     ]
   },
   {
-    id:"urologia",title:"Criterios Urología",icon:"🔬",color:"#6C3483",
+    id:"urologia",title:"Criterios Urología",icon:"🔬",color:"#6C3483",cat:"acuerdos",
     subtitle:"Acuerdo de criterios de ingreso desde Urgencias — Patología urológica",
     sections:[
       {title:"1. Uropatía Obstructiva",icon:"🟣",
@@ -289,7 +293,7 @@ const protocols = [
     ]
   },
   {
-    id:"urgencias",title:"Urgencias CB y C3",icon:"🚨",color:"#990011",
+    id:"urgencias",title:"Urgencias CB y C3",icon:"🚨",color:"#990011",cat:"daily",
     subtitle:"Procedimiento de actuación ante emergencias en CB y C3",
     sections:[
       {title:"Objetivo y Alcance",icon:"🎯",
@@ -385,7 +389,7 @@ const protocols = [
     ]
   },
   {
-    id:"huelga",title:"Protocolo de Huelga",icon:"📢",color:"#B85042",
+    id:"huelga",title:"Protocolo de Huelga",icon:"📢",color:"#B85042",cat:"org",
     subtitle:"Procedimiento interno de gestión y desarrollo de huelgas",
     sections:[
       {title:"Antes de la huelga",icon:"📅",
@@ -415,7 +419,78 @@ const protocols = [
     ]
   },
   {
-    id:"traslados",title:"Traslados C3/CB a La Paz",icon:"🔄",color:"#028090",
+    id:"oncologia",title:"Acuerdo MI — Oncología",icon:"🎗️",color:"var(--onco)",cat:"acuerdos",
+    subtitle:"Acuerdo entre MI y Oncología Médica para el traslado de pacientes entre ambos Servicios",
+    sections:[
+      {title:"Principios Generales",icon:"📋",pinned:true,items:[],
+        notes:["Priorizar el beneficio clínico, la seguridad y el uso eficiente de camas.","Evitar traslados innecesarios, cuando sea preciso prolongar el ingreso unos días para finalizar la resolución de una complicación médica general o una sintomatología no compleja, siempre que no condicione decisiones oncológicas.","Iniciar cuidados paliativos (UCP) de forma precoz durante el ingreso, cuando sea necesario.","Requisito indispensable para cualquier traslado a Oncología: existencia de diagnóstico histológico (o citológico con suficiente certeza para tratar) y estadificación básica disponible (localizado vs. diseminado), salvo situaciones de urgencia oncológica donde la demora suponga riesgo vital."]
+      },
+      {title:"Indicaciones de Traslado MI → OM",icon:"🔄",tag:"CUMPLIR ≥1",tagC:"#CB4335",
+        items:[
+          {l:"Objetivo fundamental",v:"El paciente se va a beneficiar de algún manejo específico en la planta de Oncología que no se pueda llevar a cabo en una planta de Medicina Interna"}
+        ],
+        notes:["A continuación se detallan las indicaciones concretas."]
+      },
+      {title:"2a. Tto. Oncoespecífico Urgente",icon:"🔴",tag:"TRASLADO",tagC:"#CB4335",
+        items:[
+          {l:"Definición",v:"Necesidad de tratamiento oncoespecífico (no quirúrgico) urgente durante el ingreso"},
+          {l:"Ca. microcítico de pulmón",v:"Síndrome de vena cava superior, hiponatremia por SIADH grave, alta carga tumoral o progresión rápida"},
+          {l:"Tumores de células germinales",v:"Testiculares / mediastínicos / ovario con alta carga tumoral o deterioro rápido"},
+          {l:"Cáncer de ovario",v:"Compromiso clínico que requiera quimioterapia urgente"},
+          {l:"Crisis visceral / Urgencias oncológicas",v:"Que previsiblemente respondan a QT / terapias dirigidas / inmuno. Ej.: compresión medular tumoral sin alternativa quirúrgica inmediata, hipercalcemia tumoral refractaria candidata a tratamiento activo, etc."}
+        ]
+      },
+      {title:"2b. Neoplasia Activa Conocida",icon:"🟠",tag:"TRASLADO",tagC:"#CB4335",
+        items:[
+          {l:"Definición",v:"Paciente con neoplasia activa ya conocida por Oncología (del centro o de otro) en tratamiento actual o con indicación inmediata (neoadyuvante, adyuvante o avanzado)"},
+          {l:"Requisito",v:"Situación clínica que impide alta próxima si no se inicia/ajusta el tratamiento oncológico"}
+        ],
+        notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
+      },
+      {title:"2c. Toxicidades del Tratamiento Oncológico",icon:"⚠️",tag:"TRASLADO",tagC:"#CB4335",
+        items:[
+          {l:"Definición",v:"Toxicidades o complicaciones del tratamiento oncológico que requieran manejo específico por parte de Oncología"}
+        ],
+        notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
+      },
+      {title:"2d. Recaída Confirmada",icon:"🔁",tag:"TRASLADO",tagC:"#CB4335",
+        items:[
+          {l:"Definición",v:"Recaída confirmada o altamente probable con indicación de iniciar terapia sistémica urgente durante el ingreso"}
+        ]
+      },
+      {title:"Notas sobre Indicaciones de Traslado",icon:"📝",
+        items:[
+          {l:"Plan ambulatorio seguro",v:"Si el paciente cumple criterios de traslado pero está con un plan ambulatorio seguro, se intentará evitar el traslado, organizando desde Oncología un circuito rápido para valoración en consulta"},
+          {l:"Tto. sistémico no urgente + problema social",v:"Si existiera una indicación de tratamiento sistémico (aunque no sea urgente) y el paciente no pudiera ser dado de alta a corto plazo por problemática social, pasará a cargo de Oncología. Se valorará de manera individualizada si puede realizarse traslado a planta de Oncología o por el contrario continúa en la de MI pero a cargo de Oncología"},
+          {l:"Tumores con cirugía como tto. inicial",v:"El paciente tendrá que ser presentado en el Comité Multidisciplinar de Tumores correspondiente para decidir el tipo de tratamiento primario. Se podrá ir comentando el caso con Oncología para organizar la logística y acordar quién presenta el caso. Sería deseable mantener al paciente ingresado hasta su presentación en el Comité y tener establecido el plan de tratamiento, por si procede traslado a otro Servicio"}
+        ]
+      },
+      {title:"Mantener Ingreso en MI (sin traslado)",icon:"🏥",tag:"MI",tagC:"#2874A6",
+        items:[
+          {l:"1. Proceso diagnóstico en curso",v:"Sin histología definitiva, o pendiente de completar pruebas, y sin indicación de terapia oncológica urgente"},
+          {l:"2. Libres de enfermedad neoplásica",v:"Pacientes ingresados por un problema intercurrente médico en los que no se haya identificado una recaída tumoral (infección, TEP/TVP, IC, EPOC, delirium, etc.)"},
+          {l:"3. Sospecha de recaída en estudio",v:"Sospecha de recaída o segunda neoplasia en estudio, salvo necesidad de terapia inmediata"},
+          {l:"4. Complicación médica transitoria",v:"Se resolverá en pocos días y no condiciona decisiones oncológicas inmediatas (p. ej.: neumonía comunitaria en paciente estable, tubo de tórax que se retirará en cuestión de días, infección que finalizará tratamiento ATB en próximos días)"}
+        ],
+        notes:["Con apoyo del adjunto de Oncología de interconsultas si precisa."]
+      },
+      {title:"Situaciones No Candidatas a Traslado",icon:"🚫",tag:"NO TRASLADO",tagC:"#922B21",
+        items:[
+          {l:"Pronóstico de muy baja reversibilidad",v:"O ausencia de opción terapéutica efectiva: fallo multiorgánico refractario, ECOG 4 no reversible, progresión fulminante sin opciones de tratamiento, edad avanzada con fragilidad en tumor no quimiosensible, etc."},
+          {l:"Indicación principal de C. Paliativos",v:"Síntomas refractarios, priorización de confort, sin necesidad de decisiones oncológicas"},
+          {l:"Pendiente de Comité de Tumores",v:"Paciente pendiente de comentarse en Comité de Tumores, en el que existan dudas sobre el tratamiento inicial más adecuado (cirugía vs QT vs RT)"}
+        ]
+      },
+      {title:"Requisito Previo a la Valoración por Oncología",icon:"💬",
+        items:[
+          {l:"Información al paciente",v:"Antes de solicitar la interconsulta, el equipo responsable confirmará que el paciente ha sido informado de que se encuentra en proceso diagnóstico de una neoplasia maligna y, cuando proceda, de la existencia de enfermedad diseminada"},
+          {l:"Si no está informado",v:"Deberá constar explícitamente en la petición para coordinar la comunicación clínica con Oncología"}
+        ]
+      }
+    ]
+  },
+  {
+    id:"traslados",title:"Traslados C3/CB a La Paz",icon:"🔄",color:"#028090",cat:"gestion",
     subtitle:"Procedimiento de traslado de paciente desde Carlos III o Cantoblanco a La Paz",
     sections:[
       {title:"¿Cómo traslado un paciente?",icon:"🚑",
@@ -429,7 +504,12 @@ const protocols = [
   }
 ];
 
-protocols.sort((a,b)=>a.title.localeCompare(b.title,'es'));
+const categories=[
+  {id:"daily",label:"Práctica Diaria",icon:"🏥"},
+  {id:"gestion",label:"Gestión de Pacientes",icon:"🛏️"},
+  {id:"acuerdos",label:"Acuerdos con Especialidades",icon:"🤝"},
+  {id:"org",label:"Organización Interna",icon:"📋"}
+];
 
 // ============ RENDER ENGINE ============
 const $=id=>document.getElementById(id);
@@ -477,22 +557,40 @@ function renderHome(filter=''){
   searchDiv.appendChild(inp);
   app.appendChild(searchDiv);
 
-  // List
+  // List grouped by category
   const list=h('div',{class:'list'});
   if(filtered.length===0){
     list.appendChild(h('div',{class:'empty'},'No se encontraron resultados para "'+filter+'"'));
+  } else if(fl){
+    // When searching, show flat list (no categories)
+    filtered.forEach(p=>{
+      const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
+        h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
+        h('div',null,h('div',{class:'title'},p.title),h('div',{class:'sub'},p.subtitle)),
+        h('span',{class:'arrow'},'→')
+      );
+      list.appendChild(card);
+    });
+  } else {
+    // Group by category
+    categories.forEach(cat=>{
+      const catProtos=filtered.filter(p=>p.cat===cat.id);
+      if(catProtos.length===0)return;
+      const catH=h('div',{class:'cat-header'},
+        h('span',{class:'cat-icon'},cat.icon),
+        h('span',{class:'cat-label'},cat.label)
+      );
+      list.appendChild(catH);
+      catProtos.forEach(p=>{
+        const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
+          h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
+          h('div',null,h('div',{class:'title'},p.title),h('div',{class:'sub'},p.subtitle)),
+          h('span',{class:'arrow'},'→')
+        );
+        list.appendChild(card);
+      });
+    });
   }
-  filtered.forEach(p=>{
-    const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
-      h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
-      h('div',null,
-        h('div',{class:'title'},p.title),
-        h('div',{class:'sub'},p.subtitle)
-      ),
-      h('span',{class:'arrow'},'→')
-    );
-    list.appendChild(card);
-  });
   app.appendChild(list);
 
   // Footer
