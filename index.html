@@ -26,7 +26,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 .proto-card .title{font-weight:700;font-size:15px;color:var(--text);margin-bottom:2px}
 .proto-card .sub{font-size:12px;color:var(--textL)}
 .proto-card .arrow{color:#ccc;font-size:18px;margin-left:auto}
-.back-btn{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;font-weight:600;margin-bottom:10px;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.back-btn{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.6);color:#fff;padding:7px 16px;border-radius:20px;font-size:13px;cursor:pointer;font-weight:700;margin-bottom:10px;text-shadow:0 1px 3px rgba(0,0,0,.5);backdrop-filter:blur(4px)}
 .back-btn:active{opacity:.7}
 .detail-header{padding:calc(env(safe-area-inset-top,20px) + 12px) 16px 22px;color:#fff}
 .detail-header .icon{font-size:30px;margin-bottom:4px}
@@ -461,7 +461,7 @@ const protocols = [
           {l:"Definición",v:"Recaída confirmada o altamente probable con indicación de iniciar terapia sistémica urgente durante el ingreso"}
         ]
       },
-      {title:"Notas sobre Indicaciones de Traslado",icon:"📝",tag:"IMPORTANTE",tagC:"#D4AC0D",pinned:true,
+      {title:"Notas: Plan Ambulatorio / Problema Social / Comité de Tumores",icon:"📝",tag:"IMPORTANTE",tagC:"#D4AC0D",
         items:[
           {l:"Plan ambulatorio seguro",v:"Si el paciente cumple criterios de traslado pero está con un plan ambulatorio seguro, se intentará evitar el traslado, organizando desde Oncología un circuito rápido para valoración en consulta"},
           {l:"Tto. sistémico no urgente + problema social",v:"Si existiera una indicación de tratamiento sistémico (aunque no sea urgente) y el paciente no pudiera ser dado de alta a corto plazo por problemática social, pasará a cargo de Oncología. Se valorará de manera individualizada si puede realizarse traslado a planta de Oncología o por el contrario continúa en la de MI pero a cargo de Oncología"},
@@ -493,8 +493,8 @@ const protocols = [
     ]
   },
   {
-    id:"traslados",title:"Traslados C3/CB a La Paz",icon:"🔄",color:"#028090",cat:"gestion",
-    subtitle:"Procedimiento de traslado de paciente desde Carlos III o Cantoblanco a La Paz",
+    id:"traslados",title:"Traslados C3/CB a LP",icon:"🔄",color:"#028090",cat:"gestion",
+    subtitle:"Procedimiento de traslado de paciente desde Carlos III o Cantoblanco a LP",
     sections:[
       {title:"¿Cómo traslado un paciente?",icon:"🚑",
         items:[
