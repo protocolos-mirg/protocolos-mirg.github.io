@@ -26,7 +26,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 .proto-card .title{font-weight:700;font-size:15px;color:var(--text);margin-bottom:2px}
 .proto-card .sub{font-size:12px;color:var(--textL)}
 .proto-card .arrow{color:#ccc;font-size:18px;margin-left:auto}
-.back-btn{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;font-weight:600;margin-bottom:10px}
+.back-btn{background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.5);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;font-weight:600;margin-bottom:10px;text-shadow:0 1px 2px rgba(0,0,0,.3)}
 .back-btn:active{opacity:.7}
 .detail-header{padding:calc(env(safe-area-inset-top,20px) + 12px) 16px 22px;color:#fff}
 .detail-header .icon{font-size:30px;margin-bottom:4px}
@@ -458,11 +458,11 @@ const protocols = [
           {l:"Definición",v:"Recaída confirmada o altamente probable con indicación de iniciar terapia sistémica urgente durante el ingreso"}
         ]
       },
-      {title:"Notas sobre Indicaciones de Traslado",icon:"📝",
+      {title:"Notas sobre Indicaciones de Traslado",icon:"📝",tag:"IMPORTANTE",tagC:"#D4AC0D",pinned:true,
         items:[
           {l:"Plan ambulatorio seguro",v:"Si el paciente cumple criterios de traslado pero está con un plan ambulatorio seguro, se intentará evitar el traslado, organizando desde Oncología un circuito rápido para valoración en consulta"},
           {l:"Tto. sistémico no urgente + problema social",v:"Si existiera una indicación de tratamiento sistémico (aunque no sea urgente) y el paciente no pudiera ser dado de alta a corto plazo por problemática social, pasará a cargo de Oncología. Se valorará de manera individualizada si puede realizarse traslado a planta de Oncología o por el contrario continúa en la de MI pero a cargo de Oncología"},
-          {l:"Tumores con cirugía como tto. inicial",v:"El paciente tendrá que ser presentado en el Comité Multidisciplinar de Tumores correspondiente para decidir el tipo de tratamiento primario. Se podrá ir comentando el caso con Oncología para organizar la logística y acordar quién presenta el caso. Sería deseable mantener al paciente ingresado hasta su presentación en el Comité y tener establecido el plan de tratamiento, por si procede traslado a otro Servicio"}
+          {l:"Tumores con cirugía como tto. inicial",v:"El paciente tendrá que ser presentado en el Comité Multidisciplinar de Tumores correspondiente para decidir el tipo de tratamiento primario. Se decidirá por consenso entre el oncólogo y el internista quién presenta el caso en el Comité. Se podrá ir comentando el caso con Oncología para organizar la logística. Sería deseable mantener al paciente ingresado hasta su presentación en el Comité y tener establecido el plan de tratamiento, por si procede traslado a otro Servicio"}
         ]
       },
       {title:"Mantener Ingreso en MI (sin traslado)",icon:"🏥",tag:"MI",tagC:"#2874A6",
