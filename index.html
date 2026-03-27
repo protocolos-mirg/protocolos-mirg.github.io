@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MIRG">
 <title>Protocolos MIRG</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230F1F33'/%3E%3Ctext x='50' y='68' font-size='55' font-weight='800' fill='white' text-anchor='middle' font-family='system-ui'%3EM%3C/text%3E%3C/svg%3E">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--primary:#0F1F33;--blue:#1B3A5C;--teal:#065A82;--accent:#2874A6;--uro:#6C3483;--red:#C0392B;--amber:#D4872E;--green:#2E7D32;--onco:#CB4335;--text:#1a2a3a;--textL:#5a6b7c;--bg:#f2f5f8;--card:#fff;--border:#e8ecf0}
@@ -80,438 +81,615 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 </style>
 </head>
 <body>
-
 <div id="app"></div>
-
 <script>
 // ============ DATA ============
 const protocols = [
-  {
-    id:"horarios",title:"Horarios de Medicación",icon:"💊",color:"#065A82",cat:"daily",
-    subtitle:"Medicina Interna — G10C",
-    sections:[
-      {title:"Medicación Oral",icon:"💊",
-        items:[
-          {l:"Cada 24h",v:"9h"},
-          {l:"Cada 12h",v:"9h — 21h"},
-          {l:"Cada 8h (general)",v:"De — Co — Ce"},
-          {l:"Cada 8h (margen estrecho)",v:"9h — 16h — 23h",n:"ATB, antiepilépticos, etc."},
-          {l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
-        ],
-        notes:["Acenocumarol (Sintrom): 20h (recomendado). Se puede mantener horario habitual del paciente.","De = Desayuno | Co = Comida | Ce = Cena"]
-      },
-      {title:"Medicación Intravenosa",icon:"💉",
-        items:[
-          {l:"Cada 24h",v:"9h"},
-          {l:"Cada 12h",v:"9h — 21h"},
-          {l:"Cada 8h",v:"8h — 16h — 24h"},
-          {l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
-        ],
-        subs:[
-          {title:"Furosemida",items:[
-            {l:"Con sondaje vesical",v:"8h — 16h — 24h"},
-            {l:"Sin sondaje vesical",v:"De — Co — Ce"}
-          ]},
-          {title:"Metoclopramida",items:[
-            {l:"Dieta absoluta",v:"8h — 16h — 24h"},
-            {l:"Alimentación vía oral",v:"De — Co — Ce"}
-          ]}
-        ]
-      },
-      {title:"Heparina Subcutánea",icon:"🩸",
-        items:[{l:"Cada 24h",v:"17h"},{l:"Cada 12h",v:"9h — 21h"}]
-      },
-      {title:"Aerosolterapia",icon:"🫁",
-        items:[{l:"Cada 12h",v:"9h — 21h"},{l:"Cada 8h",v:"9h — 16h — 23h"}]
-      },
-      {title:"Insulinoterapia",icon:"🔬",
-        items:[
-          {l:"Dieta absoluta / NE continua",v:"9h — 16h — 23h"},
-          {l:"No dieta absoluta / NE discontinua",v:"De — Co — Ce"}
-        ]
-      },
-      {title:"Hemocomponentes e Inmunoglobulinas",icon:"🏥",items:[],
-        notes:["Prescribir cada unidad de producto / vial por separado para que enfermería pueda confirmar correctamente la administración."]
-      },
-      {title:"Sueroterapia",icon:"💧",
-        items:[
-          {l:"500 ml/24h",v:"9h"},
-          {l:"1000 ml/24h",v:"9h — 21h"},
-          {l:"1500 ml/24h",v:"8h — 16h — 24h"},
-          {l:"2000 ml/24h",v:"6h — 12h — 18h — 24h"},
-          {l:"2500 ml/24h",v:"7h — 12h — 17h — 21h — 2h"},
-          {l:"3000 ml/24h",v:"8h — 12h — 16h — 20h — 24h — 4h"}
-        ]
-      },
-      {title:"Sueroterapia Alterna (SSF/SG)",icon:"💧",
-        items:[
-          {l:"1000 ml/24h",v:"SSF 9→21h | SG 21→9h"},
-          {l:"1500 ml/24h",v:"SSF 8→16h y 0→8h | SG 16→0h"},
-          {l:"2000 ml/24h",v:"SSF 0→6h y 12→18h | SG 6→12h y 18→0h"},
-          {l:"2500 ml/24h",v:"SSF 7→12h, 17→21h, 2→7h | SG 12→17h, 21→2h"}
-        ],
-        notes:["SSF = Suero Salino Fisiológico | SG = Suero Glucosado"]
-      }
-    ]
-  },
-  {
-    id:"ingresos",title:"Ingresos Programados",icon:"🛏️",color:"#1B3A5C",cat:"gestion",
-    subtitle:"Gestión de ingresos a cargo del Servicio",
-    sections:[
-      {title:"Norma Fundamental",icon:"⚠️",pinned:true,items:[],
-        notes:["Todos los ingresos deben ser solicitados y gestionados a través de la Secretaría de Medicina Interna (HG13, HC3 o HT5).","NO contactar directamente con Control de Camas ni realizar ingresos sin conocimiento de la Secretaría."]
-      },
-      {title:"Ingreso Urgente Inmediato",icon:"🔴",tag:"URGENTE",tagC:"#C0392B",
-        items:[
-          {l:"Definición",v:"Paciente que requiere ingreso sin demora para tratamiento inmediato"},
-          {l:"Momento",v:"Por la mañana"},
-          {l:"Proceso",v:"Secretaría llama directamente a Gestión de Camas"}
-        ],
-        notes:["Sin límite diario, pero siempre solicitar y registrar por Secretaría."]
-      },
-      {title:"Ingreso Urgente Demorable",icon:"🟠",tag:"DEMORABLE",tagC:"#D4872E",
-        items:[
-          {l:"Definición",v:"Ingreso prioritario para evitar paso por Urgencias, puede esperar"},
-          {l:"Momento",v:"Por la tarde o primera hora de la mañana siguiente"},
-          {l:"Ejemplo",v:"Paciente con prueba diagnóstica al día siguiente"}
-        ],
-        notes:["Si tiene prueba citada, indicar en observaciones: \"Paciente con prueba programada\"."]
-      },
-      {title:"Ingreso Programable",icon:"🟢",tag:"PROGRAMABLE",tagC:"#2E7D32",
-        items:[
-          {l:"Definición",v:"Ingreso planificable según disponibilidad"},
-          {l:"Cupo",v:"Máximo 2 programables por día"},
-          {l:"Condición",v:"Si ya hay ≥2 urgentes ese día, no se tramitan programables"}
-        ],
-        notes:["Cupo asignado por la Unidad de Camas del Hospital."]
-      },
-      {title:"Gestión por Secretaría",icon:"📋",
-        items:[
-          {l:"Listado",v:"Registro actualizado de todas las peticiones"},
-          {l:"Priorización",v:"Según prioridad clínica y disponibilidad de camas"},
-          {l:"Notificación",v:"A pacientes y solicitante"}
-        ],
-        notes:["Ext: 47126 / 72542 / 47108"]
-      }
-    ]
-  },
-  {
-    id:"noingreso",title:"No Ingreso CB / C3",icon:"🚫",color:"#8B1A1A",cat:"gestion",
-    subtitle:"Criterios de no ingreso en CB y C3",
-    sections:[
-      {title:"Criterios Críticos (1-4)",icon:"🔴",tag:"CRÍTICO",tagC:"#C0392B",
-        items:[
-          {l:"1. Inestabilidad hemodinámica",v:"Compromiso hemodinámico con necesidad de monitorización"},
-          {l:"2. Ventilación mecánica",v:"Soporte ventilatorio mecánico"},
-          {l:"3. Sangrado activo",v:"Hemorragia activa"},
-          {l:"4. Cirugía urgente/preferente",v:"Intervención quirúrgica durante ingreso"}
-        ]
-      },
-      {title:"Criterios Logísticos (5-8)",icon:"🟠",tag:"LOGÍSTICO",tagC:"#D4872E",
-        items:[
-          {l:"5. Especialista no presente",v:"Valoración por especialista no disponible en estos centros"},
-          {l:"6. Pruebas no posponibles",v:"Consultas/pruebas citadas no posponibles"},
-          {l:"7. Obesidad > 140 kg",v:"Limitación infraestructura"},
-          {l:"8. Técnicas especiales",v:"No disponibles en CB/C3"}
-        ]
-      },
-      {title:"Hospitalización a Domicilio",icon:"🏠",
-        items:[{l:"Caso especial",v:"Susceptibles de HaD con impedimento no médico → trasladables"}],
-        notes:["Requiere valoración caso a caso en Mesa de Camas."]
-      },
-      {title:"Horarios de Traslado",icon:"🚑",
-        items:[
-          {l:"Hora límite",v:"Antes de las 22:00h"},
-          {l:"Si ambulancia se retrasa",v:"Posponer a mañana siguiente"},
-          {l:"Excepción",v:"Alta presión asistencial: el hospital avisa a guardia CB/C3"}
-        ],
-        notes:["Excepción por presión asistencial NO debería darse desde hospitalización.","Criterios orientativos: valoración individual en Mesa de Camas."]
-      }
-    ]
-  },
-  {
-    id:"urologia",title:"Criterios Urología",icon:"🔬",color:"#6C3483",cat:"acuerdos",
-    subtitle:"Acuerdo de criterios de ingreso desde Urgencias — Patología urológica",
-    sections:[
-      {title:"1. Uropatía Obstructiva",icon:"🟣",
-        items:[{l:"Urología",v:"Pacientes que requieran colocación de catéter de derivación urinaria (doble J / nefrostomía)",n:"Uropatía obstructiva demostrada mediante prueba de imagen. Sea cual sea la causa de la indicación."}]
-      },
-      {title:"2. Infección tras Manipulación",icon:"🦠",
-        items:[
-          {l:"Definición",v:"Infección urinaria tras manipulación reciente (7 días previos) de vía urinaria"},
-          {l:"Procedimientos",v:"Colocación de catéter, RTU, cistoscopia, biopsia prostática, etc."},
-          {l:"Valoración",v:"Serán valorados por Urología en Urgencias"},
-          {l:"Si requiere ingreso",v:"Ingresa a cargo de Urología"},
-          {l:"Si plantean alta",v:"Urología gestiona el alta y da explicaciones al paciente/familiares"}
-        ],
-        notes:["El facultativo de Urgencias puede ayudar en la elaboración del informe de alta, pero Urología se encarga de dar las explicaciones al paciente y/o familiares."]
-      },
-      {title:"3. ITU Repetición + Dispositivo",icon:"🔁",
-        items:[
-          {l:"Sonda vesical permanente",v:"M. Interna o Geriatría según Escala de Rockwood",n:"Rockwood ≥ 5 → Geriatría. Se valorará traslado en mesa de camas."},
-          {l:"Nefrostomía/DJ con dilatación",v:"Urología (realizar prueba de imagen)"},
-          {l:"Nefrostomía/DJ sin dilatación",v:"M. Interna o Geriatría (igual que sonda vesical)"}
-        ]
-      },
-      {title:"4. Hematuria",icon:"🩸",
-        subs:[
-          {title:"→ Manejo inicial en Urgencias",items:[
-            {l:"Corrección coagulación",v:"Urgencias se encarga"},
-            {l:"Sonda de 3 luces",v:"Colocación e inicio de lavados"},
-            {l:"Aviso inicial",v:"A Urología"},
-            {l:"Estancia máxima",v:"48 horas en Urgencias"}
-          ]},
-          {title:"→ Criterios de ingreso en Urología",items:[
-            {l:"Anemización",v:"+2 puntos Hgb en 48h"},
-            {l:"Persistencia",v:"Hematuria persistente"},
-            {l:"Intervención",v:"Necesidad de intervención quirúrgica"}
-          ]}
-        ],
-        notes:["Pendiente consensuar con Anestesia posibilidad de cistoscopia previa a ingreso (paso por sala de exploración con sedación y salida a URPA o directamente a planta)."]
-      },
-      {title:"5. Neoplasia de Próstata",icon:"🏥",
-        items:[
-          {l:"Seguimiento Urología",v:"→ Ingresa en Urología"},
-          {l:"Seguimiento Oncología",v:"→ Oncología (posible MI tras Mesa de Camas)"}
-        ]
-      },
-      {title:"6. Absceso Renal/Prostático",icon:"⚠️",
-        items:[
-          {l:"Urología",v:"Todos los pacientes con abscesos objetivados en prueba de imagen, con independencia del estado clínico"}
-        ]
-      },
-      {title:"Anexo: Escala de Fragilidad de Rockwood",icon:"📊",type:"rockwood",
-        rockwood:[
-          {n:1,name:"Muy en forma",desc:"Personas fuertes, activas, con energía y motivación. Practican ejercicio regularmente.",c:"#27AE60",auto:100},
-          {n:2,name:"En forma",desc:"Sin síntomas de enfermedad activa, pero menos en forma que el nivel 1. Ejercicio esporádico.",c:"#2ECC71",auto:88},
-          {n:3,name:"En buen estado",desc:"Problemas médicos bien controlados. Actividad física limitada a pasear.",c:"#F1C40F",auto:75},
-          {n:4,name:"Vulnerable",desc:"No dependen de otros, pero los síntomas limitan sus actividades. Sensación de «ir lento».",c:"#F39C12",auto:62},
-          {n:5,name:"Fragilidad leve",desc:"Enlentecimiento evidente. Necesitan ayuda en actividades instrumentales (transporte, compras, medicación).",c:"#E67E22",auto:50},
-          {n:6,name:"Fragilidad moderada",desc:"Necesitan ayuda fuera del hogar y en tareas domésticas. Mínima ayuda para vestirse.",c:"#E74C3C",auto:37},
-          {n:7,name:"Fragilidad grave",desc:"Completamente dependientes para el cuidado personal por causa física o cognitiva.",c:"#C0392B",auto:25},
-          {n:8,name:"Fragilidad muy grave",desc:"Completamente dependientes. Se acercan al final de la vida. No podrían recuperarse de una enfermedad leve.",c:"#8E44AD",auto:12},
-          {n:9,name:"Enfermo terminal",desc:"Esperanza de vida menor de 6 meses. No necesariamente frágil.",c:"#2C3E50",auto:3}
-        ]
-      }
-    ]
-  },
-  {
-    id:"urgencias",title:"Urgencias CB y C3",icon:"🚨",color:"#990011",cat:"daily",
-    subtitle:"Procedimiento de actuación ante emergencias en CB y C3",
-    sections:[
-      {title:"Objetivo y Alcance",icon:"🎯",
-        items:[
-          {l:"Objetivo",v:"Pautas ante accidente o incidente que requiera atención sanitaria inmediata en CB y C3"},
-          {l:"Alcance",v:"Pacientes, acompañantes, visitantes y trabajadores"}
-        ],
-        notes:["Incluye consultas, zonas comunes, parking, entradas exteriores y zonas ajardinadas (CB). Incluye personas que acuden de forma puntual buscando asistencia de emergencia."]
-      },
-      {title:"Toma de Contacto — C3",icon:"📞",tag:"C3",tagC:"#2F3C7E",
-        items:[
-          {l:"L-V 8:00–15:00",v:"Busca MI: 841995"},
-          {l:"L-V 15:00–8:00 / Festivos / Fines de semana",v:"Guardia 1: 856001 | Guardia 2: 846002 | Residente: 858775"}
-        ],
-        notes:["El médico responsable puede solicitar ayuda a cualquier especialista del hospital, quien tiene obligación de acudir."]
-      },
-      {title:"Toma de Contacto — CB",icon:"📞",tag:"CB",tagC:"#990011",
-        items:[
-          {l:"L-V 8:00–15:00",v:"Tf. rotatorio: 889955 (MI / Neumología / Geriatría)"},
-          {l:"15:00–8:00 / Festivos / Fines de semana",v:"Guardia 1: 848077 | Guardia 2: 843287 | Residente: 844899"}
-        ],
-        notes:["Supervisora tarde/noche y fines de semana: ext. 852626"]
-      },
-      {title:"Traslado al Box de Atención",icon:"🚑",
-        items:[
-          {l:"C3",v:"Box de urgencias del Hospital de Día (junto a extracciones)"},
-          {l:"CB",v:"Consulta de enfermería — CCEE planta baja Pab. Quirúrgico"},
-          {l:"SSGG C3",v:"Ext. 857163"},
-          {l:"SSGG CB",v:"Ext. 843408"}
-        ],
-        notes:["Si el facultativo lo determina → traslado a Hospital de referencia vía SUMMA 112.","Tardes y fines de semana: avisar a seguridad si el espacio está cerrado."]
-      },
-      {title:"Recursos Materiales — C3",icon:"🧳",tag:"C3",tagC:"#2F3C7E",
-        items:[
-          {l:"Box de urgencias",v:"Material de urgencias, carro de parada, desfibrilador"},
-          {l:"Fuera de horario",v:"Carro y DESA en habitación 2 del Hospital de Día"},
-          {l:"Llave en seguridad",v:"Ext. 845999"},
-          {l:"Maletín portátil",v:"Para salidas al entorno hospitalario"}
-        ]
-      },
-      {title:"Recursos Materiales — CB",icon:"🧳",tag:"CB",tagC:"#990011",
-        items:[
-          {l:"CCEE Pab. Quirúrgico",v:"Maletín de emergencias (soporte vital inmediato)"},
-          {l:"DESA semiautomático",v:"Cada unidad dispone de uno, incluidas CCEE"},
-          {l:"Guardias localizadas",v:"Seguridad abre CCEE — Ext. 487631"},
-          {l:"Quirófano (Pab. Quirúrgico PB)",v:"Desfibrilador completo, kit intubación difícil, kit vía central"}
-        ],
-        notes:["El pabellón San Ramón y el Administrativo carecen de desfibrilador."]
-      },
-      {title:"Responsabilidades",icon:"👥",
-        items:[
-          {l:"Celadores",v:"Acudir al lugar y avisar a contactos designados"},
-          {l:"Supervisión Enfermería",v:"Acudir al lugar. Mantenimiento de mochila de emergencia y DESA"},
-          {l:"Facultativos",v:"Acudir al lugar. Cualquier especialista tiene obligación de acudir si es requerido"},
-          {l:"Seguridad",v:"Conocer el protocolo. Comunicar incidencia al responsable más cercano. Facilitar acceso a material"}
-        ]
-      },
-      {title:"Directorio C3",icon:"📋",tag:"C3",tagC:"#2F3C7E",
-        subs:[
-          {title:"Supervisores Enfermería (L-V 8-15h)",items:[
-            {l:"CCEE",v:"856012"},{l:"3ª Planta",v:"846013"},{l:"4ª Planta",v:"846014"},{l:"5ª Planta",v:"846015"}
-          ]},
-          {title:"Supervisor guardia (tardes/noches/festivos)",items:[
-            {l:"",v:"856018"}
-          ]},
-          {title:"Facultativos",items:[
-            {l:"L-V 8-15h",v:"841995"},{l:"Guardia 1",v:"856001"},{l:"Guardia 2",v:"846002"},{l:"Residente",v:"858775"}
-          ]},
-          {title:"Servicios Generales",items:[
-            {l:"Encargado turno",v:"857163"},{l:"Celador retén",v:"846026"},{l:"Noches/festivos",v:"846026 / 856034"}
-          ]},
-          {title:"Seguridad",items:[
-            {l:"",v:"Ext. 845999"}
-          ]}
-        ]
-      },
-      {title:"Directorio CB",icon:"📋",tag:"CB",tagC:"#990011",
-        subs:[
-          {title:"Supervisores Enfermería (L-V 8-15h)",items:[
-            {l:"SAF",v:"842706"},{l:"Q1º",v:"847022"},{l:"Q2º",v:"846984"},{l:"S. Luis",v:"847025"},{l:"S. Francisco",v:"847023"},{l:"S. José",v:"842674"}
-          ]},
-          {title:"Supervisor guardia (tardes/noches/festivos)",items:[
-            {l:"",v:"852626"}
-          ]},
-          {title:"Facultativos",items:[
-            {l:"L-V 8-15h",v:"889955"},{l:"Guardia 1",v:"848077"},{l:"Guardia 2",v:"843287"},{l:"Residente",v:"844899"}
-          ]},
-          {title:"Servicios Generales",items:[
-            {l:"Jefe equipo",v:"843408"},{l:"Tf. fijo",v:"487565"},{l:"Vigilantes 24h",v:"487631"},{l:"Centralita",v:"487555"}
-          ]}
-        ]
-      }
-    ]
-  },
-  {
-    id:"huelga",title:"Protocolo de Huelga",icon:"📢",color:"#B85042",cat:"org",
-    subtitle:"Procedimiento interno de gestión y desarrollo de huelgas",
-    sections:[
-      {title:"Antes de la huelga",icon:"📅",
-        items:[
-          {l:"Paso A",v:"Recibida la convocatoria oficial de RRHH-HULP, el Jefe de Servicio establece los Servicios Mínimos / Guardias de Presencia Física"},
-          {l:"Paso B",v:"Fichero Excel de NO DISPONIBILIDAD actualizado",n:"Responsabilidad del facultativo comunicar con antelación cualquier cambio (libranzas, vacaciones, guardias, etc.)"},
-          {l:"Paso C",v:"Designación informada por email corporativo",n:"Responder si hay incidencia antes del día previo a la huelga. Sin respuesta = conforme."}
-        ]
-      },
-      {title:"El día de la huelga",icon:"📆",
-        subs:[
-          {title:"→ Ejerce la huelga",items:[
-            {l:"Antes de las 08:00h",v:"Comunicar voluntariamente por email a Secretaría (con copia al Jefe de Servicio)"},
-            {l:"Nota",v:"Es un aviso voluntario para facilitar la organización del servicio"}
-          ]},
-          {title:"→ No ejerce la huelga",items:[
-            {l:"Jornada normal",v:"No es necesario ningún trámite adicional"}
-          ]}
-        ]
-      },
-      {title:"Gestión administrativa (08:00h)",icon:"📧",
-        items:[
-          {l:"Secretaría",v:"Comunica a RRHH-HULP los facultativos que van a secundar la huelga"}
-        ],
-        notes:["El calendario y encuadre de designaciones están disponibles a través de la Secretaría del Servicio.","Los pasos 3, 4 y 5 se llevarán a cabo tantos días como jornadas dure la huelga."]
-      }
-    ]
-  },
-  {
-    id:"oncologia",title:"Acuerdo MI — Oncología",icon:"🎗️",color:"var(--onco)",cat:"acuerdos",
-    subtitle:"Acuerdo entre MI y Oncología Médica para el traslado de pacientes entre ambos Servicios",
-    sections:[
-      {title:"Principios Generales",icon:"📋",pinned:true,items:[],
-        notes:["Priorizar el beneficio clínico, la seguridad y el uso eficiente de camas.","Evitar traslados innecesarios, cuando sea preciso prolongar el ingreso unos días para finalizar la resolución de una complicación médica general o una sintomatología no compleja, siempre que no condicione decisiones oncológicas.","Iniciar cuidados paliativos (UCP) de forma precoz durante el ingreso, cuando sea necesario.","Requisito indispensable para cualquier traslado a Oncología: existencia de diagnóstico histológico (o citológico con suficiente certeza para tratar) y estadificación básica disponible (localizado vs. diseminado), salvo situaciones de urgencia oncológica donde la demora suponga riesgo vital."]
-      },
-      {title:"Indicaciones de Traslado MI → OM",icon:"🔄",tag:"CUMPLIR ≥1",tagC:"#CB4335",
-        items:[
-          {l:"Objetivo fundamental",v:"El paciente se va a beneficiar de algún manejo específico en la planta de Oncología que no se pueda llevar a cabo en una planta de Medicina Interna"}
-        ],
-        notes:["A continuación se detallan las indicaciones concretas."]
-      },
-      {title:"2a. Tto. Oncoespecífico Urgente",icon:"🔴",tag:"TRASLADO",tagC:"#CB4335",
-        items:[
-          {l:"Definición",v:"Necesidad de tratamiento oncoespecífico (no quirúrgico) urgente durante el ingreso"},
-          {l:"Ca. microcítico de pulmón",v:"Síndrome de vena cava superior, hiponatremia por SIADH grave, alta carga tumoral o progresión rápida"},
-          {l:"Tumores de células germinales",v:"Testiculares / mediastínicos / ovario con alta carga tumoral o deterioro rápido"},
-          {l:"Cáncer de ovario",v:"Compromiso clínico que requiera quimioterapia urgente"},
-          {l:"Crisis visceral / Urgencias oncológicas",v:"Que previsiblemente respondan a QT / terapias dirigidas / inmuno. Ej.: compresión medular tumoral sin alternativa quirúrgica inmediata, hipercalcemia tumoral refractaria candidata a tratamiento activo, etc."}
-        ]
-      },
-      {title:"2b. Neoplasia Activa Conocida",icon:"🟠",tag:"TRASLADO",tagC:"#CB4335",
-        items:[
-          {l:"Definición",v:"Paciente con neoplasia activa ya conocida por Oncología (del centro o de otro) en tratamiento actual o con indicación inmediata (neoadyuvante, adyuvante o avanzado)"},
-          {l:"Requisito",v:"Situación clínica que impide alta próxima si no se inicia/ajusta el tratamiento oncológico"}
-        ],
-        notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
-      },
-      {title:"2c. Toxicidades del Tratamiento Oncológico",icon:"⚠️",tag:"TRASLADO",tagC:"#CB4335",
-        items:[
-          {l:"Definición",v:"Toxicidades o complicaciones del tratamiento oncológico que requieran manejo específico por parte de Oncología"}
-        ],
-        notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
-      },
-      {title:"2d. Recaída Confirmada",icon:"🔁",tag:"TRASLADO",tagC:"#CB4335",
-        items:[
-          {l:"Definición",v:"Recaída confirmada o altamente probable con indicación de iniciar terapia sistémica urgente durante el ingreso"}
-        ]
-      },
-      {title:"Notas: Plan Ambulatorio / Problema Social / Comité de Tumores",icon:"📝",tag:"IMPORTANTE",tagC:"#D4AC0D",
-        items:[
-          {l:"Plan ambulatorio seguro",v:"Si el paciente cumple criterios de traslado pero está con un plan ambulatorio seguro, se intentará evitar el traslado, organizando desde Oncología un circuito rápido para valoración en consulta"},
-          {l:"Tto. sistémico no urgente + problema social",v:"Si existiera una indicación de tratamiento sistémico (aunque no sea urgente) y el paciente no pudiera ser dado de alta a corto plazo por problemática social, pasará a cargo de Oncología. Se valorará de manera individualizada si puede realizarse traslado a planta de Oncología o por el contrario continúa en la de MI pero a cargo de Oncología"},
-          {l:"Tumores con cirugía como tto. inicial",v:"El paciente tendrá que ser presentado en el Comité Multidisciplinar de Tumores correspondiente para decidir el tipo de tratamiento primario. Se decidirá por consenso entre el oncólogo y el internista quién presenta el caso en el Comité. Se podrá ir comentando el caso con Oncología para organizar la logística. Sería deseable mantener al paciente ingresado hasta su presentación en el Comité y tener establecido el plan de tratamiento, por si procede traslado a otro Servicio"}
-        ]
-      },
-      {title:"Mantener Ingreso en MI (sin traslado)",icon:"🏥",tag:"MI",tagC:"#2874A6",
-        items:[
-          {l:"1. Proceso diagnóstico en curso",v:"Sin histología definitiva, o pendiente de completar pruebas, y sin indicación de terapia oncológica urgente"},
-          {l:"2. Libres de enfermedad neoplásica",v:"Pacientes ingresados por un problema intercurrente médico en los que no se haya identificado una recaída tumoral (infección, TEP/TVP, IC, EPOC, delirium, etc.)"},
-          {l:"3. Sospecha de recaída en estudio",v:"Sospecha de recaída o segunda neoplasia en estudio, salvo necesidad de terapia inmediata"},
-          {l:"4. Complicación médica transitoria",v:"Se resolverá en pocos días y no condiciona decisiones oncológicas inmediatas (p. ej.: neumonía comunitaria en paciente estable, tubo de tórax que se retirará en cuestión de días, infección que finalizará tratamiento ATB en próximos días)"}
-        ],
-        notes:["Con apoyo del adjunto de Oncología de interconsultas si precisa."]
-      },
-      {title:"Situaciones No Candidatas a Traslado",icon:"🚫",tag:"NO TRASLADO",tagC:"#922B21",
-        items:[
-          {l:"Pronóstico de muy baja reversibilidad",v:"O ausencia de opción terapéutica efectiva: fallo multiorgánico refractario, ECOG 4 no reversible, progresión fulminante sin opciones de tratamiento, edad avanzada con fragilidad en tumor no quimiosensible, etc."},
-          {l:"Indicación principal de C. Paliativos",v:"Síntomas refractarios, priorización de confort, sin necesidad de decisiones oncológicas"},
-          {l:"Pendiente de Comité de Tumores",v:"Paciente pendiente de comentarse en Comité de Tumores, en el que existan dudas sobre el tratamiento inicial más adecuado (cirugía vs QT vs RT)"}
-        ]
-      },
-      {title:"Requisito Previo a la Valoración por Oncología",icon:"💬",
-        items:[
-          {l:"Información al paciente",v:"Antes de solicitar la interconsulta, el equipo responsable confirmará que el paciente ha sido informado de que se encuentra en proceso diagnóstico de una neoplasia maligna y, cuando proceda, de la existencia de enfermedad diseminada"},
-          {l:"Si no está informado",v:"Deberá constar explícitamente en la petición para coordinar la comunicación clínica con Oncología"}
-        ]
-      }
-    ]
-  },
-  {
-    id:"traslados",title:"Traslados C3/CB a LP",icon:"🔄",color:"#028090",cat:"gestion",
-    subtitle:"Procedimiento de traslado de paciente desde C3 o CB a LP",
-    sections:[
-      {title:"¿Cómo traslado un paciente?",icon:"🚑",
-        items:[
-          {l:"Paso 1",v:"Contactar con Gestión de Camas",n:"Teléfonos: 851566 / 441566 / 441567"},
-          {l:"Paso 2",v:"Indicar a Gestión de Camas que el paciente sea asignado al jefe de servicio"},
-          {l:"Paso 3",v:"El traslado entra en el reparto del día siguiente → asignación a un facultativo de LP"}
-        ]
-      }
-    ]
-  }
+{
+id:"horarios",title:"Horarios de Medicación",icon:"💊",color:"#065A82",cat:"daily",
+subtitle:"Medicina Interna — G10C",
+sections:[
+{title:"Medicación Oral",icon:"💊",
+items:[
+{l:"Cada 24h",v:"9h"},
+{l:"Cada 12h",v:"9h — 21h"},
+{l:"Cada 8h (general)",v:"De — Co — Ce"},
+{l:"Cada 8h (margen estrecho)",v:"9h — 16h — 23h",n:"ATB, antiepilépticos, etc."},
+{l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
+],
+notes:["Acenocumarol (Sintrom): 20h (recomendado). Se puede mantener horario habitual del paciente.","De = Desayuno | Co = Comida | Ce = Cena"]
+},
+{title:"Medicación Intravenosa",icon:"💉",
+items:[
+{l:"Cada 24h",v:"9h"},
+{l:"Cada 12h",v:"9h — 21h"},
+{l:"Cada 8h",v:"8h — 16h — 24h"},
+{l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
+],
+subs:[
+{title:"Furosemida",items:[
+{l:"Con sondaje vesical",v:"8h — 16h — 24h"},
+{l:"Sin sondaje vesical",v:"De — Co — Ce"}
+]},
+{title:"Metoclopramida",items:[
+{l:"Dieta absoluta",v:"8h — 16h — 24h"},
+{l:"Alimentación vía oral",v:"De — Co — Ce"}
+]}
+]
+},
+{title:"Heparina Subcutánea",icon:"🩸",
+items:[{l:"Cada 24h",v:"17h"},{l:"Cada 12h",v:"9h — 21h"}]
+},
+{title:"Aerosolterapia",icon:"🫁",
+items:[{l:"Cada 12h",v:"9h — 21h"},{l:"Cada 8h",v:"9h — 16h — 23h"}]
+},
+{title:"Insulinoterapia",icon:"🔬",
+items:[
+{l:"Dieta absoluta / NE continua",v:"9h — 16h — 23h"},
+{l:"No dieta absoluta / NE discontinua",v:"De — Co — Ce"}
+]
+},
+{title:"Hemocomponentes e Inmunoglobulinas",icon:"🏥",items:[],
+notes:["Prescribir cada unidad de producto / vial por separado para que enfermería pueda confirmar correctamente la administración."]
+},
+{title:"Sueroterapia",icon:"💧",
+items:[
+{l:"500 ml/24h",v:"9h"},
+{l:"1000 ml/24h",v:"9h — 21h"},
+{l:"1500 ml/24h",v:"8h — 16h — 24h"},
+{l:"2000 ml/24h",v:"6h — 12h — 18h — 24h"},
+{l:"2500 ml/24h",v:"7h — 12h — 17h — 21h — 2h"},
+{l:"3000 ml/24h",v:"8h — 12h — 16h — 20h — 24h — 4h"}
+]
+},
+{title:"Sueroterapia Alterna (SSF/SG)",icon:"💧",
+items:[
+{l:"1000 ml/24h",v:"SSF 9→21h | SG 21→9h"},
+{l:"1500 ml/24h",v:"SSF 8→16h y 0→8h | SG 16→0h"},
+{l:"2000 ml/24h",v:"SSF 0→6h y 12→18h | SG 6→12h y 18→0h"},
+{l:"2500 ml/24h",v:"SSF 7→12h, 17→21h, 2→7h | SG 12→17h, 21→2h"}
+],
+notes:["SSF = Suero Salino Fisiológico | SG = Suero Glucosado"]
+}
+]
+},
+{
+id:"ingresos",title:"Ingresos Programados",icon:"🛏️",color:"#1B3A5C",cat:"gestion",
+subtitle:"Gestión de ingresos a cargo del Servicio",
+sections:[
+{title:"Norma Fundamental",icon:"⚠️",pinned:true,items:[],
+notes:["Todos los ingresos deben ser solicitados y gestionados a través de la Secretaría de Medicina Interna (HG13, HC3 o HT5).","NO contactar directamente con Control de Camas ni realizar ingresos sin conocimiento de la Secretaría."]
+},
+{title:"Ingreso Urgente Inmediato",icon:"🔴",tag:"URGENTE",tagC:"#C0392B",
+items:[
+{l:"Definición",v:"Paciente que requiere ingreso sin demora para tratamiento inmediato"},
+{l:"Momento",v:"Por la mañana"},
+{l:"Proceso",v:"Secretaría llama directamente a Gestión de Camas"}
+],
+notes:["Sin límite diario, pero siempre solicitar y registrar por Secretaría."]
+},
+{title:"Ingreso Urgente Demorable",icon:"🟠",tag:"DEMORABLE",tagC:"#D4872E",
+items:[
+{l:"Definición",v:"Ingreso prioritario para evitar paso por Urgencias, puede esperar"},
+{l:"Momento",v:"Por la tarde o primera hora de la mañana siguiente"},
+{l:"Ejemplo",v:"Paciente con prueba diagnóstica al día siguiente"}
+],
+notes:["Si tiene prueba citada, indicar en observaciones: \"Paciente con prueba programada\"."]
+},
+{title:"Ingreso Programable",icon:"🟢",tag:"PROGRAMABLE",tagC:"#2E7D32",
+items:[
+{l:"Definición",v:"Ingreso planificable según disponibilidad"},
+{l:"Cupo",v:"Máximo 2 programables por día"},
+{l:"Condición",v:"Si ya hay ≥2 urgentes ese día, no se tramitan programables"}
+],
+notes:["Cupo asignado por la Unidad de Camas del Hospital."]
+},
+{title:"Gestión por Secretaría",icon:"📋",
+items:[
+{l:"Listado",v:"Registro actualizado de todas las peticiones"},
+{l:"Priorización",v:"Según prioridad clínica y disponibilidad de camas"},
+{l:"Notificación",v:"A pacientes y solicitante"}
+],
+notes:["Ext: 47126 / 72542 / 47108"]
+}
+]
+},
+{
+id:"noingreso",title:"No Ingreso CB / C3",icon:"🚫",color:"#8B1A1A",cat:"gestion",
+subtitle:"Criterios de no ingreso en CB y C3",
+sections:[
+{title:"Criterios Críticos (1-4)",icon:"🔴",tag:"CRÍTICO",tagC:"#C0392B",
+items:[
+{l:"1. Inestabilidad hemodinámica",v:"Compromiso hemodinámico con necesidad de monitorización"},
+{l:"2. Ventilación mecánica",v:"Soporte ventilatorio mecánico"},
+{l:"3. Sangrado activo",v:"Hemorragia activa"},
+{l:"4. Cirugía urgente/preferente",v:"Intervención quirúrgica durante ingreso"}
+]
+},
+{title:"Criterios Logísticos (5-8)",icon:"🟠",tag:"LOGÍSTICO",tagC:"#D4872E",
+items:[
+{l:"5. Especialista no presente",v:"Valoración por especialista no disponible en estos centros"},
+{l:"6. Pruebas no posponibles",v:"Consultas/pruebas citadas no posponibles"},
+{l:"7. Obesidad > 140 kg",v:"Limitación infraestructura"},
+{l:"8. Técnicas especiales",v:"No disponibles en CB/C3"}
+]
+},
+{title:"Hospitalización a Domicilio",icon:"🏠",
+items:[{l:"Caso especial",v:"Susceptibles de HaD con impedimento no médico → trasladables"}],
+notes:["Requiere valoración caso a caso en Mesa de Camas."]
+},
+{title:"Horarios de Traslado",icon:"🚑",
+items:[
+{l:"Hora límite",v:"Antes de las 22:00h"},
+{l:"Si ambulancia se retrasa",v:"Posponer a mañana siguiente"},
+{l:"Excepción",v:"Alta presión asistencial: el hospital avisa a guardia CB/C3"}
+],
+notes:["Excepción por presión asistencial NO debería darse desde hospitalización.","Criterios orientativos: valoración individual en Mesa de Camas."]
+}
+]
+},
+{
+id:"urologia",title:"Urología",icon:"🔬",color:"#6C3483",cat:"acuerdos",
+subtitle:"Criterios de ingreso desde Urgencias — Patología urológica",
+sections:[
+{title:"1. Uropatía Obstructiva",icon:"🟣",
+items:[{l:"Urología",v:"Pacientes que requieran colocación de catéter de derivación urinaria (doble J / nefrostomía)",n:"Uropatía obstructiva demostrada mediante prueba de imagen. Sea cual sea la causa de la indicación."}]
+},
+{title:"2. Infección tras Manipulación",icon:"🦠",
+items:[
+{l:"Definición",v:"Infección urinaria tras manipulación reciente (7 días previos) de vía urinaria"},
+{l:"Procedimientos",v:"Colocación de catéter, RTU, cistoscopia, biopsia prostática, etc."},
+{l:"Valoración",v:"Serán valorados por Urología en Urgencias"},
+{l:"Si requiere ingreso",v:"Ingresa a cargo de Urología"},
+{l:"Si plantean alta",v:"Urología gestiona el alta y da explicaciones al paciente/familiares"}
+],
+notes:["El facultativo de Urgencias puede ayudar en la elaboración del informe de alta, pero Urología se encarga de dar las explicaciones al paciente y/o familiares."]
+},
+{title:"3. ITU Repetición + Dispositivo",icon:"🔁",
+items:[
+{l:"Sonda vesical permanente",v:"M. Interna o Geriatría según Escala de Rockwood",n:"Rockwood ≥ 5 → Geriatría. Se valorará traslado en mesa de camas."},
+{l:"Nefrostomía/DJ con dilatación",v:"Urología (realizar prueba de imagen)"},
+{l:"Nefrostomía/DJ sin dilatación",v:"M. Interna o Geriatría (igual que sonda vesical)"}
+]
+},
+{title:"4. Hematuria",icon:"🩸",
+subs:[
+{title:"→ Manejo inicial en Urgencias",items:[
+{l:"Corrección coagulación",v:"Urgencias se encarga"},
+{l:"Sonda de 3 luces",v:"Colocación e inicio de lavados"},
+{l:"Aviso inicial",v:"A Urología"},
+{l:"Estancia máxima",v:"48 horas en Urgencias"}
+]},
+{title:"→ Criterios de ingreso en Urología",items:[
+{l:"Anemización",v:"+2 puntos Hgb en 48h"},
+{l:"Persistencia",v:"Hematuria persistente"},
+{l:"Intervención",v:"Necesidad de intervención quirúrgica"}
+]}
+],
+notes:["Pendiente consensuar con Anestesia posibilidad de cistoscopia previa a ingreso (paso por sala de exploración con sedación y salida a URPA o directamente a planta)."]
+},
+{title:"5. Neoplasia de Próstata",icon:"🏥",
+items:[
+{l:"Seguimiento Urología",v:"→ Ingresa en Urología"},
+{l:"Seguimiento Oncología",v:"→ Oncología (posible MI tras Mesa de Camas)"}
+]
+},
+{title:"6. Absceso Renal/Prostático",icon:"⚠️",
+items:[
+{l:"Urología",v:"Todos los pacientes con abscesos objetivados en prueba de imagen, con independencia del estado clínico"}
+]
+},
+{title:"Anexo: Escala de Fragilidad de Rockwood",icon:"📊",type:"rockwood",
+rockwood:[
+{n:1,name:"Muy en forma",desc:"Personas fuertes, activas, con energía y motivación. Practican ejercicio regularmente.",c:"#27AE60",auto:100},
+{n:2,name:"En forma",desc:"Sin síntomas de enfermedad activa, pero menos en forma que el nivel 1. Ejercicio esporádico.",c:"#2ECC71",auto:88},
+{n:3,name:"En buen estado",desc:"Problemas médicos bien controlados. Actividad física limitada a pasear.",c:"#F1C40F",auto:75},
+{n:4,name:"Vulnerable",desc:"No dependen de otros, pero los síntomas limitan sus actividades. Sensación de «ir lento».",c:"#F39C12",auto:62},
+{n:5,name:"Fragilidad leve",desc:"Enlentecimiento evidente. Necesitan ayuda en actividades instrumentales (transporte, compras, medicación).",c:"#E67E22",auto:50},
+{n:6,name:"Fragilidad moderada",desc:"Necesitan ayuda fuera del hogar y en tareas domésticas. Mínima ayuda para vestirse.",c:"#E74C3C",auto:37},
+{n:7,name:"Fragilidad grave",desc:"Completamente dependientes para el cuidado personal por causa física o cognitiva.",c:"#C0392B",auto:25},
+{n:8,name:"Fragilidad muy grave",desc:"Completamente dependientes. Se acercan al final de la vida. No podrían recuperarse de una enfermedad leve.",c:"#8E44AD",auto:12},
+{n:9,name:"Enfermo terminal",desc:"Esperanza de vida menor de 6 meses. No necesariamente frágil.",c:"#2C3E50",auto:3}
+]
+}
+]
+},
+{
+id:"urgencias",title:"Urgencias CB y C3",icon:"🚨",color:"#990011",cat:"daily",
+subtitle:"Procedimiento de actuación ante emergencias en CB y C3",
+sections:[
+{title:"Objetivo y Alcance",icon:"🎯",
+items:[
+{l:"Objetivo",v:"Pautas ante accidente o incidente que requiera atención sanitaria inmediata en CB y C3"},
+{l:"Alcance",v:"Pacientes, acompañantes, visitantes y trabajadores"}
+],
+notes:["Incluye consultas, zonas comunes, parking, entradas exteriores y zonas ajardinadas (CB). Incluye personas que acuden de forma puntual buscando asistencia de emergencia."]
+},
+{title:"Toma de Contacto — C3",icon:"📞",tag:"C3",tagC:"#2F3C7E",
+items:[
+{l:"L-V 8:00–15:00",v:"Busca MI: 841995"},
+{l:"L-V 15:00–8:00 / Festivos / Fines de semana",v:"Guardia 1: 856001 | Guardia 2: 846002 | Residente: 858775"}
+],
+notes:["El médico responsable puede solicitar ayuda a cualquier especialista del hospital, quien tiene obligación de acudir."]
+},
+{title:"Toma de Contacto — CB",icon:"📞",tag:"CB",tagC:"#990011",
+items:[
+{l:"L-V 8:00–15:00",v:"Tf. rotatorio: 889955 (MI / Neumología / Geriatría)"},
+{l:"15:00–8:00 / Festivos / Fines de semana",v:"Guardia 1: 848077 | Guardia 2: 843287 | Residente: 844899"}
+],
+notes:["Supervisora tarde/noche y fines de semana: ext. 852626"]
+},
+{title:"Traslado al Box de Atención",icon:"🚑",
+items:[
+{l:"C3",v:"Box de urgencias del Hospital de Día (junto a extracciones)"},
+{l:"CB",v:"Consulta de enfermería — CCEE planta baja Pab. Quirúrgico"},
+{l:"SSGG C3",v:"Ext. 857163"},
+{l:"SSGG CB",v:"Ext. 843408"}
+],
+notes:["Si el facultativo lo determina → traslado a Hospital de referencia vía SUMMA 112.","Tardes y fines de semana: avisar a seguridad si el espacio está cerrado."]
+},
+{title:"Recursos Materiales — C3",icon:"🧳",tag:"C3",tagC:"#2F3C7E",
+items:[
+{l:"Box de urgencias",v:"Material de urgencias, carro de parada, desfibrilador"},
+{l:"Fuera de horario",v:"Carro y DESA en habitación 2 del Hospital de Día"},
+{l:"Llave en seguridad",v:"Ext. 845999"},
+{l:"Maletín portátil",v:"Para salidas al entorno hospitalario"}
+]
+},
+{title:"Recursos Materiales — CB",icon:"🧳",tag:"CB",tagC:"#990011",
+items:[
+{l:"CCEE Pab. Quirúrgico",v:"Maletín de emergencias (soporte vital inmediato)"},
+{l:"DESA semiautomático",v:"Cada unidad dispone de uno, incluidas CCEE"},
+{l:"Guardias localizadas",v:"Seguridad abre CCEE — Ext. 487631"},
+{l:"Quirófano (Pab. Quirúrgico PB)",v:"Desfibrilador completo, kit intubación difícil, kit vía central"}
+],
+notes:["El pabellón San Ramón y el Administrativo carecen de desfibrilador."]
+},
+{title:"Responsabilidades",icon:"👥",
+items:[
+{l:"Celadores",v:"Acudir al lugar y avisar a contactos designados"},
+{l:"Supervisión Enfermería",v:"Acudir al lugar. Mantenimiento de mochila de emergencia y DESA"},
+{l:"Facultativos",v:"Acudir al lugar. Cualquier especialista tiene obligación de acudir si es requerido"},
+{l:"Seguridad",v:"Conocer el protocolo. Comunicar incidencia al responsable más cercano. Facilitar acceso a material"}
+]
+},
+{title:"Directorio C3",icon:"📋",tag:"C3",tagC:"#2F3C7E",
+subs:[
+{title:"Supervisores Enfermería (L-V 8-15h)",items:[
+{l:"CCEE",v:"856012"},{l:"3ª Planta",v:"846013"},{l:"4ª Planta",v:"846014"},{l:"5ª Planta",v:"846015"}
+]},
+{title:"Supervisor guardia (tardes/noches/festivos)",items:[
+{l:"",v:"856018"}
+]},
+{title:"Facultativos",items:[
+{l:"L-V 8-15h",v:"841995"},{l:"Guardia 1",v:"856001"},{l:"Guardia 2",v:"846002"},{l:"Residente",v:"858775"}
+]},
+{title:"Servicios Generales",items:[
+{l:"Encargado turno",v:"857163"},{l:"Celador retén",v:"846026"},{l:"Noches/festivos",v:"846026 / 856034"}
+]},
+{title:"Seguridad",items:[
+{l:"",v:"Ext. 845999"}
+]}
+]
+},
+{title:"Directorio CB",icon:"📋",tag:"CB",tagC:"#990011",
+subs:[
+{title:"Supervisores Enfermería (L-V 8-15h)",items:[
+{l:"SAF",v:"842706"},{l:"Q1º",v:"847022"},{l:"Q2º",v:"846984"},{l:"S. Luis",v:"847025"},{l:"S. Francisco",v:"847023"},{l:"S. José",v:"842674"}
+]},
+{title:"Supervisor guardia (tardes/noches/festivos)",items:[
+{l:"",v:"852626"}
+]},
+{title:"Facultativos",items:[
+{l:"L-V 8-15h",v:"889955"},{l:"Guardia 1",v:"848077"},{l:"Guardia 2",v:"843287"},{l:"Residente",v:"844899"}
+]},
+{title:"Servicios Generales",items:[
+{l:"Jefe equipo",v:"843408"},{l:"Tf. fijo",v:"487565"},{l:"Vigilantes 24h",v:"487631"},{l:"Centralita",v:"487555"}
+]}
+]
+}
+]
+},
+{
+id:"huelga",title:"Protocolo de Huelga",icon:"📢",color:"#B85042",cat:"org",
+subtitle:"Procedimiento interno de gestión y desarrollo de huelgas",
+sections:[
+{title:"Antes de la huelga",icon:"📅",
+items:[
+{l:"Paso A",v:"Recibida la convocatoria oficial de RRHH-HULP, el Jefe de Servicio establece los Servicios Mínimos / Guardias de Presencia Física"},
+{l:"Paso B",v:"Fichero Excel de NO DISPONIBILIDAD actualizado",n:"Responsabilidad del facultativo comunicar con antelación cualquier cambio (libranzas, vacaciones, guardias, etc.)"},
+{l:"Paso C",v:"Designación informada por email corporativo",n:"Responder si hay incidencia antes del día previo a la huelga. Sin respuesta = conforme."}
+]
+},
+{title:"El día de la huelga",icon:"📆",
+subs:[
+{title:"→ Ejerce la huelga",items:[
+{l:"Antes de las 08:00h",v:"Comunicar voluntariamente por email a Secretaría (con copia al Jefe de Servicio)"},
+{l:"Nota",v:"Es un aviso voluntario para facilitar la organización del servicio"}
+]},
+{title:"→ No ejerce la huelga",items:[
+{l:"Jornada normal",v:"No es necesario ningún trámite adicional"}
+]}
+]
+},
+{title:"Gestión administrativa (08:00h)",icon:"📧",
+items:[
+{l:"Secretaría",v:"Comunica a RRHH-HULP los facultativos que van a secundar la huelga"}
+],
+notes:["El calendario y encuadre de designaciones están disponibles a través de la Secretaría del Servicio.","Los pasos 3, 4 y 5 se llevarán a cabo tantos días como jornadas dure la huelga."]
+}
+]
+},
+{
+id:"oncologia",title:"Oncología",icon:"🎗️",color:"var(--onco)",cat:"acuerdos",
+subtitle:"Traslado de pacientes entre MI y Oncología Médica",
+sections:[
+{title:"Principios Generales",icon:"📋",pinned:true,items:[],
+notes:["Priorizar el beneficio clínico, la seguridad y el uso eficiente de camas.","Evitar traslados innecesarios, cuando sea preciso prolongar el ingreso unos días para finalizar la resolución de una complicación médica general o una sintomatología no compleja, siempre que no condicione decisiones oncológicas.","Iniciar cuidados paliativos (UCP) de forma precoz durante el ingreso, cuando sea necesario.","Requisito indispensable para cualquier traslado a Oncología: existencia de diagnóstico histológico (o citológico con suficiente certeza para tratar) y estadificación básica disponible (localizado vs. diseminado), salvo situaciones de urgencia oncológica donde la demora suponga riesgo vital."]
+},
+{title:"Indicaciones de Traslado MI → OM",icon:"🔄",tag:"CUMPLIR ≥1",tagC:"#CB4335",
+items:[
+{l:"Objetivo fundamental",v:"El paciente se va a beneficiar de algún manejo específico en la planta de Oncología que no se pueda llevar a cabo en una planta de Medicina Interna"}
+],
+notes:["A continuación se detallan las indicaciones concretas."]
+},
+{title:"2a. Tto. Oncoespecífico Urgente",icon:"🔴",tag:"TRASLADO",tagC:"#CB4335",
+items:[
+{l:"Definición",v:"Necesidad de tratamiento oncoespecífico (no quirúrgico) urgente durante el ingreso"},
+{l:"Ca. microcítico de pulmón",v:"Síndrome de vena cava superior, hiponatremia por SIADH grave, alta carga tumoral o progresión rápida"},
+{l:"Tumores de células germinales",v:"Testiculares / mediastínicos / ovario con alta carga tumoral o deterioro rápido"},
+{l:"Cáncer de ovario",v:"Compromiso clínico que requiera quimioterapia urgente"},
+{l:"Crisis visceral / Urgencias oncológicas",v:"Que previsiblemente respondan a QT / terapias dirigidas / inmuno. Ej.: compresión medular tumoral sin alternativa quirúrgica inmediata, hipercalcemia tumoral refractaria candidata a tratamiento activo, etc."}
+]
+},
+{title:"2b. Neoplasia Activa Conocida",icon:"🟠",tag:"TRASLADO",tagC:"#CB4335",
+items:[
+{l:"Definición",v:"Paciente con neoplasia activa ya conocida por Oncología (del centro o de otro) en tratamiento actual o con indicación inmediata (neoadyuvante, adyuvante o avanzado)"},
+{l:"Requisito",v:"Situación clínica que impide alta próxima si no se inicia/ajusta el tratamiento oncológico"}
+],
+notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
+},
+{title:"2c. Toxicidades del Tratamiento Oncológico",icon:"⚠️",tag:"TRASLADO",tagC:"#CB4335",
+items:[
+{l:"Definición",v:"Toxicidades o complicaciones del tratamiento oncológico que requieran manejo específico por parte de Oncología"}
+],
+notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
+},
+{title:"2d. Recaída Confirmada",icon:"🔁",tag:"TRASLADO",tagC:"#CB4335",
+items:[
+{l:"Definición",v:"Recaída confirmada o altamente probable con indicación de iniciar terapia sistémica urgente durante el ingreso"}
+]
+},
+{title:"Notas: Plan Ambulatorio / Problema Social / Comité de Tumores",icon:"📝",tag:"IMPORTANTE",tagC:"#D4AC0D",
+items:[
+{l:"Plan ambulatorio seguro",v:"Si el paciente cumple criterios de traslado pero está con un plan ambulatorio seguro, se intentará evitar el traslado, organizando desde Oncología un circuito rápido para valoración en consulta"},
+{l:"Tto. sistémico no urgente + problema social",v:"Si existiera una indicación de tratamiento sistémico (aunque no sea urgente) y el paciente no pudiera ser dado de alta a corto plazo por problemática social, pasará a cargo de Oncología. Se valorará de manera individualizada si puede realizarse traslado a planta de Oncología o por el contrario continúa en la de MI pero a cargo de Oncología"},
+{l:"Tumores con cirugía como tto. inicial",v:"El paciente tendrá que ser presentado en el Comité Multidisciplinar de Tumores correspondiente para decidir el tipo de tratamiento primario. Se decidirá por consenso entre el oncólogo y el internista quién presenta el caso en el Comité. Se podrá ir comentando el caso con Oncología para organizar la logística. Sería deseable mantener al paciente ingresado hasta su presentación en el Comité y tener establecido el plan de tratamiento, por si procede traslado a otro Servicio"}
+]
+},
+{title:"Mantener Ingreso en MI (sin traslado)",icon:"🏥",tag:"MI",tagC:"#2874A6",
+items:[
+{l:"1. Proceso diagnóstico en curso",v:"Sin histología definitiva, o pendiente de completar pruebas, y sin indicación de terapia oncológica urgente"},
+{l:"2. Libres de enfermedad neoplásica",v:"Pacientes ingresados por un problema intercurrente médico en los que no se haya identificado una recaída tumoral (infección, TEP/TVP, IC, EPOC, delirium, etc.)"},
+{l:"3. Sospecha de recaída en estudio",v:"Sospecha de recaída o segunda neoplasia en estudio, salvo necesidad de terapia inmediata"},
+{l:"4. Complicación médica transitoria",v:"Se resolverá en pocos días y no condiciona decisiones oncológicas inmediatas (p. ej.: neumonía comunitaria en paciente estable, tubo de tórax que se retirará en cuestión de días, infección que finalizará tratamiento ATB en próximos días)"}
+],
+notes:["Con apoyo del adjunto de Oncología de interconsultas si precisa."]
+},
+{title:"Situaciones No Candidatas a Traslado",icon:"🚫",tag:"NO TRASLADO",tagC:"#922B21",
+items:[
+{l:"Pronóstico de muy baja reversibilidad",v:"O ausencia de opción terapéutica efectiva: fallo multiorgánico refractario, ECOG 4 no reversible, progresión fulminante sin opciones de tratamiento, edad avanzada con fragilidad en tumor no quimiosensible, etc."},
+{l:"Indicación principal de C. Paliativos",v:"Síntomas refractarios, priorización de confort, sin necesidad de decisiones oncológicas"},
+{l:"Pendiente de Comité de Tumores",v:"Paciente pendiente de comentarse en Comité de Tumores, en el que existan dudas sobre el tratamiento inicial más adecuado (cirugía vs QT vs RT)"}
+]
+},
+{title:"Requisito Previo a la Valoración por Oncología",icon:"💬",
+items:[
+{l:"Información al paciente",v:"Antes de solicitar la interconsulta, el equipo responsable confirmará que el paciente ha sido informado de que se encuentra en proceso diagnóstico de una neoplasia maligna y, cuando proceda, de la existencia de enfermedad diseminada"},
+{l:"Si no está informado",v:"Deberá constar explícitamente en la petición para coordinar la comunicación clínica con Oncología"}
+]
+}
+]
+},
+{
+id:"traslados",title:"Traslados C3/CB a LP",icon:"🔄",color:"#028090",cat:"gestion",
+subtitle:"Procedimiento de traslado de paciente desde C3 o CB a LP",
+sections:[
+{title:"¿Cómo traslado un paciente?",icon:"🚑",
+items:[
+{l:"Paso 1",v:"Contactar con Gestión de Camas",n:"Teléfonos: 851566 / 441566 / 441567"},
+{l:"Paso 2",v:"Indicar a Gestión de Camas que el paciente sea asignado al jefe de servicio"},
+{l:"Paso 3",v:"El traslado entra en el reparto del día siguiente → asignación a un facultativo de LP"}
+]
+}
+]
+},
+{
+id:"econsulta",title:"E-Consulta Intrahospitalaria",icon:"📋",color:"#1A5276",cat:"acuerdos",
+subtitle:"Consultas estructuradas entre servicios sin derivación presencial",
+sections:[
+{title:"Justificación",icon:"💡",
+items:[
+{l:"Problema",v:"La multiplicidad de citas genera confusión, sobrecarga de listas de espera y pérdida de eficacia"},
+{l:"Solución",v:"Un médico referente del paciente crónico complejo mejora la calidad de la atención"},
+{l:"Visión institucional",v:"Figura del referente del paciente crónico complejo"}
+]
+},
+{title:"Objetivo",icon:"🎯",
+items:[
+{l:"Sustituir",v:"Consultas informales por consultas estructuradas"},
+{l:"Evitar",v:"Derivaciones y policonsultas innecesarias"}
+]
+},
+{title:"Indicaciones",icon:"✅",tag:"INDICADO",tagC:"#2E7D32",
+items:[
+{l:"Dudas clínicas",v:"Preguntas concretas sobre manejo del paciente"},
+{l:"Ajustes de seguimiento",v:"Modificaciones de plan sin necesidad de consulta presencial"},
+{l:"Interpretación de pruebas",v:"Consulta sobre resultados de pruebas complementarias"},
+{l:"Necesidad de derivación",v:"Decidir si es necesaria derivación en casos dudosos"}
+]
+},
+{title:"Ejemplos Prácticos",icon:"📖",
+items:[
+{l:"Ejemplo 1",v:"Paciente con ETEV, origen camerunés. E-consulta a Infecciosas para serologías sin duplicar consulta"},
+{l:"Ejemplo 2",v:"Paciente con ANAs 1/640 sin clínica EAS y complemento bajo. ¿Necesita seguimiento duplicado?"},
+{l:"Ejemplo 3",v:"Paciente con gammapatía monoclonal y 5 pólipos adenomatosos. E-consulta a Digestivo: ¿cada cuánto colonoscopia?"}
+]
+},
+{title:"No Indicado",icon:"🚫",tag:"NO INDICADO",tagC:"#C0392B",
+items:[
+{l:"Urgencias",v:"No es vía para consultas urgentes"},
+{l:"Valoración presencial directa",v:"Pacientes que requieren exploración física"},
+{l:"Pacientes ingresados",v:"Usar interconsulta convencional"}
+]
+},
+{title:"Funcionamiento",icon:"⚙️",
+items:[
+{l:"Solicitud",v:"A través de la pestaña de interconsultas del servicio implicado"},
+{l:"Respuesta",v:"Se crea anotación y se cierra cuando se resuelve"},
+{l:"Plazo",v:"Respuesta en aproximadamente 72 horas"},
+{l:"Resolución",v:"Resolver, citar o recomendar seguimiento"}
+]
+},
+{title:"Servicios Implicados",icon:"🏥",
+subs:[
+{title:"Medicina Interna",items:[
+{l:"General",v:"E-consulta abierta"},
+{l:"Infecciosas",v:"E-consulta abierta"},
+{l:"Autoinmunes",v:"E-consulta abierta"},
+{l:"ETEV/ICC",v:"E-consulta abierta"}
+]},
+{title:"Digestivo",items:[
+{l:"General",v:"E-consulta abierta"},
+{l:"EII",v:"E-consulta abierta"},
+{l:"Hepatología",v:"E-consulta abierta"}
+]},
+{title:"Cardiología",items:[
+{l:"Sin subdivisiones",v:"E-consulta abierta"}
+]}
+],
+notes:["Próximamente se ampliará a otros servicios de forma progresiva."]
+},
+{title:"Responsables",icon:"👤",
+items:[
+{l:"MI — General",v:"AL"},
+{l:"MI — Autoinmunes",v:"JJR"},
+{l:"MI — Infecciosas",v:"ADV / CMC"},
+{l:"MI — ETEV/ICC",v:"AL / GS / AQ"}
+],
+notes:["Si una e-consulta requiere opinión de experto (RCV, tropicales, VIH, enfermedades raras, etc.) se contactará al especialista correspondiente."]
+},
+{title:"Contenido de la E-Consulta",icon:"📝",
+subs:[
+{title:"Datos Básicos",items:[
+{l:"Servicio solicitante",v:"Obligatorio"},
+{l:"Médico responsable",v:"Obligatorio"},
+{l:"Fecha",v:"Obligatorio"},
+{l:"Paciente",v:"Nombre y NHC"},
+{l:"Edad / Sexo",v:"Obligatorio"}
+]},
+{title:"Consulta",items:[
+{l:"Motivo",v:"Pregunta clara y concreta"}
+]},
+{title:"Respuesta",items:[
+{l:"Valoración",v:"Análisis del caso"},
+{l:"Recomendaciones",v:"Plan propuesto"},
+{l:"Actitud",v:"Seguimiento / Citar / Pruebas"}
+]}
+]
+}
+]
+},
+{
+id:"hado",title:"HADO",icon:"🏠",color:"#2E7D32",cat:"gestion",
+subtitle:"Hospitalización a Domicilio — Proceso de admisión",
+sections:[
+{title:"Modelo Asistencial",icon:"🏥",pinned:true,
+items:[],
+notes:["HADO ofrece atención hospitalaria en el domicilio del paciente como alternativa al ingreso convencional, con seguimiento médico y de enfermería diario.","Teléfono de contacto: 850029"]
+},
+{title:"Beneficiarios",icon:"👥",
+items:[
+{l:"Pacientes agudos",v:"Que requieren hospitalización pero pueden recibir atención en domicilio"},
+{l:"Altas precoces",v:"Pacientes estables que pueden continuar tratamiento en domicilio"},
+{l:"Pacientes paliativos",v:"Con necesidades de control sintomático en domicilio"}
+]
+},
+{title:"Cartera de Servicios",icon:"📋",
+items:[
+{l:"Tratamiento IV",v:"Antibióticos, sueroterapia y otros tratamientos intravenosos"},
+{l:"Programa TADE",v:"Tratamiento Antimicrobiano Domiciliario Endovenoso"},
+{l:"Control clínico",v:"Seguimiento médico y de enfermería diario"},
+{l:"Cuidados paliativos",v:"Control sintomático domiciliario"},
+{l:"Transfusiones",v:"Hemoderivados en domicilio cuando esté indicado"}
+]
+},
+{title:"Criterios de Admisión",icon:"✅",tag:"REQUISITOS",tagC:"#2E7D32",
+subs:[
+{title:"Clínicos",items:[
+{l:"Estabilidad",v:"Paciente clínicamente estable"},
+{l:"Diagnóstico",v:"Diagnóstico definido con plan terapéutico establecido"},
+{l:"No precisa",v:"Monitorización continua ni pruebas hospitalarias inmediatas"}
+]},
+{title:"Sociofamiliares",items:[
+{l:"Cuidador",v:"Presencia de cuidador principal identificado"},
+{l:"Domicilio",v:"Condiciones higiénico-sanitarias adecuadas"},
+{l:"Teléfono",v:"Disponibilidad de línea telefónica"}
+]},
+{title:"Geográficos",items:[
+{l:"Área de cobertura",v:"Dentro del área geográfica asignada a HADO"},
+{l:"Accesibilidad",v:"Domicilio accesible para el equipo asistencial"}
+]},
+{title:"Aceptación",items:[
+{l:"Paciente",v:"Aceptación voluntaria del paciente"},
+{l:"Familia",v:"Aceptación de la familia / cuidador principal"}
+]}
+]
+},
+{title:"Pacientes Subsidiarios desde Plantas",icon:"🛏️",tag:"TRASLADO",tagC:"#1B3A5C",
+items:[
+{l:"Infecciones estables",v:"Pacientes con infecciones que requieren ATB IV prolongado y están clínicamente estables"},
+{l:"Insuficiencia cardíaca",v:"Pacientes con IC estabilizada que precisan ajuste de tratamiento IV"},
+{l:"EPOC reagudizado",v:"Pacientes con EPOC estabilizado tras fase aguda"},
+{l:"Trombosis venosa",v:"TEP/TVP estables con tratamiento anticoagulante iniciado"},
+{l:"Cuidados paliativos",v:"Pacientes oncológicos o no oncológicos con indicación de confort domiciliario"},
+{l:"Celulitis / Infección piel",v:"Con necesidad de ATB IV y sin criterios de gravedad"},
+{l:"Otros",v:"Cualquier paciente estable con plan terapéutico definido que pueda realizarse en domicilio"}
+],
+notes:["Valorar de forma individualizada con HADO (ext. 850029). El paciente debe cumplir criterios clínicos, sociofamiliares y geográficos."]
+},
+{title:"Procedencia de los Pacientes",icon:"🚪",
+items:[
+{l:"Urgencias",v:"Pacientes valorados en Urgencias susceptibles de HADO"},
+{l:"Plantas de hospitalización",v:"Alta precoz de pacientes estabilizados"},
+{l:"Consultas externas",v:"Pacientes que requieren tratamiento IV ambulatorio"},
+{l:"Otros hospitales",v:"Derivaciones con coordinación previa"}
+]
+},
+{title:"Proceso de Admisión",icon:"📞",
+items:[
+{l:"Paso 1",v:"Contactar con HADO: ext. 850029"},
+{l:"Paso 2",v:"Valoración conjunta del caso (criterios clínicos + sociofamiliares + geográficos)"},
+{l:"Paso 3",v:"Si cumple criterios: coordinar traslado y plan de seguimiento"},
+{l:"Paso 4",v:"Informar al paciente y familia, obtener aceptación"}
+],
+notes:["La solicitud se realiza mediante contacto telefónico directo con el equipo HADO."]
+},
+{title:"Contacto",icon:"📱",
+items:[
+{l:"Teléfono HADO",v:"Ext. 850029"},
+{l:"Horario de contacto",v:"L-V 8:00–15:00"}
+]
+}
+]
+}
 ];
 
 const categories=[
-  {id:"daily",label:"Práctica Diaria",icon:"🏥"},
-  {id:"gestion",label:"Gestión de Pacientes",icon:"🛏️"},
-  {id:"acuerdos",label:"Acuerdos con Especialidades",icon:"🤝"},
-  {id:"org",label:"Organización Interna",icon:"📋"}
+{id:"daily",label:"Práctica Diaria",icon:"🏥"},
+{id:"gestion",label:"Gestión de Pacientes",icon:"🛏️"},
+{id:"acuerdos",label:"Acuerdos con Especialidades",icon:"🤝"},
+{id:"org",label:"Organización Interna",icon:"📋"}
 ];
 
 // ============ RENDER ENGINE ============
@@ -520,202 +698,183 @@ const app=$('app');
 let openSections={};
 
 function h(tag,attrs,...children){
-  const el=document.createElement(tag);
-  if(attrs)Object.entries(attrs).forEach(([k,v])=>{
-    if(k==='onclick')el.addEventListener('click',v);
-    else if(k==='class')el.className=v;
-    else if(k==='style'&&typeof v==='object')Object.assign(el.style,v);
-    else if(k==='html')el.innerHTML=v;
-    else el.setAttribute(k,v);
-  });
-  children.flat().forEach(c=>{if(c)el.appendChild(typeof c==='string'?document.createTextNode(c):c)});
-  return el;
+const el=document.createElement(tag);
+if(attrs)Object.entries(attrs).forEach(([k,v])=>{
+if(k==='onclick')el.addEventListener('click',v);
+else if(k==='class')el.className=v;
+else if(k==='style'&&typeof v==='object')Object.assign(el.style,v);
+else if(k==='html')el.innerHTML=v;
+else el.setAttribute(k,v);
+});
+children.flat().forEach(c=>{if(c)el.appendChild(typeof c==='string'?document.createTextNode(c):c)});
+return el;
 }
 
 function renderHome(filter=''){
-  const fl=filter.toLowerCase();
-  const filtered=protocols.filter(p=>{
-    if(!fl)return true;
-    if(p.title.toLowerCase().includes(fl)||p.subtitle.toLowerCase().includes(fl))return true;
-    return p.sections.some(s=>
-      s.title.toLowerCase().includes(fl)||
-      (s.items&&s.items.some(i=>(i.l+i.v).toLowerCase().includes(fl)))||
-      (s.notes&&s.notes.some(n=>n.toLowerCase().includes(fl)))
-    );
-  });
-
-  app.innerHTML='';
-  // Header
-  const hdr=h('div',{class:'header header-home'},
-    h('small',null,'MEDICINA INTERNA'),
-    h('h1',null,'Protocolos MIRG'),
-    h('p',null,'Guía rápida del servicio')
-  );
-  app.appendChild(hdr);
-
-  // Search
-  const searchDiv=h('div',{class:'search'});
-  const inp=h('input',{type:'text',placeholder:'Buscar protocolo o medicación...',value:filter});
-  inp.addEventListener('input',e=>renderHome(e.target.value));
-  searchDiv.appendChild(inp);
-  app.appendChild(searchDiv);
-
-  // List grouped by category
-  const list=h('div',{class:'list'});
-  if(filtered.length===0){
-    list.appendChild(h('div',{class:'empty'},'No se encontraron resultados para "'+filter+'"'));
-  } else if(fl){
-    // When searching, show flat list (no categories)
-    filtered.forEach(p=>{
-      const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
-        h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
-        h('div',null,h('div',{class:'title'},p.title),h('div',{class:'sub'},p.subtitle)),
-        h('span',{class:'arrow'},'→')
-      );
-      list.appendChild(card);
-    });
-  } else {
-    // Group by category
-    categories.forEach(cat=>{
-      const catProtos=filtered.filter(p=>p.cat===cat.id);
-      if(catProtos.length===0)return;
-      const catH=h('div',{class:'cat-header'},
-        h('span',{class:'cat-icon'},cat.icon),
-        h('span',{class:'cat-label'},cat.label)
-      );
-      list.appendChild(catH);
-      catProtos.forEach(p=>{
-        const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
-          h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
-          h('div',null,h('div',{class:'title'},p.title),h('div',{class:'sub'},p.subtitle)),
-          h('span',{class:'arrow'},'→')
-        );
-        list.appendChild(card);
-      });
-    });
-  }
-  app.appendChild(list);
-
-  // Footer
-  app.appendChild(h('div',{class:'footer'},'Servicio de Medicina Interna'));
-
-  // Refocus search
-  if(filter){const i=app.querySelector('.search input');if(i){i.focus();i.setSelectionRange(filter.length,filter.length);}}
+const fl=filter.toLowerCase();
+const filtered=protocols.filter(p=>{
+if(!fl)return true;
+if(p.title.toLowerCase().includes(fl)||p.subtitle.toLowerCase().includes(fl))return true;
+return p.sections.some(s=>
+s.title.toLowerCase().includes(fl)||
+(s.items&&s.items.some(i=>(i.l+i.v).toLowerCase().includes(fl)))||
+(s.notes&&s.notes.some(n=>n.toLowerCase().includes(fl)))
+);
+});
+app.innerHTML='';
+// Header
+const hdr=h('div',{class:'header header-home'},
+h('small',null,'MEDICINA INTERNA'),
+h('h1',null,'Protocolos MIRG'),
+h('p',null,'Guía rápida del servicio')
+);
+app.appendChild(hdr);
+// Search
+const searchDiv=h('div',{class:'search'});
+const inp=h('input',{type:'text',placeholder:'Buscar protocolo o medicación...',value:filter});
+inp.addEventListener('input',e=>renderHome(e.target.value));
+searchDiv.appendChild(inp);
+app.appendChild(searchDiv);
+// List grouped by category
+const list=h('div',{class:'list'});
+if(filtered.length===0){
+list.appendChild(h('div',{class:'empty'},'No se encontraron resultados para "'+filter+'"'));
+} else if(fl){
+filtered.forEach(p=>{
+const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
+h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
+h('div',null,h('div',{class:'title'},p.title),h('div',{class:'sub'},p.subtitle)),
+h('span',{class:'arrow'},'→')
+);
+list.appendChild(card);
+});
+} else {
+categories.forEach(cat=>{
+const catProtos=filtered.filter(p=>p.cat===cat.id);
+if(catProtos.length===0)return;
+const catH=h('div',{class:'cat-header'},
+h('span',{class:'cat-icon'},cat.icon),
+h('span',{class:'cat-label'},cat.label)
+);
+list.appendChild(catH);
+catProtos.forEach(p=>{
+const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
+h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
+h('div',null,h('div',{class:'title'},p.title),h('div',{class:'sub'},p.subtitle)),
+h('span',{class:'arrow'},'→')
+);
+list.appendChild(card);
+});
+});
+}
+app.appendChild(list);
+// Footer
+app.appendChild(h('div',{class:'footer'},'Servicio de Medicina Interna'));
+// Refocus search
+if(filter){const i=app.querySelector('.search input');if(i){i.focus();i.setSelectionRange(filter.length,filter.length);}}
 }
 
 function renderDetail(p){
-  app.innerHTML='';
-
-  // Header
-  const hdr=h('div',{class:'detail-header',style:{background:'linear-gradient(135deg,'+p.color+','+p.color+'dd)'}},
-    h('button',{class:'back-btn',onclick:()=>{openSections={};renderHome();}},'← Volver'),
-    h('div',{class:'icon'},p.icon),
-    h('h1',null,p.title),
-    h('p',null,p.subtitle)
-  );
-  app.appendChild(hdr);
-
-  // Pinned sections (always visible as banner)
-  const pinnedSections=p.sections.filter(s=>s.pinned);
-  pinnedSections.forEach(s=>{
-    const banner=h('div',{class:'pinned-banner'});
-    banner.appendChild(h('div',{class:'pinned-title'},h('span',null,s.icon),h('span',null,s.title)));
-    if(s.items&&s.items.length){s.items.forEach(it=>{const d=h('div',{class:'pinned-item'});d.appendChild(h('div',{class:'pinned-item-label'},it.l));d.appendChild(h('div',{class:'pinned-item-value'},it.v));banner.appendChild(d);});}
-    if(s.notes){s.notes.forEach(n=>{banner.appendChild(h('div',{class:'pinned-note'},n));});}
-    app.appendChild(banner);
-  });
-
-  // Sections
-  const cont=h('div',{class:'sections'});
-  p.sections.filter(s=>!s.pinned).forEach((s,si)=>{
-    const sec=h('div',{class:'section'});
-    const key=p.id+'_'+si;
-    const isOpen=!!openSections[key];
-
-    // Head
-    const head=h('div',{class:'section-head'+(isOpen?' open':''),onclick:()=>{
-      openSections[key]=!openSections[key];renderDetail(p);
-    }});
-    const left=h('div',{class:'left'},
-      h('span',{class:'ico'},s.icon),
-      h('span',{class:'ttl'},s.title)
-    );
-    if(s.tag){
-      const tg=h('span',{class:'tag',style:{backgroundColor:s.tagC}},s.tag);
-      left.appendChild(tg);
-    }
-    head.appendChild(left);
-    head.appendChild(h('span',{class:'chevron'+(isOpen?' open':'')},'▼'));
-    sec.appendChild(head);
-
-    // Body
-    if(isOpen){
-      const body=h('div',{class:'section-body'});
-
-      if(s.type==='rockwood'&&s.rockwood){
-        const rw=h('div',{class:'rockwood-scale'});
-        s.rockwood.forEach((r,ri)=>{
-          if(ri===4){
-            rw.appendChild(h('div',{class:'rw-cutoff'},'⚠ Valor ≥ 5 → Ingreso en GERIATRÍA'));
-          }
-          const row=h('div',{class:'rw-row'});
-          row.appendChild(h('div',{class:'rw-num',style:{backgroundColor:r.c}},String(r.n)));
-          row.appendChild(h('div',{class:'rw-bar',style:{backgroundColor:r.c}}));
-          const info=h('div',{class:'rw-info'});
-          info.appendChild(h('div',{class:'rw-name',style:{color:r.c}},r.name));
-          info.appendChild(h('div',{class:'rw-desc'},r.desc));
-          row.appendChild(info);
-          const meter=h('div',{class:'rw-meter'});
-          meter.appendChild(h('div',{class:'rw-meter-fill',style:{width:r.auto+'%',backgroundColor:r.c}}));
-          row.appendChild(meter);
-          rw.appendChild(row);
-        });
-        const legend=h('div',{class:'rw-legend'});
-        legend.innerHTML='<span>📋 1-3: No frágil</span><span>⚡ 4: Vulnerable</span><span>🔶 5-8: Frágil → Geriatría</span><span>🏥 9: Terminal</span>';
-        rw.appendChild(legend);
-        body.appendChild(rw);
-      }
-
-      if(s.items&&s.items.length>0){
-        s.items.forEach(it=>{
-          const row=h('div',{class:'item-row'},
-            h('div',{class:'lbl'},it.l),
-            h('div',{class:'val'},it.v+(it.n?'<br><span class="note">'+it.n+'</span>':''))
-          );
-          row.querySelector('.val').innerHTML=it.v+(it.n?'<br><span class="note">'+it.n+'</span>':'');
-          body.appendChild(row);
-        });
-      }
-
-      if(s.subs){
-        s.subs.forEach(sub=>{
-          body.appendChild(h('div',{class:'sub-title'},sub.title));
-          sub.items.forEach(it=>{
-            const row=h('div',{class:'item-row'});
-            if(it.l)row.appendChild(h('div',{class:'lbl'},it.l));
-            const valDiv=h('div',{class:'val',style:it.l?{}:{textAlign:'left',maxWidth:'100%'}});
-            valDiv.innerHTML=it.v;
-            row.appendChild(valDiv);
-            body.appendChild(row);
-          });
-        });
-      }
-
-      if(s.notes){
-        s.notes.forEach(n=>{
-          body.appendChild(h('div',{class:'note-box'},n));
-        });
-      }
-
-      sec.appendChild(body);
-    }
-
-    cont.appendChild(sec);
-  });
-  app.appendChild(cont);
-
-  // Footer
-  app.appendChild(h('div',{class:'footer'},'Servicio de Medicina Interna'));
+app.innerHTML='';
+// Header
+const hdr=h('div',{class:'detail-header',style:{background:'linear-gradient(135deg,'+p.color+','+p.color+'dd)'}},
+h('button',{class:'back-btn',onclick:()=>{openSections={};renderHome();}},'← Volver'),
+h('div',{class:'icon'},p.icon),
+h('h1',null,p.title),
+h('p',null,p.subtitle)
+);
+app.appendChild(hdr);
+// Pinned sections
+const pinnedSections=p.sections.filter(s=>s.pinned);
+pinnedSections.forEach(s=>{
+const banner=h('div',{class:'pinned-banner'});
+banner.appendChild(h('div',{class:'pinned-title'},h('span',null,s.icon),h('span',null,s.title)));
+if(s.items&&s.items.length){s.items.forEach(it=>{const d=h('div',{class:'pinned-item'});d.appendChild(h('div',{class:'pinned-item-label'},it.l));d.appendChild(h('div',{class:'pinned-item-value'},it.v));banner.appendChild(d);});}
+if(s.notes){s.notes.forEach(n=>{banner.appendChild(h('div',{class:'pinned-note'},n));});}
+app.appendChild(banner);
+});
+// Sections
+const cont=h('div',{class:'sections'});
+p.sections.filter(s=>!s.pinned).forEach((s,si)=>{
+const sec=h('div',{class:'section'});
+const key=p.id+'_'+si;
+const isOpen=!!openSections[key];
+// Head
+const head=h('div',{class:'section-head'+(isOpen?' open':''),onclick:()=>{
+openSections[key]=!openSections[key];renderDetail(p);
+}});
+const left=h('div',{class:'left'},
+h('span',{class:'ico'},s.icon),
+h('span',{class:'ttl'},s.title)
+);
+if(s.tag){
+const tg=h('span',{class:'tag',style:{backgroundColor:s.tagC}},s.tag);
+left.appendChild(tg);
+}
+head.appendChild(left);
+head.appendChild(h('span',{class:'chevron'+(isOpen?' open':'')},'▼'));
+sec.appendChild(head);
+// Body
+if(isOpen){
+const body=h('div',{class:'section-body'});
+if(s.type==='rockwood'&&s.rockwood){
+const rw=h('div',{class:'rockwood-scale'});
+s.rockwood.forEach((r,ri)=>{
+if(ri===4){
+rw.appendChild(h('div',{class:'rw-cutoff'},'⚠ Valor ≥ 5 → Ingreso en GERIATRÍA'));
+}
+const row=h('div',{class:'rw-row'});
+row.appendChild(h('div',{class:'rw-num',style:{backgroundColor:r.c}},String(r.n)));
+row.appendChild(h('div',{class:'rw-bar',style:{backgroundColor:r.c}}));
+const info=h('div',{class:'rw-info'});
+info.appendChild(h('div',{class:'rw-name',style:{color:r.c}},r.name));
+info.appendChild(h('div',{class:'rw-desc'},r.desc));
+row.appendChild(info);
+const meter=h('div',{class:'rw-meter'});
+meter.appendChild(h('div',{class:'rw-meter-fill',style:{width:r.auto+'%',backgroundColor:r.c}}));
+row.appendChild(meter);
+rw.appendChild(row);
+});
+const legend=h('div',{class:'rw-legend'});
+legend.innerHTML='<span>📋 1-3: No frágil</span><span>⚡ 4: Vulnerable</span><span>🔶 5-8: Frágil → Geriatría</span><span>🏥 9: Terminal</span>';
+rw.appendChild(legend);
+body.appendChild(rw);
+}
+if(s.items&&s.items.length>0){
+s.items.forEach(it=>{
+const row=h('div',{class:'item-row'},
+h('div',{class:'lbl'},it.l),
+h('div',{class:'val'},it.v+(it.n?'<br><span class="note">'+it.n+'</span>':''))
+);
+row.querySelector('.val').innerHTML=it.v+(it.n?'<br><span class="note">'+it.n+'</span>':'');
+body.appendChild(row);
+});
+}
+if(s.subs){
+s.subs.forEach(sub=>{
+body.appendChild(h('div',{class:'sub-title'},sub.title));
+sub.items.forEach(it=>{
+const row=h('div',{class:'item-row'});
+if(it.l)row.appendChild(h('div',{class:'lbl'},it.l));
+const valDiv=h('div',{class:'val',style:it.l?{}:{textAlign:'left',maxWidth:'100%'}});
+valDiv.innerHTML=it.v;
+row.appendChild(valDiv);
+body.appendChild(row);
+});
+});
+}
+if(s.notes){
+s.notes.forEach(n=>{
+body.appendChild(h('div',{class:'note-box'},n));
+});
+}
+sec.appendChild(body);
+}
+cont.appendChild(sec);
+});
+app.appendChild(cont);
+// Footer
+app.appendChild(h('div',{class:'footer'},'Servicio de Medicina Interna'));
 }
 
 // Init
