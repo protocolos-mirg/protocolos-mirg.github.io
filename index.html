@@ -86,70 +86,364 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 // ============ DATA ============
 const protocols = [
 {
-id:"horarios",title:"Horarios de Medicación",icon:"💊",color:"#065A82",cat:"daily",
-subtitle:"Medicina Interna — G10C",
+id:"econsulta",title:"E-Consulta Intrahospitalaria",icon:"📋",color:"#1A5276",cat:"acuerdos",
+subtitle:"Consultas estructuradas entre servicios sin derivación presencial",
 sections:[
-{title:"Medicación Oral",icon:"💊",
+{title:"Justificación",icon:"💡",
 items:[
-{l:"Cada 24h",v:"9h"},
-{l:"Cada 12h",v:"9h — 21h"},
-{l:"Cada 8h (general)",v:"De — Co — Ce"},
-{l:"Cada 8h (margen estrecho)",v:"9h — 16h — 23h",n:"ATB, antiepilépticos, etc."},
-{l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
-],
-notes:["Acenocumarol (Sintrom): 20h (recomendado). Se puede mantener horario habitual del paciente.","De = Desayuno | Co = Comida | Ce = Cena"]
+{l:"Problema",v:"La multiplicidad de citas genera confusión, sobrecarga de listas de espera y pérdida de eficacia"},
+{l:"Solución",v:"Un médico referente del paciente crónico complejo mejora la calidad de la atención"},
+{l:"Visión institucional",v:"Figura del referente del paciente crónico complejo"}
+]
 },
-{title:"Medicación Intravenosa",icon:"💉",
+{title:"Objetivo",icon:"🎯",
 items:[
-{l:"Cada 24h",v:"9h"},
-{l:"Cada 12h",v:"9h — 21h"},
-{l:"Cada 8h",v:"8h — 16h — 24h"},
-{l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
-],
+{l:"Sustituir",v:"Consultas informales por consultas estructuradas"},
+{l:"Evitar",v:"Derivaciones y policonsultas innecesarias"}
+]
+},
+{title:"Indicaciones",icon:"✅",tag:"INDICADO",tagC:"#2E7D32",
+items:[
+{l:"Dudas clínicas",v:"Preguntas concretas sobre manejo del paciente"},
+{l:"Ajustes de seguimiento",v:"Modificaciones de plan sin necesidad de consulta presencial"},
+{l:"Interpretación de pruebas",v:"Consulta sobre resultados de pruebas complementarias"},
+{l:"Necesidad de derivación",v:"Decidir si es necesaria derivación en casos dudosos"}
+]
+},
+{title:"Ejemplos Prácticos",icon:"📖",
+items:[
+{l:"Ejemplo 1",v:"Paciente con ETEV, origen camerunés. E-consulta a Infecciosas para serologías sin duplicar consulta"},
+{l:"Ejemplo 2",v:"Paciente con ANAs 1/640 sin clínica EAS y complemento bajo. ¿Necesita seguimiento duplicado?"},
+{l:"Ejemplo 3",v:"Paciente con gammapatía monoclonal y 5 pólipos adenomatosos. E-consulta a Digestivo: ¿cada cuánto colonoscopia?"}
+]
+},
+{title:"No Indicado",icon:"🚫",tag:"NO INDICADO",tagC:"#C0392B",
+items:[
+{l:"Urgencias",v:"No es vía para consultas urgentes"},
+{l:"Valoración presencial directa",v:"Pacientes que requieren exploración física"},
+{l:"Pacientes ingresados",v:"Usar interconsulta convencional"}
+]
+},
+{title:"Funcionamiento",icon:"⚙️",
+items:[
+{l:"Solicitud",v:"A través de la pestaña de interconsultas del servicio implicado"},
+{l:"Respuesta",v:"Se crea anotación y se cierra cuando se resuelve"},
+{l:"Plazo",v:"Respuesta en aproximadamente 72 horas"},
+{l:"Resolución",v:"Resolver, citar o recomendar seguimiento"}
+]
+},
+{title:"Servicios Implicados",icon:"🏥",
 subs:[
-{title:"Furosemida",items:[
-{l:"Con sondaje vesical",v:"8h — 16h — 24h"},
-{l:"Sin sondaje vesical",v:"De — Co — Ce"}
+{title:"Medicina Interna",items:[
+{l:"General",v:"E-consulta abierta"},
+{l:"Infecciosas",v:"E-consulta abierta"},
+{l:"Autoinmunes",v:"E-consulta abierta"},
+{l:"ETEV/ICC",v:"E-consulta abierta"}
 ]},
-{title:"Metoclopramida",items:[
-{l:"Dieta absoluta",v:"8h — 16h — 24h"},
-{l:"Alimentación vía oral",v:"De — Co — Ce"}
+{title:"Digestivo",items:[
+{l:"General",v:"E-consulta abierta"},
+{l:"EII",v:"E-consulta abierta"},
+{l:"Hepatología",v:"E-consulta abierta"}
+]},
+{title:"Cardiología",items:[
+{l:"Sin subdivisiones",v:"E-consulta abierta"}
+]}
+],
+notes:["Próximamente se ampliará a otros servicios de forma progresiva."]
+},
+{title:"Responsables",icon:"👤",
+items:[
+{l:"MI — General",v:"AL"},
+{l:"MI — Autoinmunes",v:"JJR"},
+{l:"MI — Infecciosas",v:"ADV / CMC"},
+{l:"MI — ETEV/ICC",v:"AL / GS / AQ"}
+],
+notes:["Si una e-consulta requiere opinión de experto (RCV, tropicales, VIH, enfermedades raras, etc.) se contactará al especialista correspondiente."]
+},
+{title:"Contenido de la E-Consulta",icon:"📝",
+subs:[
+{title:"Datos Básicos",items:[
+{l:"Servicio solicitante",v:"Obligatorio"},
+{l:"Médico responsable",v:"Obligatorio"},
+{l:"Fecha",v:"Obligatorio"},
+{l:"Paciente",v:"Nombre y NHC"},
+{l:"Edad / Sexo",v:"Obligatorio"}
+]},
+{title:"Consulta",items:[
+{l:"Motivo",v:"Pregunta clara y concreta"}
+]},
+{title:"Respuesta",items:[
+{l:"Valoración",v:"Análisis del caso"},
+{l:"Recomendaciones",v:"Plan propuesto"},
+{l:"Actitud",v:"Seguimiento / Citar / Pruebas"}
+]}
+]
+}
+]
+},
+{
+id:"oncologia",title:"Oncología",icon:"🎗️",color:"var(--onco)",cat:"acuerdos",
+subtitle:"Traslado de pacientes entre MI y Oncología Médica",
+sections:[
+{title:"Principios Generales",icon:"📋",pinned:true,items:[],
+notes:["Priorizar el beneficio clínico, la seguridad y el uso eficiente de camas.","Evitar traslados innecesarios, cuando sea preciso prolongar el ingreso unos días para finalizar la resolución de una complicación médica general o una sintomatología no compleja, siempre que no condicione decisiones oncológicas.","Iniciar cuidados paliativos (UCP) de forma precoz durante el ingreso, cuando sea necesario.","Requisito indispensable para cualquier traslado a Oncología: existencia de diagnóstico histológico (o citológico con suficiente certeza para tratar) y estadificación básica disponible (localizado vs. diseminado), salvo situaciones de urgencia oncológica donde la demora suponga riesgo vital."]
+},
+{title:"Indicaciones de Traslado MI → OM",icon:"🔄",tag:"CUMPLIR ≥1",tagC:"#CB4335",
+items:[
+{l:"Objetivo fundamental",v:"El paciente se va a beneficiar de algún manejo específico en la planta de Oncología que no se pueda llevar a cabo en una planta de Medicina Interna"}
+],
+notes:["A continuación se detallan las indicaciones concretas."]
+},
+{title:"2a. Tto. Oncoespecífico Urgente",icon:"🔴",tag:"TRASLADO",tagC:"#CB4335",
+items:[
+{l:"Definición",v:"Necesidad de tratamiento oncoespecífico (no quirúrgico) urgente durante el ingreso"},
+{l:"Ca. microcítico de pulmón",v:"Síndrome de vena cava superior, hiponatremia por SIADH grave, alta carga tumoral o progresión rápida"},
+{l:"Tumores de células germinales",v:"Testiculares / mediastínicos / ovario con alta carga tumoral o deterioro rápido"},
+{l:"Cáncer de ovario",v:"Compromiso clínico que requiera quimioterapia urgente"},
+{l:"Crisis visceral / Urgencias oncológicas",v:"Que previsiblemente respondan a QT / terapias dirigidas / inmuno. Ej.: compresión medular tumoral sin alternativa quirúrgica inmediata, hipercalcemia tumoral refractaria candidata a tratamiento activo, etc."}
+]
+},
+{title:"2b. Neoplasia Activa Conocida",icon:"🟠",tag:"TRASLADO",tagC:"#CB4335",
+items:[
+{l:"Definición",v:"Paciente con neoplasia activa ya conocida por Oncología (del centro o de otro) en tratamiento actual o con indicación inmediata (neoadyuvante, adyuvante o avanzado)"},
+{l:"Requisito",v:"Situación clínica que impide alta próxima si no se inicia/ajusta el tratamiento oncológico"}
+],
+notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
+},
+{title:"2c. Toxicidades del Tratamiento Oncológico",icon:"⚠️",tag:"TRASLADO",tagC:"#CB4335",
+items:[
+{l:"Definición",v:"Toxicidades o complicaciones del tratamiento oncológico que requieran manejo específico por parte de Oncología"}
+],
+notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
+},
+{title:"2d. Recaída Confirmada",icon:"🔁",tag:"TRASLADO",tagC:"#CB4335",
+items:[
+{l:"Definición",v:"Recaída confirmada o altamente probable con indicación de iniciar terapia sistémica urgente durante el ingreso"}
+]
+},
+{title:"Notas: Plan Ambulatorio / Problema Social / Comité de Tumores",icon:"📝",tag:"IMPORTANTE",tagC:"#D4AC0D",
+items:[
+{l:"Plan ambulatorio seguro",v:"Si el paciente cumple criterios de traslado pero está con un plan ambulatorio seguro, se intentará evitar el traslado, organizando desde Oncología un circuito rápido para valoración en consulta"},
+{l:"Tto. sistémico no urgente + problema social",v:"Si existiera una indicación de tratamiento sistémico (aunque no sea urgente) y el paciente no pudiera ser dado de alta a corto plazo por problemática social, pasará a cargo de Oncología. Se valorará de manera individualizada si puede realizarse traslado a planta de Oncología o por el contrario continúa en la de MI pero a cargo de Oncología"},
+{l:"Tumores con cirugía como tto. inicial",v:"El paciente tendrá que ser presentado en el Comité Multidisciplinar de Tumores correspondiente para decidir el tipo de tratamiento primario. Se decidirá por consenso entre el oncólogo y el internista quién presenta el caso en el Comité. Se podrá ir comentando el caso con Oncología para organizar la logística. Sería deseable mantener al paciente ingresado hasta su presentación en el Comité y tener establecido el plan de tratamiento, por si procede traslado a otro Servicio"}
+]
+},
+{title:"Mantener Ingreso en MI (sin traslado)",icon:"🏥",tag:"MI",tagC:"#2874A6",
+items:[
+{l:"1. Proceso diagnóstico en curso",v:"Sin histología definitiva, o pendiente de completar pruebas, y sin indicación de terapia oncológica urgente"},
+{l:"2. Libres de enfermedad neoplásica",v:"Pacientes ingresados por un problema intercurrente médico en los que no se haya identificado una recaída tumoral (infección, TEP/TVP, IC, EPOC, delirium, etc.)"},
+{l:"3. Sospecha de recaída en estudio",v:"Sospecha de recaída o segunda neoplasia en estudio, salvo necesidad de terapia inmediata"},
+{l:"4. Complicación médica transitoria",v:"Se resolverá en pocos días y no condiciona decisiones oncológicas inmediatas (p. ej.: neumonía comunitaria en paciente estable, tubo de tórax que se retirará en cuestión de días, infección que finalizará tratamiento ATB en próximos días)"}
+],
+notes:["Con apoyo del adjunto de Oncología de interconsultas si precisa."]
+},
+{title:"Situaciones No Candidatas a Traslado",icon:"🚫",tag:"NO TRASLADO",tagC:"#922B21",
+items:[
+{l:"Pronóstico de muy baja reversibilidad",v:"O ausencia de opción terapéutica efectiva: fallo multiorgánico refractario, ECOG 4 no reversible, progresión fulminante sin opciones de tratamiento, edad avanzada con fragilidad en tumor no quimiosensible, etc."},
+{l:"Indicación principal de C. Paliativos",v:"Síntomas refractarios, priorización de confort, sin necesidad de decisiones oncológicas"},
+{l:"Pendiente de Comité de Tumores",v:"Paciente pendiente de comentarse en Comité de Tumores, en el que existan dudas sobre el tratamiento inicial más adecuado (cirugía vs QT vs RT)"}
+]
+},
+{title:"Requisito Previo a la Valoración por Oncología",icon:"💬",
+items:[
+{l:"Información al paciente",v:"Antes de solicitar la interconsulta, el equipo responsable confirmará que el paciente ha sido informado de que se encuentra en proceso diagnóstico de una neoplasia maligna y, cuando proceda, de la existencia de enfermedad diseminada"},
+{l:"Si no está informado",v:"Deberá constar explícitamente en la petición para coordinar la comunicación clínica con Oncología"}
+]
+}
+]
+},
+{
+id:"urologia",title:"Urología",icon:"🔬",color:"#6C3483",cat:"acuerdos",
+subtitle:"Criterios de ingreso desde Urgencias — Patología urológica",
+sections:[
+{title:"1. Uropatía Obstructiva",icon:"🟣",
+items:[{l:"Urología",v:"Pacientes que requieran colocación de catéter de derivación urinaria (doble J / nefrostomía)",n:"Uropatía obstructiva demostrada mediante prueba de imagen. Sea cual sea la causa de la indicación."}]
+},
+{title:"2. Infección tras Manipulación",icon:"🦠",
+items:[
+{l:"Definición",v:"Infección urinaria tras manipulación reciente (7 días previos) de vía urinaria"},
+{l:"Procedimientos",v:"Colocación de catéter, RTU, cistoscopia, biopsia prostática, etc."},
+{l:"Valoración",v:"Serán valorados por Urología en Urgencias"},
+{l:"Si requiere ingreso",v:"Ingresa a cargo de Urología"},
+{l:"Si plantean alta",v:"Urología gestiona el alta y da explicaciones al paciente/familiares"}
+],
+notes:["El facultativo de Urgencias puede ayudar en la elaboración del informe de alta, pero Urología se encarga de dar las explicaciones al paciente y/o familiares."]
+},
+{title:"3. ITU Repetición + Dispositivo",icon:"🔁",
+items:[
+{l:"Sonda vesical permanente",v:"M. Interna o Geriatría según Escala de Rockwood",n:"Rockwood ≥ 5 → Geriatría. Se valorará traslado en mesa de camas."},
+{l:"Nefrostomía/DJ con dilatación",v:"Urología (realizar prueba de imagen)"},
+{l:"Nefrostomía/DJ sin dilatación",v:"M. Interna o Geriatría (igual que sonda vesical)"}
+]
+},
+{title:"4. Hematuria",icon:"🩸",
+subs:[
+{title:"→ Manejo inicial en Urgencias",items:[
+{l:"Corrección coagulación",v:"Urgencias se encarga"},
+{l:"Sonda de 3 luces",v:"Colocación e inicio de lavados"},
+{l:"Aviso inicial",v:"A Urología"},
+{l:"Estancia máxima",v:"48 horas en Urgencias"}
+]},
+{title:"→ Criterios de ingreso en Urología",items:[
+{l:"Anemización",v:"+2 puntos Hgb en 48h"},
+{l:"Persistencia",v:"Hematuria persistente"},
+{l:"Intervención",v:"Necesidad de intervención quirúrgica"}
+]}
+],
+notes:["Pendiente consensuar con Anestesia posibilidad de cistoscopia previa a ingreso (paso por sala de exploración con sedación y salida a URPA o directamente a planta)."]
+},
+{title:"5. Neoplasia de Próstata",icon:"🏥",
+items:[
+{l:"Seguimiento Urología",v:"→ Ingresa en Urología"},
+{l:"Seguimiento Oncología",v:"→ Oncología (posible MI tras Mesa de Camas)"}
+]
+},
+{title:"6. Absceso Renal/Prostático",icon:"⚠️",
+items:[
+{l:"Urología",v:"Todos los pacientes con abscesos objetivados en prueba de imagen, con independencia del estado clínico"}
+]
+},
+{title:"Anexo: Escala de Fragilidad de Rockwood",icon:"📊",type:"rockwood",
+rockwood:[
+{n:1,name:"Muy en forma",desc:"Personas fuertes, activas, con energía y motivación. Practican ejercicio regularmente.",c:"#27AE60",auto:100},
+{n:2,name:"En forma",desc:"Sin síntomas de enfermedad activa, pero menos en forma que el nivel 1. Ejercicio esporádico.",c:"#2ECC71",auto:88},
+{n:3,name:"En buen estado",desc:"Problemas médicos bien controlados. Actividad física limitada a pasear.",c:"#F1C40F",auto:75},
+{n:4,name:"Vulnerable",desc:"No dependen de otros, pero los síntomas limitan sus actividades. Sensación de «ir lento».",c:"#F39C12",auto:62},
+{n:5,name:"Fragilidad leve",desc:"Enlentecimiento evidente. Necesitan ayuda en actividades instrumentales (transporte, compras, medicación).",c:"#E67E22",auto:50},
+{n:6,name:"Fragilidad moderada",desc:"Necesitan ayuda fuera del hogar y en tareas domésticas. Mínima ayuda para vestirse.",c:"#E74C3C",auto:37},
+{n:7,name:"Fragilidad grave",desc:"Completamente dependientes para el cuidado personal por causa física o cognitiva.",c:"#C0392B",auto:25},
+{n:8,name:"Fragilidad muy grave",desc:"Completamente dependientes. Se acercan al final de la vida. No podrían recuperarse de una enfermedad leve.",c:"#8E44AD",auto:12},
+{n:9,name:"Enfermo terminal",desc:"Esperanza de vida menor de 6 meses. No necesariamente frágil.",c:"#2C3E50",auto:3}
+]
+}
+]
+},
+{
+id:"mediaestancia",title:"Derivación Media Estancia C3",icon:"🏥",color:"#065A82",cat:"gestion",
+subtitle:"Protocolo de derivación a camas de media estancia en C3",
+sections:[
+{title:"Pacientes Candidatos",icon:"✅",pinned:true,items:[],
+notes:["Pacientes que precisan tratamiento rehabilitador (incluido logopedia) previo al alta a domicilio.","Pacientes para continuación de tratamiento médico / cuidados especializados cuando estos se prolongan en el tiempo (p. ej., tratamiento antibiótico)."]
+},
+{title:"Información al Paciente y Familia",icon:"ℹ️",tag:"IMPORTANTE",tagC:"#E67E22",
+items:[
+{l:"Revaloración por Rehabilitación",v:"Una vez trasladado, el paciente debe ser valorado de nuevo por Rehabilitación antes de comenzar el tratamiento (puede llevar 1-2 días)"},
+{l:"Duración de la estancia",v:"La establecerá el personal de C3 (Rehabilitación y/o Medicina Interna)"}
+]
+},
+{title:"Contraindicaciones",icon:"🚫",tag:"NO TRASLADAR",tagC:"#C0392B",
+items:[
+{l:"Inestabilidad hemodinámica",v:"Paciente hemodinámicamente inestable"},
+{l:"VMNI / alto flujo",v:"Requiere VMNI, oxigenoterapia de alto flujo u otros cuidados críticos/intermedios"},
+{l:"Cirugía urgente/preferente",v:"Requiere intervención quirúrgica urgente o preferente durante el ingreso"},
+{l:"Especialista no presente en C3",v:"Pendiente de valoración por especialista no disponible en C3"},
+{l:"Pruebas pendientes",v:"Consultas o pruebas citadas no posponibles durante el ingreso"},
+{l:"Obesidad mórbida > 140 kg",v:"Limitación por peso"},
+{l:"Técnicas especiales",v:"Precisa técnicas no disponibles en C3"}
+]
+},
+{title:"Procedimiento de Traslado",icon:"📋",
+items:[
+{l:"Paso 1: Interconsulta",v:"Realizar interconsulta a la enfermera gestora de casos (Tlf. 85 1508)"},
+{l:"Paso 2: Contacto con C3",v:"La enfermera gestora llama a C3 (TG o JM) para comentar el caso"},
+{l:"Paso 3: Disponibilidad",v:"Si procede, se queda pendiente de cama de media estancia (máximo 10 camas)"}
+]
+},
+{title:"Interconsulta a Trabajo Social",icon:"🤝",tag:"ANTES DEL TRASLADO",tagC:"#2E7D32",
+items:[
+{l:"Aislamiento social",v:"Fragilidad o situación de soledad no deseada"},
+{l:"Soportes insuficientes",v:"Aumento significativo de necesidad de apoyo tras proceso agudo"},
+{l:"Disfunción familiar",v:"Conflictividad, claudicación, carencial"},
+{l:"Trato inadecuado",v:"Sospecha de trato inadecuado o negligencia en los cuidados"},
+{l:"Discapacidad/dependencia",v:"Discapacidad y/o dependencia, o riesgo de tenerla"},
+{l:"Dificultades laborales/económicas",v:"IT, desempleo, dificultades económicas"},
+{l:"Vulnerabilidad social",v:"Migrantes, salud mental, carencia de vivienda estable"},
+{l:"Apoyo a cuidadores",v:"Orientación, información, asesoramiento de recursos y prestaciones"}
+],
+notes:["Todos los pacientes susceptibles de ser derivados a media estancia deberían tener realizada una interconsulta a Trabajo Social antes del traslado."]
+}
+]
+},
+{
+id:"hado",title:"HADO",icon:"🏠",color:"#2E7D32",cat:"gestion",
+subtitle:"Hospitalización a Domicilio — Proceso de admisión",
+sections:[
+{title:"Modelo Asistencial",icon:"🏥",pinned:true,
+items:[],
+notes:["HADO ofrece atención hospitalaria en el domicilio del paciente como alternativa al ingreso convencional, con seguimiento médico y de enfermería diario.","Teléfono de contacto: 850029"]
+},
+{title:"Beneficiarios",icon:"👥",
+items:[
+{l:"Pacientes agudos",v:"Que requieren hospitalización pero pueden recibir atención en domicilio"},
+{l:"Altas precoces",v:"Pacientes estables que pueden continuar tratamiento en domicilio"},
+{l:"Pacientes paliativos",v:"Con necesidades de control sintomático en domicilio"}
+]
+},
+{title:"Cartera de Servicios",icon:"📋",
+items:[
+{l:"Tratamiento IV",v:"Antibióticos, sueroterapia y otros tratamientos intravenosos"},
+{l:"Programa TADE",v:"Tratamiento Antimicrobiano Domiciliario Endovenoso"},
+{l:"Control clínico",v:"Seguimiento médico y de enfermería diario"},
+{l:"Cuidados paliativos",v:"Control sintomático domiciliario"},
+{l:"Transfusiones",v:"Hemoderivados en domicilio cuando esté indicado"}
+]
+},
+{title:"Criterios de Admisión",icon:"✅",tag:"REQUISITOS",tagC:"#2E7D32",
+subs:[
+{title:"Clínicos",items:[
+{l:"Estabilidad",v:"Paciente clínicamente estable"},
+{l:"Diagnóstico",v:"Diagnóstico definido con plan terapéutico establecido"},
+{l:"No precisa",v:"Monitorización continua ni pruebas hospitalarias inmediatas"}
+]},
+{title:"Sociofamiliares",items:[
+{l:"Cuidador",v:"Presencia de cuidador principal identificado"},
+{l:"Domicilio",v:"Condiciones higiénico-sanitarias adecuadas"},
+{l:"Teléfono",v:"Disponibilidad de línea telefónica"}
+]},
+{title:"Geográficos",items:[
+{l:"Área de cobertura",v:"Dentro del área geográfica asignada a HADO"},
+{l:"Accesibilidad",v:"Domicilio accesible para el equipo asistencial"}
+]},
+{title:"Aceptación",items:[
+{l:"Paciente",v:"Aceptación voluntaria del paciente"},
+{l:"Familia",v:"Aceptación de la familia / cuidador principal"}
 ]}
 ]
 },
-{title:"Heparina Subcutánea",icon:"🩸",
-items:[{l:"Cada 24h",v:"17h"},{l:"Cada 12h",v:"9h — 21h"}]
-},
-{title:"Aerosolterapia",icon:"🫁",
-items:[{l:"Cada 12h",v:"9h — 21h"},{l:"Cada 8h",v:"9h — 16h — 23h"}]
-},
-{title:"Insulinoterapia",icon:"🔬",
+{title:"Pacientes Subsidiarios desde Plantas",icon:"🛏️",tag:"TRASLADO",tagC:"#1B3A5C",
 items:[
-{l:"Dieta absoluta / NE continua",v:"9h — 16h — 23h"},
-{l:"No dieta absoluta / NE discontinua",v:"De — Co — Ce"}
-]
-},
-{title:"Hemocomponentes e Inmunoglobulinas",icon:"🏥",items:[],
-notes:["Prescribir cada unidad de producto / vial por separado para que enfermería pueda confirmar correctamente la administración."]
-},
-{title:"Sueroterapia",icon:"💧",
-items:[
-{l:"500 ml/24h",v:"9h"},
-{l:"1000 ml/24h",v:"9h — 21h"},
-{l:"1500 ml/24h",v:"8h — 16h — 24h"},
-{l:"2000 ml/24h",v:"6h — 12h — 18h — 24h"},
-{l:"2500 ml/24h",v:"7h — 12h — 17h — 21h — 2h"},
-{l:"3000 ml/24h",v:"8h — 12h — 16h — 20h — 24h — 4h"}
-]
-},
-{title:"Sueroterapia Alterna (SSF/SG)",icon:"💧",
-items:[
-{l:"1000 ml/24h",v:"SSF 9→21h | SG 21→9h"},
-{l:"1500 ml/24h",v:"SSF 8→16h y 0→8h | SG 16→0h"},
-{l:"2000 ml/24h",v:"SSF 0→6h y 12→18h | SG 6→12h y 18→0h"},
-{l:"2500 ml/24h",v:"SSF 7→12h, 17→21h, 2→7h | SG 12→17h, 21→2h"}
+{l:"Infecciones estables",v:"Pacientes con infecciones que requieren ATB IV prolongado y están clínicamente estables"},
+{l:"Insuficiencia cardíaca",v:"Pacientes con IC estabilizada que precisan ajuste de tratamiento IV"},
+{l:"EPOC reagudizado",v:"Pacientes con EPOC estabilizado tras fase aguda"},
+{l:"Trombosis venosa",v:"TEP/TVP estables con tratamiento anticoagulante iniciado"},
+{l:"Cuidados paliativos",v:"Pacientes oncológicos o no oncológicos con indicación de confort domiciliario"},
+{l:"Celulitis / Infección piel",v:"Con necesidad de ATB IV y sin criterios de gravedad"},
+{l:"Otros",v:"Cualquier paciente estable con plan terapéutico definido que pueda realizarse en domicilio"}
 ],
-notes:["SSF = Suero Salino Fisiológico | SG = Suero Glucosado"]
+notes:["Valorar de forma individualizada con HADO (ext. 850029). El paciente debe cumplir criterios clínicos, sociofamiliares y geográficos."]
+},
+{title:"Procedencia de los Pacientes",icon:"🚪",
+items:[
+{l:"Urgencias",v:"Pacientes valorados en Urgencias susceptibles de HADO"},
+{l:"Plantas de hospitalización",v:"Alta precoz de pacientes estabilizados"},
+{l:"Consultas externas",v:"Pacientes que requieren tratamiento IV ambulatorio"},
+{l:"Otros hospitales",v:"Derivaciones con coordinación previa"}
+]
+},
+{title:"Proceso de Admisión",icon:"📞",
+items:[
+{l:"Paso 1",v:"Contactar con HADO: ext. 850029"},
+{l:"Paso 2",v:"Valoración conjunta del caso (criterios clínicos + sociofamiliares + geográficos)"},
+{l:"Paso 3",v:"Si cumple criterios: coordinar traslado y plan de seguimiento"},
+{l:"Paso 4",v:"Informar al paciente y familia, obtener aceptación"}
+],
+notes:["La solicitud se realiza mediante contacto telefónico directo con el equipo HADO."]
+},
+{title:"Contacto",icon:"📱",
+items:[
+{l:"Teléfono HADO",v:"Ext. 850029"},
+{l:"Horario de contacto",v:"L-V 8:00–15:00"}
+]
 }
 ]
 },
@@ -229,68 +523,113 @@ notes:["Excepción por presión asistencial NO debería darse desde hospitalizac
 ]
 },
 {
-id:"urologia",title:"Urología",icon:"🔬",color:"#6C3483",cat:"acuerdos",
-subtitle:"Criterios de ingreso desde Urgencias — Patología urológica",
+id:"traslados",title:"Traslados C3/CB a LP",icon:"🔄",color:"#028090",cat:"gestion",
+subtitle:"Procedimiento de traslado de paciente desde C3 o CB a LP",
 sections:[
-{title:"1. Uropatía Obstructiva",icon:"🟣",
-items:[{l:"Urología",v:"Pacientes que requieran colocación de catéter de derivación urinaria (doble J / nefrostomía)",n:"Uropatía obstructiva demostrada mediante prueba de imagen. Sea cual sea la causa de la indicación."}]
-},
-{title:"2. Infección tras Manipulación",icon:"🦠",
+{title:"¿Cómo traslado un paciente?",icon:"🚑",
 items:[
-{l:"Definición",v:"Infección urinaria tras manipulación reciente (7 días previos) de vía urinaria"},
-{l:"Procedimientos",v:"Colocación de catéter, RTU, cistoscopia, biopsia prostática, etc."},
-{l:"Valoración",v:"Serán valorados por Urología en Urgencias"},
-{l:"Si requiere ingreso",v:"Ingresa a cargo de Urología"},
-{l:"Si plantean alta",v:"Urología gestiona el alta y da explicaciones al paciente/familiares"}
-],
-notes:["El facultativo de Urgencias puede ayudar en la elaboración del informe de alta, pero Urología se encarga de dar las explicaciones al paciente y/o familiares."]
-},
-{title:"3. ITU Repetición + Dispositivo",icon:"🔁",
-items:[
-{l:"Sonda vesical permanente",v:"M. Interna o Geriatría según Escala de Rockwood",n:"Rockwood ≥ 5 → Geriatría. Se valorará traslado en mesa de camas."},
-{l:"Nefrostomía/DJ con dilatación",v:"Urología (realizar prueba de imagen)"},
-{l:"Nefrostomía/DJ sin dilatación",v:"M. Interna o Geriatría (igual que sonda vesical)"}
+{l:"Paso 1",v:"Contactar con Gestión de Camas",n:"Teléfonos: 851566 / 441566 / 441567"},
+{l:"Paso 2",v:"Indicar a Gestión de Camas que el paciente sea asignado al jefe de servicio"},
+{l:"Paso 3",v:"El traslado entra en el reparto del día siguiente → asignación a un facultativo de LP"}
+]
+}
 ]
 },
-{title:"4. Hematuria",icon:"🩸",
+{
+id:"huelga",title:"Protocolo de Huelga",icon:"📢",color:"#B85042",cat:"org",
+subtitle:"Procedimiento interno de gestión y desarrollo de huelgas",
+sections:[
+{title:"Antes de la huelga",icon:"📅",
+items:[
+{l:"Paso A",v:"Recibida la convocatoria oficial de RRHH-HULP, el Jefe de Servicio establece los Servicios Mínimos / Guardias de Presencia Física"},
+{l:"Paso B",v:"Fichero Excel de NO DISPONIBILIDAD actualizado",n:"Responsabilidad del facultativo comunicar con antelación cualquier cambio (libranzas, vacaciones, guardias, etc.)"},
+{l:"Paso C",v:"Designación informada por email corporativo",n:"Responder si hay incidencia antes del día previo a la huelga. Sin respuesta = conforme."}
+]
+},
+{title:"El día de la huelga",icon:"📆",
 subs:[
-{title:"→ Manejo inicial en Urgencias",items:[
-{l:"Corrección coagulación",v:"Urgencias se encarga"},
-{l:"Sonda de 3 luces",v:"Colocación e inicio de lavados"},
-{l:"Aviso inicial",v:"A Urología"},
-{l:"Estancia máxima",v:"48 horas en Urgencias"}
+{title:"→ Ejerce la huelga",items:[
+{l:"Antes de las 08:00h",v:"Comunicar voluntariamente por email a Secretaría (con copia al Jefe de Servicio)"},
+{l:"Nota",v:"Es un aviso voluntario para facilitar la organización del servicio"}
 ]},
-{title:"→ Criterios de ingreso en Urología",items:[
-{l:"Anemización",v:"+2 puntos Hgb en 48h"},
-{l:"Persistencia",v:"Hematuria persistente"},
-{l:"Intervención",v:"Necesidad de intervención quirúrgica"}
+{title:"→ No ejerce la huelga",items:[
+{l:"Jornada normal",v:"No es necesario ningún trámite adicional"}
 ]}
+]
+},
+{title:"Gestión administrativa (08:00h)",icon:"📧",
+items:[
+{l:"Secretaría",v:"Comunica a RRHH-HULP los facultativos que van a secundar la huelga"}
 ],
-notes:["Pendiente consensuar con Anestesia posibilidad de cistoscopia previa a ingreso (paso por sala de exploración con sedación y salida a URPA o directamente a planta)."]
+notes:["El calendario y encuadre de designaciones están disponibles a través de la Secretaría del Servicio.","Los pasos 3, 4 y 5 se llevarán a cabo tantos días como jornadas dure la huelga."]
+}
+]
 },
-{title:"5. Neoplasia de Próstata",icon:"🏥",
+{
+id:"horarios",title:"Horarios de Medicación",icon:"💊",color:"#065A82",cat:"daily",
+subtitle:"Medicina Interna — G10C",
+sections:[
+{title:"Medicación Oral",icon:"💊",
 items:[
-{l:"Seguimiento Urología",v:"→ Ingresa en Urología"},
-{l:"Seguimiento Oncología",v:"→ Oncología (posible MI tras Mesa de Camas)"}
-]
+{l:"Cada 24h",v:"9h"},
+{l:"Cada 12h",v:"9h — 21h"},
+{l:"Cada 8h (general)",v:"De — Co — Ce"},
+{l:"Cada 8h (margen estrecho)",v:"9h — 16h — 23h",n:"ATB, antiepilépticos, etc."},
+{l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
+],
+notes:["Acenocumarol (Sintrom): 20h (recomendado). Se puede mantener horario habitual del paciente.","De = Desayuno | Co = Comida | Ce = Cena"]
 },
-{title:"6. Absceso Renal/Prostático",icon:"⚠️",
+{title:"Medicación Intravenosa",icon:"💉",
 items:[
-{l:"Urología",v:"Todos los pacientes con abscesos objetivados en prueba de imagen, con independencia del estado clínico"}
+{l:"Cada 24h",v:"9h"},
+{l:"Cada 12h",v:"9h — 21h"},
+{l:"Cada 8h",v:"8h — 16h — 24h"},
+{l:"Cada 6h",v:"6h — 12h — 18h — 24h"}
+],
+subs:[
+{title:"Furosemida",items:[
+{l:"Con sondaje vesical",v:"8h — 16h — 24h"},
+{l:"Sin sondaje vesical",v:"De — Co — Ce"}
+]},
+{title:"Metoclopramida",items:[
+{l:"Dieta absoluta",v:"8h — 16h — 24h"},
+{l:"Alimentación vía oral",v:"De — Co — Ce"}
+]}
 ]
 },
-{title:"Anexo: Escala de Fragilidad de Rockwood",icon:"📊",type:"rockwood",
-rockwood:[
-{n:1,name:"Muy en forma",desc:"Personas fuertes, activas, con energía y motivación. Practican ejercicio regularmente.",c:"#27AE60",auto:100},
-{n:2,name:"En forma",desc:"Sin síntomas de enfermedad activa, pero menos en forma que el nivel 1. Ejercicio esporádico.",c:"#2ECC71",auto:88},
-{n:3,name:"En buen estado",desc:"Problemas médicos bien controlados. Actividad física limitada a pasear.",c:"#F1C40F",auto:75},
-{n:4,name:"Vulnerable",desc:"No dependen de otros, pero los síntomas limitan sus actividades. Sensación de «ir lento».",c:"#F39C12",auto:62},
-{n:5,name:"Fragilidad leve",desc:"Enlentecimiento evidente. Necesitan ayuda en actividades instrumentales (transporte, compras, medicación).",c:"#E67E22",auto:50},
-{n:6,name:"Fragilidad moderada",desc:"Necesitan ayuda fuera del hogar y en tareas domésticas. Mínima ayuda para vestirse.",c:"#E74C3C",auto:37},
-{n:7,name:"Fragilidad grave",desc:"Completamente dependientes para el cuidado personal por causa física o cognitiva.",c:"#C0392B",auto:25},
-{n:8,name:"Fragilidad muy grave",desc:"Completamente dependientes. Se acercan al final de la vida. No podrían recuperarse de una enfermedad leve.",c:"#8E44AD",auto:12},
-{n:9,name:"Enfermo terminal",desc:"Esperanza de vida menor de 6 meses. No necesariamente frágil.",c:"#2C3E50",auto:3}
+{title:"Heparina Subcutánea",icon:"🩸",
+items:[{l:"Cada 24h",v:"17h"},{l:"Cada 12h",v:"9h — 21h"}]
+},
+{title:"Aerosolterapia",icon:"🫁",
+items:[{l:"Cada 12h",v:"9h — 21h"},{l:"Cada 8h",v:"9h — 16h — 23h"}]
+},
+{title:"Insulinoterapia",icon:"🔬",
+items:[
+{l:"Dieta absoluta / NE continua",v:"9h — 16h — 23h"},
+{l:"No dieta absoluta / NE discontinua",v:"De — Co — Ce"}
 ]
+},
+{title:"Hemocomponentes e Inmunoglobulinas",icon:"🏥",items:[],
+notes:["Prescribir cada unidad de producto / vial por separado para que enfermería pueda confirmar correctamente la administración."]
+},
+{title:"Sueroterapia",icon:"💧",
+items:[
+{l:"500 ml/24h",v:"9h"},
+{l:"1000 ml/24h",v:"9h — 21h"},
+{l:"1500 ml/24h",v:"8h — 16h — 24h"},
+{l:"2000 ml/24h",v:"6h — 12h — 18h — 24h"},
+{l:"2500 ml/24h",v:"7h — 12h — 17h — 21h — 2h"},
+{l:"3000 ml/24h",v:"8h — 12h — 16h — 20h — 24h — 4h"}
+]
+},
+{title:"Sueroterapia Alterna (SSF/SG)",icon:"💧",
+items:[
+{l:"1000 ml/24h",v:"SSF 9→21h | SG 21→9h"},
+{l:"1500 ml/24h",v:"SSF 8→16h y 0→8h | SG 16→0h"},
+{l:"2000 ml/24h",v:"SSF 0→6h y 12→18h | SG 6→12h y 18→0h"},
+{l:"2500 ml/24h",v:"SSF 7→12h, 17→21h, 2→7h | SG 12→17h, 21→2h"}
+],
+notes:["SSF = Suero Salino Fisiológico | SG = Suero Glucosado"]
 }
 ]
 },
@@ -389,353 +728,14 @@ subs:[
 ]
 }
 ]
-},
-{
-id:"huelga",title:"Protocolo de Huelga",icon:"📢",color:"#B85042",cat:"org",
-subtitle:"Procedimiento interno de gestión y desarrollo de huelgas",
-sections:[
-{title:"Antes de la huelga",icon:"📅",
-items:[
-{l:"Paso A",v:"Recibida la convocatoria oficial de RRHH-HULP, el Jefe de Servicio establece los Servicios Mínimos / Guardias de Presencia Física"},
-{l:"Paso B",v:"Fichero Excel de NO DISPONIBILIDAD actualizado",n:"Responsabilidad del facultativo comunicar con antelación cualquier cambio (libranzas, vacaciones, guardias, etc.)"},
-{l:"Paso C",v:"Designación informada por email corporativo",n:"Responder si hay incidencia antes del día previo a la huelga. Sin respuesta = conforme."}
-]
-},
-{title:"El día de la huelga",icon:"📆",
-subs:[
-{title:"→ Ejerce la huelga",items:[
-{l:"Antes de las 08:00h",v:"Comunicar voluntariamente por email a Secretaría (con copia al Jefe de Servicio)"},
-{l:"Nota",v:"Es un aviso voluntario para facilitar la organización del servicio"}
-]},
-{title:"→ No ejerce la huelga",items:[
-{l:"Jornada normal",v:"No es necesario ningún trámite adicional"}
-]}
-]
-},
-{title:"Gestión administrativa (08:00h)",icon:"📧",
-items:[
-{l:"Secretaría",v:"Comunica a RRHH-HULP los facultativos que van a secundar la huelga"}
-],
-notes:["El calendario y encuadre de designaciones están disponibles a través de la Secretaría del Servicio.","Los pasos 3, 4 y 5 se llevarán a cabo tantos días como jornadas dure la huelga."]
-}
-]
-},
-{
-id:"oncologia",title:"Oncología",icon:"🎗️",color:"var(--onco)",cat:"acuerdos",
-subtitle:"Traslado de pacientes entre MI y Oncología Médica",
-sections:[
-{title:"Principios Generales",icon:"📋",pinned:true,items:[],
-notes:["Priorizar el beneficio clínico, la seguridad y el uso eficiente de camas.","Evitar traslados innecesarios, cuando sea preciso prolongar el ingreso unos días para finalizar la resolución de una complicación médica general o una sintomatología no compleja, siempre que no condicione decisiones oncológicas.","Iniciar cuidados paliativos (UCP) de forma precoz durante el ingreso, cuando sea necesario.","Requisito indispensable para cualquier traslado a Oncología: existencia de diagnóstico histológico (o citológico con suficiente certeza para tratar) y estadificación básica disponible (localizado vs. diseminado), salvo situaciones de urgencia oncológica donde la demora suponga riesgo vital."]
-},
-{title:"Indicaciones de Traslado MI → OM",icon:"🔄",tag:"CUMPLIR ≥1",tagC:"#CB4335",
-items:[
-{l:"Objetivo fundamental",v:"El paciente se va a beneficiar de algún manejo específico en la planta de Oncología que no se pueda llevar a cabo en una planta de Medicina Interna"}
-],
-notes:["A continuación se detallan las indicaciones concretas."]
-},
-{title:"2a. Tto. Oncoespecífico Urgente",icon:"🔴",tag:"TRASLADO",tagC:"#CB4335",
-items:[
-{l:"Definición",v:"Necesidad de tratamiento oncoespecífico (no quirúrgico) urgente durante el ingreso"},
-{l:"Ca. microcítico de pulmón",v:"Síndrome de vena cava superior, hiponatremia por SIADH grave, alta carga tumoral o progresión rápida"},
-{l:"Tumores de células germinales",v:"Testiculares / mediastínicos / ovario con alta carga tumoral o deterioro rápido"},
-{l:"Cáncer de ovario",v:"Compromiso clínico que requiera quimioterapia urgente"},
-{l:"Crisis visceral / Urgencias oncológicas",v:"Que previsiblemente respondan a QT / terapias dirigidas / inmuno. Ej.: compresión medular tumoral sin alternativa quirúrgica inmediata, hipercalcemia tumoral refractaria candidata a tratamiento activo, etc."}
-]
-},
-{title:"2b. Neoplasia Activa Conocida",icon:"🟠",tag:"TRASLADO",tagC:"#CB4335",
-items:[
-{l:"Definición",v:"Paciente con neoplasia activa ya conocida por Oncología (del centro o de otro) en tratamiento actual o con indicación inmediata (neoadyuvante, adyuvante o avanzado)"},
-{l:"Requisito",v:"Situación clínica que impide alta próxima si no se inicia/ajusta el tratamiento oncológico"}
-],
-notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
-},
-{title:"2c. Toxicidades del Tratamiento Oncológico",icon:"⚠️",tag:"TRASLADO",tagC:"#CB4335",
-items:[
-{l:"Definición",v:"Toxicidades o complicaciones del tratamiento oncológico que requieran manejo específico por parte de Oncología"}
-],
-notes:["Hay que tener en cuenta que estos pacientes habitualmente ingresarán directamente en Oncología."]
-},
-{title:"2d. Recaída Confirmada",icon:"🔁",tag:"TRASLADO",tagC:"#CB4335",
-items:[
-{l:"Definición",v:"Recaída confirmada o altamente probable con indicación de iniciar terapia sistémica urgente durante el ingreso"}
-]
-},
-{title:"Notas: Plan Ambulatorio / Problema Social / Comité de Tumores",icon:"📝",tag:"IMPORTANTE",tagC:"#D4AC0D",
-items:[
-{l:"Plan ambulatorio seguro",v:"Si el paciente cumple criterios de traslado pero está con un plan ambulatorio seguro, se intentará evitar el traslado, organizando desde Oncología un circuito rápido para valoración en consulta"},
-{l:"Tto. sistémico no urgente + problema social",v:"Si existiera una indicación de tratamiento sistémico (aunque no sea urgente) y el paciente no pudiera ser dado de alta a corto plazo por problemática social, pasará a cargo de Oncología. Se valorará de manera individualizada si puede realizarse traslado a planta de Oncología o por el contrario continúa en la de MI pero a cargo de Oncología"},
-{l:"Tumores con cirugía como tto. inicial",v:"El paciente tendrá que ser presentado en el Comité Multidisciplinar de Tumores correspondiente para decidir el tipo de tratamiento primario. Se decidirá por consenso entre el oncólogo y el internista quién presenta el caso en el Comité. Se podrá ir comentando el caso con Oncología para organizar la logística. Sería deseable mantener al paciente ingresado hasta su presentación en el Comité y tener establecido el plan de tratamiento, por si procede traslado a otro Servicio"}
-]
-},
-{title:"Mantener Ingreso en MI (sin traslado)",icon:"🏥",tag:"MI",tagC:"#2874A6",
-items:[
-{l:"1. Proceso diagnóstico en curso",v:"Sin histología definitiva, o pendiente de completar pruebas, y sin indicación de terapia oncológica urgente"},
-{l:"2. Libres de enfermedad neoplásica",v:"Pacientes ingresados por un problema intercurrente médico en los que no se haya identificado una recaída tumoral (infección, TEP/TVP, IC, EPOC, delirium, etc.)"},
-{l:"3. Sospecha de recaída en estudio",v:"Sospecha de recaída o segunda neoplasia en estudio, salvo necesidad de terapia inmediata"},
-{l:"4. Complicación médica transitoria",v:"Se resolverá en pocos días y no condiciona decisiones oncológicas inmediatas (p. ej.: neumonía comunitaria en paciente estable, tubo de tórax que se retirará en cuestión de días, infección que finalizará tratamiento ATB en próximos días)"}
-],
-notes:["Con apoyo del adjunto de Oncología de interconsultas si precisa."]
-},
-{title:"Situaciones No Candidatas a Traslado",icon:"🚫",tag:"NO TRASLADO",tagC:"#922B21",
-items:[
-{l:"Pronóstico de muy baja reversibilidad",v:"O ausencia de opción terapéutica efectiva: fallo multiorgánico refractario, ECOG 4 no reversible, progresión fulminante sin opciones de tratamiento, edad avanzada con fragilidad en tumor no quimiosensible, etc."},
-{l:"Indicación principal de C. Paliativos",v:"Síntomas refractarios, priorización de confort, sin necesidad de decisiones oncológicas"},
-{l:"Pendiente de Comité de Tumores",v:"Paciente pendiente de comentarse en Comité de Tumores, en el que existan dudas sobre el tratamiento inicial más adecuado (cirugía vs QT vs RT)"}
-]
-},
-{title:"Requisito Previo a la Valoración por Oncología",icon:"💬",
-items:[
-{l:"Información al paciente",v:"Antes de solicitar la interconsulta, el equipo responsable confirmará que el paciente ha sido informado de que se encuentra en proceso diagnóstico de una neoplasia maligna y, cuando proceda, de la existencia de enfermedad diseminada"},
-{l:"Si no está informado",v:"Deberá constar explícitamente en la petición para coordinar la comunicación clínica con Oncología"}
-]
-}
-]
-},
-{
-id:"traslados",title:"Traslados C3/CB a LP",icon:"🔄",color:"#028090",cat:"gestion",
-subtitle:"Procedimiento de traslado de paciente desde C3 o CB a LP",
-sections:[
-{title:"¿Cómo traslado un paciente?",icon:"🚑",
-items:[
-{l:"Paso 1",v:"Contactar con Gestión de Camas",n:"Teléfonos: 851566 / 441566 / 441567"},
-{l:"Paso 2",v:"Indicar a Gestión de Camas que el paciente sea asignado al jefe de servicio"},
-{l:"Paso 3",v:"El traslado entra en el reparto del día siguiente → asignación a un facultativo de LP"}
-]
-}
-]
-},
-{
-id:"mediaestancia",title:"Derivación Media Estancia C3",icon:"🏥",color:"#065A82",cat:"gestion",
-subtitle:"Protocolo de derivación a camas de media estancia en C3",
-sections:[
-{title:"Pacientes Candidatos",icon:"✅",pinned:true,items:[],
-notes:["Pacientes que precisan tratamiento rehabilitador (incluido logopedia) previo al alta a domicilio.","Pacientes para continuación de tratamiento médico / cuidados especializados cuando estos se prolongan en el tiempo (p. ej., tratamiento antibiótico)."]
-},
-{title:"Información al Paciente y Familia",icon:"ℹ️",tag:"IMPORTANTE",tagC:"#E67E22",
-items:[
-{l:"Revaloración por Rehabilitación",v:"Una vez trasladado, el paciente debe ser valorado de nuevo por Rehabilitación antes de comenzar el tratamiento (puede llevar 1-2 días)"},
-{l:"Duración de la estancia",v:"La establecerá el personal de C3 (Rehabilitación y/o Medicina Interna)"}
-]
-},
-{title:"Contraindicaciones",icon:"🚫",tag:"NO TRASLADAR",tagC:"#C0392B",
-items:[
-{l:"Inestabilidad hemodinámica",v:"Paciente hemodinámicamente inestable"},
-{l:"VMNI / alto flujo",v:"Requiere VMNI, oxigenoterapia de alto flujo u otros cuidados críticos/intermedios"},
-{l:"Cirugía urgente/preferente",v:"Requiere intervención quirúrgica urgente o preferente durante el ingreso"},
-{l:"Especialista no presente en C3",v:"Pendiente de valoración por especialista no disponible en C3"},
-{l:"Pruebas pendientes",v:"Consultas o pruebas citadas no posponibles durante el ingreso"},
-{l:"Obesidad mórbida > 140 kg",v:"Limitación por peso"},
-{l:"Técnicas especiales",v:"Precisa técnicas no disponibles en C3"}
-]
-},
-{title:"Procedimiento de Traslado",icon:"📋",
-items:[
-{l:"Paso 1: Interconsulta",v:"Realizar interconsulta a la enfermera gestora de casos"},
-{l:"Paso 2: Contacto con C3",v:"La enfermera gestora llama a C3 (TG o JM) para comentar el caso"},
-{l:"Paso 3: Disponibilidad",v:"Si procede, se queda pendiente de cama de media estancia (máximo 10 camas)"}
-]
-},
-{title:"Interconsulta a Trabajo Social",icon:"🤝",tag:"ANTES DEL TRASLADO",tagC:"#2E7D32",
-items:[
-{l:"Aislamiento social",v:"Fragilidad o situación de soledad no deseada"},
-{l:"Soportes insuficientes",v:"Aumento significativo de necesidad de apoyo tras proceso agudo"},
-{l:"Disfunción familiar",v:"Conflictividad, claudicación, carencial"},
-{l:"Trato inadecuado",v:"Sospecha de trato inadecuado o negligencia en los cuidados"},
-{l:"Discapacidad/dependencia",v:"Discapacidad y/o dependencia, o riesgo de tenerla"},
-{l:"Dificultades laborales/económicas",v:"IT, desempleo, dificultades económicas"},
-{l:"Vulnerabilidad social",v:"Migrantes, salud mental, carencia de vivienda estable"},
-{l:"Apoyo a cuidadores",v:"Orientación, información, asesoramiento de recursos y prestaciones"}
-],
-notes:["Todos los pacientes susceptibles de ser derivados a media estancia deberían tener realizada una interconsulta a Trabajo Social antes del traslado."]
-}
-]
-},
-{
-id:"econsulta",title:"E-Consulta Intrahospitalaria",icon:"📋",color:"#1A5276",cat:"acuerdos",
-subtitle:"Consultas estructuradas entre servicios sin derivación presencial",
-sections:[
-{title:"Justificación",icon:"💡",
-items:[
-{l:"Problema",v:"La multiplicidad de citas genera confusión, sobrecarga de listas de espera y pérdida de eficacia"},
-{l:"Solución",v:"Un médico referente del paciente crónico complejo mejora la calidad de la atención"},
-{l:"Visión institucional",v:"Figura del referente del paciente crónico complejo"}
-]
-},
-{title:"Objetivo",icon:"🎯",
-items:[
-{l:"Sustituir",v:"Consultas informales por consultas estructuradas"},
-{l:"Evitar",v:"Derivaciones y policonsultas innecesarias"}
-]
-},
-{title:"Indicaciones",icon:"✅",tag:"INDICADO",tagC:"#2E7D32",
-items:[
-{l:"Dudas clínicas",v:"Preguntas concretas sobre manejo del paciente"},
-{l:"Ajustes de seguimiento",v:"Modificaciones de plan sin necesidad de consulta presencial"},
-{l:"Interpretación de pruebas",v:"Consulta sobre resultados de pruebas complementarias"},
-{l:"Necesidad de derivación",v:"Decidir si es necesaria derivación en casos dudosos"}
-]
-},
-{title:"Ejemplos Prácticos",icon:"📖",
-items:[
-{l:"Ejemplo 1",v:"Paciente con ETEV, origen camerunés. E-consulta a Infecciosas para serologías sin duplicar consulta"},
-{l:"Ejemplo 2",v:"Paciente con ANAs 1/640 sin clínica EAS y complemento bajo. ¿Necesita seguimiento duplicado?"},
-{l:"Ejemplo 3",v:"Paciente con gammapatía monoclonal y 5 pólipos adenomatosos. E-consulta a Digestivo: ¿cada cuánto colonoscopia?"}
-]
-},
-{title:"No Indicado",icon:"🚫",tag:"NO INDICADO",tagC:"#C0392B",
-items:[
-{l:"Urgencias",v:"No es vía para consultas urgentes"},
-{l:"Valoración presencial directa",v:"Pacientes que requieren exploración física"},
-{l:"Pacientes ingresados",v:"Usar interconsulta convencional"}
-]
-},
-{title:"Funcionamiento",icon:"⚙️",
-items:[
-{l:"Solicitud",v:"A través de la pestaña de interconsultas del servicio implicado"},
-{l:"Respuesta",v:"Se crea anotación y se cierra cuando se resuelve"},
-{l:"Plazo",v:"Respuesta en aproximadamente 72 horas"},
-{l:"Resolución",v:"Resolver, citar o recomendar seguimiento"}
-]
-},
-{title:"Servicios Implicados",icon:"🏥",
-subs:[
-{title:"Medicina Interna",items:[
-{l:"General",v:"E-consulta abierta"},
-{l:"Infecciosas",v:"E-consulta abierta"},
-{l:"Autoinmunes",v:"E-consulta abierta"},
-{l:"ETEV/ICC",v:"E-consulta abierta"}
-]},
-{title:"Digestivo",items:[
-{l:"General",v:"E-consulta abierta"},
-{l:"EII",v:"E-consulta abierta"},
-{l:"Hepatología",v:"E-consulta abierta"}
-]},
-{title:"Cardiología",items:[
-{l:"Sin subdivisiones",v:"E-consulta abierta"}
-]}
-],
-notes:["Próximamente se ampliará a otros servicios de forma progresiva."]
-},
-{title:"Responsables",icon:"👤",
-items:[
-{l:"MI — General",v:"AL"},
-{l:"MI — Autoinmunes",v:"JJR"},
-{l:"MI — Infecciosas",v:"ADV / CMC"},
-{l:"MI — ETEV/ICC",v:"AL / GS / AQ"}
-],
-notes:["Si una e-consulta requiere opinión de experto (RCV, tropicales, VIH, enfermedades raras, etc.) se contactará al especialista correspondiente."]
-},
-{title:"Contenido de la E-Consulta",icon:"📝",
-subs:[
-{title:"Datos Básicos",items:[
-{l:"Servicio solicitante",v:"Obligatorio"},
-{l:"Médico responsable",v:"Obligatorio"},
-{l:"Fecha",v:"Obligatorio"},
-{l:"Paciente",v:"Nombre y NHC"},
-{l:"Edad / Sexo",v:"Obligatorio"}
-]},
-{title:"Consulta",items:[
-{l:"Motivo",v:"Pregunta clara y concreta"}
-]},
-{title:"Respuesta",items:[
-{l:"Valoración",v:"Análisis del caso"},
-{l:"Recomendaciones",v:"Plan propuesto"},
-{l:"Actitud",v:"Seguimiento / Citar / Pruebas"}
-]}
-]
-}
-]
-},
-{
-id:"hado",title:"HADO",icon:"🏠",color:"#2E7D32",cat:"gestion",
-subtitle:"Hospitalización a Domicilio — Proceso de admisión",
-sections:[
-{title:"Modelo Asistencial",icon:"🏥",pinned:true,
-items:[],
-notes:["HADO ofrece atención hospitalaria en el domicilio del paciente como alternativa al ingreso convencional, con seguimiento médico y de enfermería diario.","Teléfono de contacto: 850029"]
-},
-{title:"Beneficiarios",icon:"👥",
-items:[
-{l:"Pacientes agudos",v:"Que requieren hospitalización pero pueden recibir atención en domicilio"},
-{l:"Altas precoces",v:"Pacientes estables que pueden continuar tratamiento en domicilio"},
-{l:"Pacientes paliativos",v:"Con necesidades de control sintomático en domicilio"}
-]
-},
-{title:"Cartera de Servicios",icon:"📋",
-items:[
-{l:"Tratamiento IV",v:"Antibióticos, sueroterapia y otros tratamientos intravenosos"},
-{l:"Programa TADE",v:"Tratamiento Antimicrobiano Domiciliario Endovenoso"},
-{l:"Control clínico",v:"Seguimiento médico y de enfermería diario"},
-{l:"Cuidados paliativos",v:"Control sintomático domiciliario"},
-{l:"Transfusiones",v:"Hemoderivados en domicilio cuando esté indicado"}
-]
-},
-{title:"Criterios de Admisión",icon:"✅",tag:"REQUISITOS",tagC:"#2E7D32",
-subs:[
-{title:"Clínicos",items:[
-{l:"Estabilidad",v:"Paciente clínicamente estable"},
-{l:"Diagnóstico",v:"Diagnóstico definido con plan terapéutico establecido"},
-{l:"No precisa",v:"Monitorización continua ni pruebas hospitalarias inmediatas"}
-]},
-{title:"Sociofamiliares",items:[
-{l:"Cuidador",v:"Presencia de cuidador principal identificado"},
-{l:"Domicilio",v:"Condiciones higiénico-sanitarias adecuadas"},
-{l:"Teléfono",v:"Disponibilidad de línea telefónica"}
-]},
-{title:"Geográficos",items:[
-{l:"Área de cobertura",v:"Dentro del área geográfica asignada a HADO"},
-{l:"Accesibilidad",v:"Domicilio accesible para el equipo asistencial"}
-]},
-{title:"Aceptación",items:[
-{l:"Paciente",v:"Aceptación voluntaria del paciente"},
-{l:"Familia",v:"Aceptación de la familia / cuidador principal"}
-]}
-]
-},
-{title:"Pacientes Subsidiarios desde Plantas",icon:"🛏️",tag:"TRASLADO",tagC:"#1B3A5C",
-items:[
-{l:"Infecciones estables",v:"Pacientes con infecciones que requieren ATB IV prolongado y están clínicamente estables"},
-{l:"Insuficiencia cardíaca",v:"Pacientes con IC estabilizada que precisan ajuste de tratamiento IV"},
-{l:"EPOC reagudizado",v:"Pacientes con EPOC estabilizado tras fase aguda"},
-{l:"Trombosis venosa",v:"TEP/TVP estables con tratamiento anticoagulante iniciado"},
-{l:"Cuidados paliativos",v:"Pacientes oncológicos o no oncológicos con indicación de confort domiciliario"},
-{l:"Celulitis / Infección piel",v:"Con necesidad de ATB IV y sin criterios de gravedad"},
-{l:"Otros",v:"Cualquier paciente estable con plan terapéutico definido que pueda realizarse en domicilio"}
-],
-notes:["Valorar de forma individualizada con HADO (ext. 850029). El paciente debe cumplir criterios clínicos, sociofamiliares y geográficos."]
-},
-{title:"Procedencia de los Pacientes",icon:"🚪",
-items:[
-{l:"Urgencias",v:"Pacientes valorados en Urgencias susceptibles de HADO"},
-{l:"Plantas de hospitalización",v:"Alta precoz de pacientes estabilizados"},
-{l:"Consultas externas",v:"Pacientes que requieren tratamiento IV ambulatorio"},
-{l:"Otros hospitales",v:"Derivaciones con coordinación previa"}
-]
-},
-{title:"Proceso de Admisión",icon:"📞",
-items:[
-{l:"Paso 1",v:"Contactar con HADO: ext. 850029"},
-{l:"Paso 2",v:"Valoración conjunta del caso (criterios clínicos + sociofamiliares + geográficos)"},
-{l:"Paso 3",v:"Si cumple criterios: coordinar traslado y plan de seguimiento"},
-{l:"Paso 4",v:"Informar al paciente y familia, obtener aceptación"}
-],
-notes:["La solicitud se realiza mediante contacto telefónico directo con el equipo HADO."]
-},
-{title:"Contacto",icon:"📱",
-items:[
-{l:"Teléfono HADO",v:"Ext. 850029"},
-{l:"Horario de contacto",v:"L-V 8:00–15:00"}
-]
-}
-]
 }
 ];
 
 const categories=[
-{id:"daily",label:"Práctica Diaria",icon:"🏥"},
-{id:"gestion",label:"Gestión de Pacientes",icon:"🛏️"},
 {id:"acuerdos",label:"Acuerdos con Especialidades",icon:"🤝"},
-{id:"org",label:"Organización Interna",icon:"📋"}
+{id:"gestion",label:"Gestión de Pacientes",icon:"🛏️"},
+{id:"org",label:"Organización Interna",icon:"📋"},
+{id:"daily",label:"Práctica Diaria",icon:"🏥"}
 ];
 
 // ============ RENDER ENGINE ============
