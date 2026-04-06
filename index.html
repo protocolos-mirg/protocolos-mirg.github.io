@@ -523,7 +523,7 @@ notes:["Excepción por presión asistencial NO debería darse desde hospitalizac
 ]
 },
 {
-id:"traslados",title:"Traslados C3/CB a LP",icon:"🔄",color:"#028090",cat:"gestion",
+id:"traslados",title:"Traslados intraservicio C3/CB a LP",icon:"🔄",color:"#028090",cat:"gestion",
 subtitle:"Procedimiento de traslado de paciente desde C3 o CB a LP",
 sections:[
 {title:"¿Cómo traslado un paciente?",icon:"🚑",
@@ -532,6 +532,214 @@ items:[
 {l:"Paso 2",v:"Indicar a Gestión de Camas que el paciente sea asignado al jefe de servicio"},
 {l:"Paso 3",v:"El traslado entra en el reparto del día siguiente → asignación a un facultativo de LP"}
 ]
+}
+]
+},
+{
+id:"trasladointer",title:"Traslado Intercentros",icon:"🚑",color:"#065A82",cat:"gestion",
+subtitle:"PNT de traslados entre LP, Carlos III y Cantoblanco",
+sections:[
+{title:"Objetivo y Alcance",icon:"🎯",pinned:true,items:[],
+notes:["Definir y estandarizar las actuaciones necesarias para llevar a cabo los traslados de pacientes entre los centros adscritos al HULP: La Paz (LP), Hospital Carlos III (C3) y Hospital Cantoblanco (CB).","Aplica a todo el personal sanitario y no sanitario involucrado en los traslados intercentros.","Versión 3 — 12 enero 2026. Elaborado por Dirección Médica, Dirección de Enfermería, Dirección de Gestión y Servicio de Admisión."]
+},
+{title:"Responsabilidades",icon:"👥",
+subs:[
+{title:"Facultativo del hospital de origen (CB/C3)",items:[
+{l:"Valoración",v:"Valora la necesidad de traslado"},
+{l:"Aviso",v:"Avisa al referente de su servicio o de guardia en Castellana"},
+{l:"Ambulancia",v:"Solicita ambulancia a Gestión de Camas"}
+]},
+{title:"Enfermería de planta (CB/C3)",items:[
+{l:"Preparación",v:"Documentación, medicación y pertenencias del paciente"},
+{l:"Informe",v:"Informe de continuidad de cuidados de enfermería"},
+{l:"Verificación",v:"Comprobación de la historia clínica completa"}
+]},
+{title:"Gestión de Camas y Admisión",items:[
+{l:"HCIS",v:"Gestiona el traslado del paciente en HCIS"},
+{l:"SUMMA",v:"Valida el transporte sanitario en aplicativo SUMMA 112"},
+{l:"Cama",v:"Asigna cama en LP (destino)"}
+]},
+{title:"Celador (CB/C3)",items:[
+{l:"Acompañamiento",v:"Acompaña al paciente desde la planta de origen hasta la ambulancia"},
+{l:"Identidad",v:"Verificación de la identidad del paciente"}
+]},
+{title:"Personal de ambulancia",items:[
+{l:"Transporte",v:"Transporte seguro CB/C3 → LP"},
+{l:"Incidencias",v:"Comunicación de incidencias durante el trayecto"}
+]},
+{title:"Enfermera de GSSU (Sala 6)",items:[
+{l:"Aviso al facultativo",v:"Avisa al facultativo de guardia del servicio de destino cuando llega el paciente"},
+{l:"Complicación urgente",v:"En caso de complicación no prevista, avisa al referente de Urgencias"}
+]},
+{title:"Médico del servicio de origen en Castellana",items:[
+{l:"Atención",v:"Atención y supervisión del paciente en el edificio de Castellana"},
+{l:"Valoración",v:"Valoración del motivo de traslado, gestión de interconsultas"},
+{l:"Decisión",v:"Decisión de ingreso en Castellana o retorno a CB/C3 (solicitar ambulancia)"}
+]},
+{title:"Referente de Urgencias",items:[
+{l:"BOX REA",v:"Recepción e inicio de tratamiento de pacientes con criterios de BOX REA"},
+{l:"Urgencia",v:"Atención en caso de urgencia/desestabilización hasta que se haga cargo el médico del servicio responsable"}
+]}
+]
+},
+{title:"5.1 Paciente estable → Prueba/Consulta programada",icon:"📋",tag:"PROGRAMADO",tagC:"#2E7D32",
+items:[
+{l:"Definición",v:"Paciente ingresado en CB/C3 que necesita prueba diagnóstica o consulta en LP SIN sedación ni intervencionismo (TAC, eco, consulta de especialidad…)"},
+{l:"Anticipación",v:"Con 24-48h de antelación, Admisión envía correo a Gestión de Camas y Presalida con listado de pacientes"},
+{l:"Paso 1",v:"Facultativo solicita ambulancia de ida y vuelta. Administrativo la tramita en TSNU del SUMMA"},
+{l:"Paso 2",v:"Paciente trasladado en ambulancia programada desde CB/C3. Debe llevar pulsera identificativa + cita impresa en papel"},
+{l:"Paso 3",v:"Recogido en CB/C3 → zona de Presalida/Tránsito del edificio de Castellana → celador lo lleva a consulta/sala de prueba"},
+{l:"Paso 4",v:"Tras la prueba: administrativa del servicio cierra ambulancia de vuelta. Celador lleva a Presalida → ambulancia → retorno a CB/C3"},
+{l:"Si administrativa no disponible",v:"Admisión de Urgencias cierra la ambulancia"},
+{l:"Ubicación del paciente en LP",v:"Zona de PRESALIDA / TRÁNSITO — área específica de espera y supervisión"}
+],
+notes:["En caso de inestabilización del paciente se avisará al servicio de origen en el edificio de Castellana. El paciente permanecerá SIEMPRE supervisado en el lugar del procedimiento hasta la llegada del médico responsable.","Trazabilidad HCIS: la enfermera de la unidad de origen traslada al paciente a pestaña 'GSSU' reservando la cama en CB/C3, asignando al GFH del servicio origen en Castellana. Avisar a Gestión de Camas para 'pretraslado' a cama de origen."]
+},
+{title:"5.2 Prueba con sedación / Intervencionismo",icon:"💉",tag:"PROGRAMADO",tagC:"#D4872E",
+items:[
+{l:"Definición",v:"Paciente en CB/C3 que requiere prueba con sedación o intervencionismo en LP (endoscopia, broncoscopia, biopsia guiada, drenaje…)"},
+{l:"Paso 1",v:"Facultativo solicita ambulancia ida y vuelta. Administrativo la tramita en TSNU del SUMMA"},
+{l:"Paso 2",v:"Ambulancia traslada al paciente desde CB/C3 → recogido en PRESALIDA/TRÁNSITO por celador de LP"},
+{l:"Paso 3",v:"Celador lleva al paciente a la SALA DE INTERVENCIONISMO/PRUEBA. Pulsera identificativa + cita obligatorias"},
+{l:"Paso 4",v:"Tras la prueba → paciente a URPA. El especialista que realiza la prueba / anestesista valora estabilidad"},
+{l:"Paso 5",v:"Cuando estable → administrativa del servicio cierra ambulancia de vuelta → celador lleva a PRESALIDA"},
+{l:"Paso 6",v:"Ambulancia de vuelta → retorno a cama en CB/C3 (mismo día o siguiente)"},
+{l:"Ubicaciones del paciente en LP",v:"PRESALIDA → SALA DE PRUEBA → URPA → PRESALIDA"}
+],
+notes:["En caso de inestabilización: se avisará al servicio de origen en Castellana. El especialista que realiza la prueba o el anestesista de URPA es el responsable del paciente mientras esté en su área. Si se inestabiliza, se avisará al servicio de MI de origen en Castellana.","Trazabilidad HCIS: enfermera de la unidad de origen traslada a pestaña 'TRÁNSITO' reservando cama en CB/C3. Cuando llega a URPA → traslado en HCIS a localización URPA. Al salir de URPA → vuelve a pestaña 'TRÁNSITO' hasta retorno a CB/C3."]
+},
+{title:"5.3 Traslado NO programado — Sin criterios BOX REA",icon:"🚑",tag:"URGENTE",tagC:"#C0392B",
+items:[
+{l:"Definición",v:"Paciente en CB/C3 que se deteriora y requiere traslado urgente a LP. Destino: Urgencias HULP → GSSU – SALA 6 (camas de hospitalización en Urgencias)"},
+{l:"Paso 1",v:"Facultativo de CB/C3 contacta con: referente de Urgencias en Castellana + referente de su servicio (mañana) o médico de guardia (tarde/noche/fin de semana)"},
+{l:"Paso 2",v:"Para gestionar cama: avisar a Gestión de Camas para solicitud de traslado en GSSU"},
+{l:"Paso 3",v:"Traslado interno en HCIS: servicio origen → Unidad GSSU (a cargo del servicio origen en Castellana para facilitar visualización)"},
+{l:"Paso 4",v:"Se avisa a transporte sanitario urgente → ambulancia traslada al paciente a Urgencias de Castellana (HULP)"},
+{l:"Paso 5",v:"Admisión de Urgencias identifica al paciente a su llegada → avisa a celador para traslado"},
+{l:"Paso 6",v:"Celador traslada al paciente a la cama asignada en GSSU – SALA 6"},
+{l:"Paso 7",v:"Enfermera de GSSU avisa al facultativo de guardia del servicio de origen → responsable de la atención del paciente"},
+{l:"Alternativa ubicación",v:"Si SALA 6 no disponible → priorizar SALA 5 (UPAMI)"},
+{l:"Códigos especiales",v:"Si código ictus, código TEP, código infarto, proceso cardiológico agudo, sepsis con posible ingreso en UVI, o TCE con Glasgow <13 → seguirán los circuitos establecidos para dichos códigos"}
+],
+subs:[
+{title:"Gestión de Camas — Teléfonos por horario",items:[
+{l:"L-V 08:00–21:00",v:"441567 / 851566 / 856800"},
+{l:"L-V 21:00–08:00",v:"Supervisor de guardia: 851121"},
+{l:"Fines semana/festivos 08:00–20:00",v:"441567 / 851566 / 856800"},
+{l:"Fines semana/festivos 20:00–08:00",v:"Supervisor de guardia: 851121"}
+]}
+],
+notes:["⚠ CLAVE PARA MI: Este es el escenario de MAYOR RIESGO. El facultativo de MI debe llamar SIEMPRE a Gestión de Camas. NUNCA enviar al paciente directamente a Urgencias de LP sin coordinación previa."]
+},
+{title:"5.3b Traslado por caída o accidente",icon:"⚠️",tag:"URGENTE",tagC:"#D4872E",
+items:[
+{l:"Definición",v:"Paciente ingresado en CB/C3 que sufre caída o accidente y requiere atención en Urgencias de LP (traumatismo, fractura, TCE)"},
+{l:"Paso 1",v:"Enfermería comunica al facultativo de MI la caída/accidente"},
+{l:"Paso 2",v:"Facultativo de MI en CB/C3 valora al paciente y decide si necesita traslado a Urgencias de LP"},
+{l:"Paso 3",v:"Se avisará a Urgencias y al referente del servicio en HULP"},
+{l:"Paso 4",v:"Si procede → solicita ambulancia a Gestión de Camas indicando el motivo"},
+{l:"Paso 5",v:"Paciente trasladado a Urgencias LP → destino: BOX 4 para valoración por el facultativo correspondiente"},
+{l:"Paso 6",v:"La cama en CB/C3 se mantiene reservada hasta resolución en LP"},
+{l:"Tras valoración en Box 4",v:"Si no queda ingresado en Castellana → traslado a SALA 6 a la espera de ambulancia para retorno a CB/C3"}
+],
+notes:["MI: Las caídas son frecuentes en nuestros pacientes mayores en CB/C3. El adjunto SIEMPRE valora antes de pedir traslado. Destino: Urgencias LP (Box 4)."]
+},
+{title:"5.3c Traslado con criterios BOX REA",icon:"🔴",tag:"EMERGENCIA",tagC:"#922B21",
+items:[
+{l:"Definición",v:"Paciente en CB/C3 con criterios de Box de Reanimación (parada, shock, insuf. respiratoria grave, deterioro neurológico agudo). Requiere activación INMEDIATA de SUMMA 112"},
+{l:"Paso 1",v:"Facultativo activa código de emergencia y comienza estabilización"},
+{l:"Paso 2",v:"Llamar directamente al 112 (SUMMA) → solicitar UVI móvil. NO esperar a Gestión de Camas"},
+{l:"Paso 3",v:"Mientras llega SUMMA: monitorización, soporte vital y tratamiento inicial en CB/C3"},
+{l:"Paso 4",v:"SUMMA traslada al paciente desde CB/C3 → BOX DE REANIMACIÓN en Urgencias de LP"},
+{l:"Paso 5",v:"Médico de Urgencias LP recibe al paciente → valoración UCI / ingreso en LP"},
+{l:"Destino en LP",v:"Box de Reanimación (Urgencias LP) → UCI de LP si procede"},
+{l:"Códigos especiales",v:"Si código ictus, código TEP, código infarto, proceso cardiológico agudo, sepsis/UVI, o TCE con Glasgow <13 → circuitos específicos de dichos códigos"},
+{l:"Tras estabilización",v:"El referente del servicio origen en Castellana decide ingreso. Si requiere ingreso en Castellana → priorizar cama en servicio de procedencia (o ectópico). Si vuelve a CB/C3 → facultativo solicita ambulancia de vuelta, avisa a admisión y comunica al facultativo de CB/C3. Evitar traslado nocturno."}
+],
+notes:["⚠ MI: Paciente crítico → llamar al 112 directamente. Estabilizar mientras llega la UVI móvil. El referente del servicio de origen en Castellana decide el plan de seguimiento post-estabilización."]
+},
+{title:"5.4 Código Teleictus",icon:"🧠",tag:"EMERGENCIA",tagC:"#922B21",
+items:[
+{l:"Definición",v:"Paciente ingresado en CB/C3 con sospecha de ictus agudo (déficit neurológico focal de instauración brusca)"},
+{l:"Paso 1",v:"Facultativo detecta sospecha de ictus → activar Código Teleictus"},
+{l:"Paso 2",v:"Contacto inmediato con Neurología de guardia LP (centralita)"},
+{l:"Paso 3",v:"Neurología realiza valoración por telemedicina y TAC urgente en CB/C3 si disponible"},
+{l:"Paso 4",v:"Si indicación de tratamiento agudo → SUMMA 112 traslada a LP de forma prioritaria"},
+{l:"Paso 5",v:"Neurología LP recibe al paciente → tratamiento revascularizador si candidato"}
+],
+notes:["MI: Atentos al TIEMPO VENTANA. El adjunto de MI detecta el cuadro y ACTIVA el código. No esperar a que enfermería lo haga."]
+},
+{title:"Documentación necesaria",icon:"📝",
+subs:[
+{title:"Documentación clínica (Facultativo)",items:[
+{l:"Informe clínico",v:"Actualizado con diagnóstico, tratamiento y motivo del traslado"},
+{l:"Analítica",v:"Última analítica y pruebas relevantes"},
+{l:"Tratamiento",v:"Hoja de tratamiento farmacológico vigente"},
+{l:"Peticiones",v:"Peticiones de pruebas/consultas (si aplica)"},
+{l:"Consentimientos",v:"Consentimientos informados firmados (si aplica)"}
+]},
+{title:"Documentación enfermería",items:[
+{l:"Informe",v:"Informe de continuidad de cuidados de enfermería"},
+{l:"Constantes",v:"Hoja de constantes vitales actualizada"},
+{l:"Medicación",v:"Registro de medicación administrada"},
+{l:"Alertas",v:"Alergias, caídas, UPP, aislamiento"},
+{l:"Pertenencias",v:"Pertenencias del paciente inventariadas"}
+]}
+],
+notes:["MI: El adjunto es RESPONSABLE de que la documentación clínica esté completa ANTES de autorizar la salida del paciente."]
+},
+{title:"Incidencias con ambulancia",icon:"🚨",
+items:[
+{l:"Demora > 30 min",v:"Gestión de Camas contacta nuevamente con la empresa/SUMMA. Si persiste → escalado a Dirección Médica"},
+{l:"Registro",v:"Toda incidencia debe registrarse con: hora solicitud, hora llegada real, tipo de incidencia y resolución"},
+{l:"Reporte",v:"Se reporta mensualmente a Dirección Médica"}
+]
+},
+{title:"Directorio telefónico",icon:"📞",tag:"IMPORTANTE",tagC:"#065A82",
+subs:[
+{title:"Gestión de Camas y generales",items:[
+{l:"Gestión de Camas",v:"851566 / 441566 / 441567 (L-V 8:00-22:00)"},
+{l:"Gestión de Camas (noches)",v:"441566 (22:00-8:00 y festivos)"},
+{l:"Supervisor guardia Hospital General",v:"851121 (noches y festivos)"},
+{l:"SUMMA 112",v:"112 (24 horas)"},
+{l:"Centralita LP",v:"917 27 70 00 (24 horas)"}
+]},
+{title:"Supervisión y servicios",items:[
+{l:"Superv. Enfermería C3",v:"856018 (tardes/noches/festivos)"},
+{l:"Superv. Enfermería CB",v:"852626 (tardes/noches/festivos)"},
+{l:"SSGG C3",v:"857163 (L-V)"},
+{l:"SSGG CB",v:"843408 (L-V)"},
+{l:"Seguridad C3",v:"845999 (24h)"},
+{l:"Seguridad CB",v:"487631 (24h)"}
+]},
+{title:"Guardias médicas H. Cantoblanco",items:[
+{l:"Guardia 1",v:"856001 (ext. 686 458 077)"},
+{l:"Guardia 2",v:"856002 (ext. 686 453 287)"},
+{l:"Residente",v:"844899 (ext. 638 214 899)"}
+]},
+{title:"Guardias médicas H. Carlos III",items:[
+{l:"Guardia 1",v:"856001 (ext. 605 846 002)"},
+{l:"Guardia 2",v:"856002 (ext. 605 846 004)"},
+{l:"Residente",v:"858775 (ext. 660 148 775)"}
+]}
+]
+},
+{title:"Criterios de NO ingreso en CB/C3",icon:"🚫",tag:"NO TRASLADAR",tagC:"#C0392B",
+subs:[
+{title:"Criterios Críticos",items:[
+{l:"1. Inestabilidad hemodinámica",v:"Compromiso hemodinámico con necesidad de monitorización"},
+{l:"2. Ventilación mecánica",v:"Incluida VMNI y oxigenoterapia de alto flujo"},
+{l:"3. Sangrado activo",v:"Hemorragia activa"},
+{l:"4. Cirugía urgente/preferente",v:"Intervención quirúrgica durante el ingreso"}
+]},
+{title:"Criterios Logísticos",items:[
+{l:"5. Especialista ausente",v:"Valoración por especialista no disponible en CB/C3"},
+{l:"6. Pruebas no posponibles",v:"Consultas o pruebas citadas no posponibles"},
+{l:"7. Obesidad > 140 kg",v:"Limitación de infraestructura"},
+{l:"8. Técnicas especiales",v:"Técnicas no disponibles en CB/C3"}
+]}
+],
+notes:["Los criterios 5 y 6 son los que más afectan a MI: pacientes en CB/C3 pendientes de valoración por especialistas ausentes o con pruebas citadas en LP. Valorar siempre si la prueba/consulta puede aplazarse o gestionarse por telemedicina.","Excepción: pacientes susceptibles de HaD con impedimento no médico → trasladables. Valorar en Mesa de Camas."]
 }
 ]
 },
