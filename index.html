@@ -72,6 +72,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 .rw-legend{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding:8px 10px;background:#EBF5FB;border-radius:8px;border-left:4px solid #2980B9}
 .rw-legend span{font-size:11px;font-weight:600;color:#1A5276}
 .rw-cutoff{background:#FFF3E0;border:2px dashed #E65100;border-radius:8px;padding:8px 12px;margin:8px 0;text-align:center;font-size:12px;font-weight:700;color:#BF360C}
+.gene-table{width:100%;border-collapse:collapse;margin-top:4px}
+.gene-table th{background:#0B3D6B;color:#fff;padding:8px 10px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.3px}
+.gene-table th:nth-child(2){text-align:center;white-space:nowrap}
+.gene-table td{padding:8px 10px;border-bottom:1px solid #e8ecf0;font-size:12px;vertical-align:top;color:#1a2a3a}
+.gene-table tr:nth-child(even) td{background:#f7f9fb}
+.gene-der{text-align:center;font-weight:700;white-space:nowrap}
+.gene-si{color:#2E7D32}.gene-no{color:#C62828}.gene-pero{color:#E65100}
 </style>
 </head>
 <body>
@@ -304,7 +311,7 @@ const protocols = [
       {title:"Toma de Contacto — C3",icon:"📞",tag:"C3",tagC:"#2F3C7E",
         items:[
           {l:"L-V 8:00–15:00",v:"Busca MI: 841995"},
-          {l:"L-V 15:00–8:00 / Festivos / Fines de semana",v:"Guardia 1: 856001 | Guardia 2: 846002 | Residente: 858775"}
+          {l:"L-V 15:00–8:00 / Festivos / Fines de semana",v:"Guardia 1: 846001 | Guardia 2: 846002 | Residente: 858775"}
         ],
         notes:["El médico responsable puede solicitar ayuda a cualquier especialista del hospital, quien tiene obligación de acudir."]
       },
@@ -358,7 +365,7 @@ const protocols = [
             {l:"",v:"856018"}
           ]},
           {title:"Facultativos",items:[
-            {l:"L-V 8-15h",v:"841995"},{l:"Guardia 1",v:"856001"},{l:"Guardia 2",v:"846002"},{l:"Residente",v:"858775"}
+            {l:"L-V 8-15h",v:"841995"},{l:"Guardia 1",v:"846001"},{l:"Guardia 2",v:"846002"},{l:"Residente",v:"858775"}
           ]},
           {title:"Servicios Generales",items:[
             {l:"Encargado turno",v:"857163"},{l:"Celador retén",v:"846026"},{l:"Noches/festivos",v:"846026 / 856034"}
@@ -417,14 +424,161 @@ const protocols = [
     ]
   },
   {
-    id:"traslados",title:"Traslados C3/CB a La Paz",icon:"🔄",color:"#028090",
-    subtitle:"Procedimiento de traslado de paciente desde Carlos III o Cantoblanco a La Paz",
+    id:"traslados",title:"Traslado Intercentros",icon:"🔄",color:"#1B3A5C",
+    subtitle:"CB / C3 → LP — PNT v3 · Enero 2026",
     sections:[
-      {title:"¿Cómo traslado un paciente?",icon:"🚑",
+      {title:"Resumen MI — Lo esencial",icon:"📋",pinned:true,items:[],
+        notes:[
+          "Dirección SIEMPRE: CB / C3 (origen) → LP (destino). El adjunto en CB/C3 inicia el proceso.",
+          "5.1 Prueba simple (TAC, eco, consulta): ambulancia programada vía Gestión de Camas. Paciente vuelve a CB/C3 el mismo día.",
+          "5.2 Sedación / intervencionismo: ambulancia + URPA. Retorno a CB/C3 mismo día o siguiente.",
+          "5.3 Deterioro clínico (sin BOX REA): llamar a Gestión de Camas (851566). Destino: GSSU – Sala 6 (Urgencias LP).",
+          "5.3c Paciente crítico (BOX REA): llamar directamente al 112. Destino: Box REA → UCI LP.",
+          "5.4 Sospecha de ictus: activar Teleictus INMEDIATAMENTE. Destino: Unidad de Ictus LP."
+        ]
+      },
+      {title:"5.1 Prueba / Consulta programada (sin sedación)",icon:"📋",
         items:[
-          {l:"Paso 1",v:"Contactar con Gestión de Camas",n:"Teléfonos: 851566 / 441566 / 441567"},
-          {l:"Paso 2",v:"Indicar a Gestión de Camas que el paciente sea asignado al jefe de servicio"},
-          {l:"Paso 3",v:"El traslado entra en el reparto del día siguiente → asignación a un facultativo de LP"}
+          {l:"Definición",v:"Prueba diagnóstica o consulta en LP sin sedación ni intervencionismo (TAC, eco, consulta de especialidad…)"},
+          {l:"Ambulancia",v:"Adjunto solicita ida y vuelta. Administrativo tramita en TSNU / SUMMA"},
+          {l:"Llegada LP",v:"Zona de Presálida/Tránsito → celador lleva a consulta o sala de técnicas"},
+          {l:"Vuelta",v:"Tras la prueba → Presálida → ambulancia → cama en CB/C3 el mismo día"},
+          {l:"Trazabilidad HCIS",v:"Enfermería traslada en HCIS a pestaña 'GSSU', reservando cama en CB/C3"}
+        ],
+        notes:["Inestabilización en LP: avisar al servicio de origen en Castellana. El paciente permanece SIEMPRE supervisado hasta la llegada del médico responsable. Si ocurre en tránsito → Urgencias LP (GSSU – Sala 6)."]
+      },
+      {title:"5.1 Teléfonos MIRG en Presálida",icon:"📞",tag:"MIRG",tagC:"#1B3A5C",
+        subs:[
+          {title:"Horario laboral (L-V 8:00–15:00)",items:[
+            {l:"1º JS",v:"441 989"},{l:"2º AQ",v:"857 455"},
+            {l:"3º JJR",v:"874 840"},{l:"4º Secretaría",v:"447 126"}
+          ]},
+          {title:"Durante la guardia",items:[
+            {l:"FEA guardia",v:"859 491"},{l:"Residente mayor",v:"853 402"}
+          ]}
+        ],
+        notes:["El adjunto designado DIARIAMENTE por el Jefe de Servicio en el fichero de Hospitalización es quien atiende al paciente en Presálida en horario laboral."]
+      },
+      {title:"5.2 Sedación / Intervencionismo",icon:"💉",
+        items:[
+          {l:"Definición",v:"Prueba con sedación o intervencionismo en LP (endoscopia, broncoscopia, biopsia guiada, drenaje…)"},
+          {l:"Ambulancia",v:"Adjunto solicita ida y vuelta. Administrativo tramita en TSNU / SUMMA"},
+          {l:"Llegada LP",v:"Presálida/Tránsito → Sala de intervencionismo. Pulsera + cita en papel obligatorias"},
+          {l:"Tras la prueba",v:"Paciente a URPA hasta que especialista / anestesista valore estabilidad para el traslado"},
+          {l:"Vuelta",v:"Administrativo del servicio cierra ambulancia → Presálida → CB/C3 (mismo día o siguiente)"},
+          {l:"Trazabilidad HCIS",v:"Pestaña 'TRÁNSITO' → URPA → Tránsito → alta CB/C3"}
+        ],
+        notes:["Inestabilización: avisar al servicio de origen en Castellana (ver teléfonos MIRG arriba). Paciente permanece supervisado en todo momento."]
+      },
+      {title:"5.3 Deterioro clínico — Sin BOX REA",icon:"🚑",tag:"URGENTE",tagC:"#D4872E",
+        items:[
+          {l:"Definición",v:"Paciente en CB/C3 que se deteriora y necesita atención no disponible en origen, sin criterios de BOX REA"},
+          {l:"Paso 1",v:"Llamar al referente de Urgencias en Castellana + referente del servicio (mañana) o guardia (tarde/noche/finde)"},
+          {l:"Paso 2",v:"Gestión de Camas: solicitar traslado en GSSU (441567 / 851566 / 856800)"},
+          {l:"Destino en LP",v:"GSSU – SALA 6 (Hospitalización en Urgencias LP)"},
+          {l:"Si Sala 6 llena",v:"→ SALA 5 (UPAMI)"},
+          {l:"Responsable en LP",v:"Facultativo de guardia del servicio de origen en Castellana"}
+        ],
+        notes:[
+          "NUNCA enviar al paciente directamente a Urgencias LP sin coordinación previa. Llamar SIEMPRE a Gestión de Camas.",
+          "Códigos especiales (ictus, TEP, IAM, sepsis con posible UCI, TCE Glasgow <13) → seguirán sus circuitos propios."
+        ]
+      },
+      {title:"5.3b Caída o accidente",icon:"⚠️",
+        items:[
+          {l:"Valoración previa",v:"Adjunto de MI valora SIEMPRE al paciente antes de decidir el traslado"},
+          {l:"Si procede traslado",v:"Adjunto solicita ambulancia a Gestión de Camas indicando el motivo"},
+          {l:"Destino en LP",v:"Box 4 – Urgencias LP (valoración traumatismo / TCE)"},
+          {l:"Cama en CB/C3",v:"Se mantiene reservada hasta resolución en LP"},
+          {l:"Si no ingresa en Castellana",v:"→ SALA 6 → espera ambulancia de retorno a CB/C3"},
+          {l:"TCE GCS 14-15",v:"→ GSSU Sala 6, atendido por guardia del servicio correspondiente"}
+        ]
+      },
+      {title:"5.3c BOX REA — Paciente crítico",icon:"🔴",tag:"EMERGENCIA",tagC:"#C0392B",
+        items:[
+          {l:"Criterios",v:"Parada cardiorrespiratoria, shock, insuficiencia respiratoria grave, deterioro neurológico agudo"},
+          {l:"Acción inmediata",v:"Llamar directamente al 112 (SUMMA). NO esperar a Gestión de Camas"},
+          {l:"Mientras llega SUMMA",v:"Monitorización, soporte vital y tratamiento inicial en CB/C3"},
+          {l:"Destino en LP",v:"Box de Reanimación (Urgencias LP) → UCI si procede"}
+        ],
+        notes:["Paciente crítico = 112 directo. El adjunto en CB/C3 estabiliza mientras llega la UVI móvil."]
+      },
+      {title:"5.4 Código Teleictus",icon:"🧠",
+        items:[
+          {l:"Definición",v:"Déficit neurológico focal de instauración brusca en paciente ingresado en CB/C3"},
+          {l:"Paso 1",v:"Activar Código Teleictus INMEDIATAMENTE. No esperar a enfermería"},
+          {l:"Paso 2",v:"Contactar con Neurología de guardia en LP (vía centralita LP: 917 27 70 00)"},
+          {l:"Paso 3",v:"Neurología LP valora por telemedicina. TAC urgente en CB/C3 si disponible"},
+          {l:"Paso 4",v:"Si indicación de tratamiento → SUMMA 112 traslada de forma prioritaria"},
+          {l:"Destino",v:"Unidad de Ictus / Neurovascular de LP (trombólisis / trombectomía si candidato)"}
+        ]
+      },
+      {title:"Documentación obligatoria",icon:"📝",
+        subs:[
+          {title:"Doc. clínica — Adjunto CB/C3",items:[
+            {l:"",v:"Informe clínico actualizado (diagnóstico, tratamiento, motivo del traslado)"},
+            {l:"",v:"Última analítica y pruebas relevantes"},
+            {l:"",v:"Peticiones de pruebas / consultas en LP"},
+            {l:"",v:"Consentimientos informados firmados"}
+          ]},
+          {title:"Doc. enfermería — Enfermería CB/C3",items:[
+            {l:"",v:"Informe de continuidad de cuidados"},
+            {l:"",v:"Hoja de constantes vitales actualizada"},
+            {l:"",v:"Tratamiento farmacológico vigente + medicación administrada"},
+            {l:"",v:"Alertas: alergias, caídas, UPP, aislamiento. Pertenencias inventariadas"}
+          ]}
+        ],
+        notes:["El adjunto de CB/C3 es RESPONSABLE de que la documentación clínica esté completa ANTES de autorizar la salida del paciente."]
+      },
+      {title:"Criterios de NO ingreso en CB / C3",icon:"🚫",
+        subs:[
+          {title:"Criterios críticos (1–4)",items:[
+            {l:"1",v:"Inestabilidad hemodinámica con necesidad de monitorización"},
+            {l:"2",v:"Ventilación mecánica (incluida VMNI) / O₂ > 4 lpm en el momento del traslado"},
+            {l:"3",v:"Sangrado activo"},
+            {l:"4",v:"Cirugía urgente o preferente durante el ingreso"}
+          ]},
+          {title:"Criterios logísticos (5–8)",items:[
+            {l:"5",v:"Especialista no disponible en CB/C3"},
+            {l:"6",v:"Consultas o pruebas citadas no posponibles"},
+            {l:"7",v:"Obesidad > 140 kg (límite infraestructura)"},
+            {l:"8",v:"Técnicas no disponibles en CB/C3"}
+          ]}
+        ],
+        notes:["Los criterios 5 y 6 son los que más afectan a MI. Valorar siempre si la consulta/prueba puede aplazarse o gestionarse por telemedicina. Traslados antes de las 22:00 h — si la ambulancia se retrasa, posponer a la mañana siguiente salvo presión asistencial máxima."]
+      },
+      {title:"Directorio telefónico",icon:"📞",
+        subs:[
+          {title:"HULP — Gestión de Camas",items:[
+            {l:"L-V 8-22h / Festivos 8-20h",v:"447 123 · 851 566 · 441 566 · 441 567 · 856 800"},
+            {l:"Noches y festivos 20-8h",v:"Supervisor guardia: 851 121"}
+          ]},
+          {title:"MIRG en Castellana",items:[
+            {l:"L-V 8-15h · JS",v:"441 989"},
+            {l:"L-V 8-15h · AQ",v:"857 455"},
+            {l:"L-V 8-15h · JJR",v:"874 840"},
+            {l:"Secretaría",v:"447 126"},
+            {l:"FEA guardia",v:"859 491"},
+            {l:"Residente mayor",v:"853 402"}
+          ]},
+          {title:"H. Carlos III",items:[
+            {l:"L-V 8-15h",v:"841 995"},
+            {l:"Guardia 1",v:"846 001"},
+            {l:"Guardia 2",v:"846 002"},
+            {l:"Residente",v:"858 775"}
+          ]},
+          {title:"H. Cantoblanco",items:[
+            {l:"L-V 8-15h",v:"889 955"},
+            {l:"Guardia 1",v:"848 077"},
+            {l:"Guardia 2",v:"843 287"},
+            {l:"Residente",v:"844 899"}
+          ]},
+          {title:"Otros contactos",items:[
+            {l:"SUMMA 112",v:"112 (24 h)"},
+            {l:"Centralita LP",v:"917 27 70 00 (24 h)"},
+            {l:"Seguridad C3",v:"845 999 (24 h)"},
+            {l:"Seguridad CB",v:"487 631 (24 h)"}
+          ]}
         ]
       }
     ]
@@ -686,30 +840,18 @@ const protocols = [
         notes:["Derivar cuando el resultado del estudio genético pueda modificar el manejo clínico o tenga implicaciones para familiares en riesgo."]
       },
       {title:"Tabla rápida de indicaciones",icon:"📊",tag:"CLAVE",tagC:"#065A82",
-        items:[
-          {l:"ETEV < 50 a o localización inusual (si cambia el manejo)",
-           v:'<span style="background:#C62828;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">No</span> · Hematología'},
-          {l:"Miocardiopatía sin etiología",
-           v:'<span style="background:#C62828;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">No</span> · Cardiología',
-           n:"Debe pedirla Cardiología (J.C.)"},
-          {l:"Muerte súbita familiar",
-           v:'<span style="background:#C62828;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">No</span> · Cardiología',
-           n:"Debe pedirla Cardiología (J.C.)"},
-          {l:"Demencia precoz (< 65 años)",
-           v:'<span style="background:#C62828;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">No</span> · Neurología'},
-          {l:"Neuropatía inexplicada",
-           v:'<span style="background:#C62828;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">No</span> · Neurología'},
-          {l:"Enfermedad multisistémica no filiada",
-           v:'<span style="background:#2E7D32;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">Sí</span> · Enf. Minoritarias — Dra. Salgueiro'},
-          {l:"Tejido conectivo + sospecha PROS / patología vascular",
-           v:'<span style="background:#E65100;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">Si pero…</span> · Enf. Minoritarias — Dr. Carrasco'},
-          {l:"Sospecha de Fabry / hemocromatosis / amiloidosis hereditaria",
-           v:'<span style="background:#2E7D32;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">Sí</span> · Enf. Minoritarias — Dra. Salgueiro'},
-          {l:"Miopatías / enfermedades musculares",
-           v:'<span style="background:#C62828;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">No</span> · MIRG41 — Dr. Troncoso'},
-          {l:"Cáncer precoz o familiar",
-           v:'<span style="background:#C62828;color:#fff;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">No</span> · Oncología',
-           n:"Desde AP: SIPE a Oncología"}
+        type:"genetable",
+        rows:[
+          {sit:"ETEV <50 a o localización inusual (si el resultado cambia el manejo)", der:"No", esp:"Hematología"},
+          {sit:"Miocardiopatía sin etiología", der:"No", esp:"Pero debería ser pedida por Cardiología (Juan Caro)"},
+          {sit:"Muerte súbita familiar", der:"No", esp:"Pero debería ser pedida por Cardiología (Juan Caro)"},
+          {sit:"Demencia precoz (<65 años)", der:"No", esp:"Valoración por Neurología"},
+          {sit:"Neuropatía inexplicada", der:"No", esp:"Valoración por Neurología"},
+          {sit:"Enfermedad multisistémica no filiada", der:"Sí", esp:"Valoración en Enf. Minoritarias — Dra. Salgueiro"},
+          {sit:"Alteraciones del tejido conectivo con sospecha de síndrome PROS o patología vascular/linfática relacionada (el diagnóstico suele precisar estudio genético en tejido)", der:"Si pero", esp:"Valoración en Enf. Minoritarias (Dr. Carrasco)"},
+          {sit:"Sospecha de Fabry / hemocromatosis / amiloidosis hereditaria", der:"Sí", esp:"Valoración en Enf. Minoritarias — Dra. Salgueiro"},
+          {sit:"Miopatías / enfermedades musculares", der:"No", esp:"Valoración en MIRG41 — Dr. Troncoso"},
+          {sit:"Cáncer precoz o familiar", der:"No", esp:"Oncología. Si se pide desde Atención Primaria deben hacer SIPE a Oncología"}
         ],
         notes:["Criterios generales: sospecha de enfermedad hereditaria · inicio precoz o presentación atípica · agregación familiar · enfermedad no filiada tras estudio convencional."]
       },
@@ -886,6 +1028,35 @@ function renderDetail(p){
         legend.innerHTML='<span>📋 1-3: No frágil</span><span>⚡ 4: Vulnerable</span><span>🔶 5-8: Frágil → Geriatría</span><span>🏥 9: Terminal</span>';
         rw.appendChild(legend);
         body.appendChild(rw);
+      }
+
+      if(s.type==='genetable'&&s.rows){
+        const tbl=document.createElement('table');
+        tbl.className='gene-table';
+        const thead=document.createElement('thead');
+        const hr=document.createElement('tr');
+        ['Situación clínica','Derivar a Genética','Especialidad'].forEach((txt,i)=>{
+          const th=document.createElement('th');
+          th.textContent=txt;
+          hr.appendChild(th);
+        });
+        thead.appendChild(hr);
+        tbl.appendChild(thead);
+        const tbody=document.createElement('tbody');
+        s.rows.forEach(r=>{
+          const tr=document.createElement('tr');
+          const tdSit=document.createElement('td');
+          tdSit.textContent=r.sit;
+          const tdDer=document.createElement('td');
+          tdDer.className='gene-der '+(r.der==='Sí'?'gene-si':r.der==='No'?'gene-no':'gene-pero');
+          tdDer.textContent=r.der;
+          const tdEsp=document.createElement('td');
+          tdEsp.textContent=r.esp;
+          tr.appendChild(tdSit);tr.appendChild(tdDer);tr.appendChild(tdEsp);
+          tbody.appendChild(tr);
+        });
+        tbl.appendChild(tbody);
+        body.appendChild(tbl);
       }
 
       if(s.items&&s.items.length>0){
