@@ -846,6 +846,82 @@ const protocols = [
     ]
   },
   {
+    id:"endocarditis",title:"Endocarditis",icon:"🫀",color:"#A93226",
+    subtitle:"Circuito Cardiología · MI/EI — HULP v1.0 · Mayo 2026",
+    sections:[
+      {title:"Algoritmo rápido",icon:"⚡",pinned:true,items:[],
+        notes:[
+          "1 · Criterios Cardiología → ingresa en Cardiología",
+          "2 · Sin criterios Cardiología → ingresa en MI/EI",
+          "3 · Incierto → consenso telefónico + documentar en HC (Comité si no urgente)"
+        ]
+      },
+      {title:"Criterios de ingreso en Cardiología",icon:"🏥",tag:"CARDIO",tagC:"#A93226",
+        subs:[
+          {title:"→ Antecedentes",items:[
+            {l:"Cardiopatía congénita",v:"Siempre Cardiología"},
+            {l:"Trasplante cardiaco o pre-trasplante",v:"Siempre Cardiología"},
+            {l:"Dispositivo de asistencia ventricular",v:"Siempre Cardiología"},
+            {l:"Seguimiento activo por Cardiología",v:"Si Cardiología prefiere mantener continuidad"}
+          ]},
+          {title:"→ Situación clínica",items:[
+            {l:"Necesidad de telemetría",v:"En paciente subsidiario de invasivo y/o cirugía"},
+            {l:"Criterio quirúrgico",v:"Si el paciente es subsidiario de intervención por edad y comorbilidad"}
+          ]},
+          {title:"→ Sin criterios de Cardiología → MI/EI",items:[
+            {l:"Sospecha no confirmada",v:"Sin criterios específicos de Cardiología"},
+            {l:"Endocarditis confirmada",v:"Sin indicación quirúrgica · sin telemetría · sin criterios Cardio"},
+            {l:"Criterio quirúrgico potencial",v:"Pero no subsidiario de intervención por comorbilidad"}
+          ]}
+        ]
+      },
+      {title:"Criterios quirúrgicos clave (ESC 2023)",icon:"🔬",
+        items:[
+          {l:"IC o compromiso hemodinámico",v:"IC nueva, edema pulmonar, shock, insuficiencia valvular grave"},
+          {l:"Infección localmente incontrolada",v:"Absceso, pseudoaneurisma, fístula, dehiscencia prótesis, BAV nuevo"},
+          {l:"Microorganismos difícil control",v:"MRSA, Enterococcus VR, hongos"},
+          {l:"Sepsis / shock séptico persistente",v:"A pesar de ATB óptimo"},
+          {l:"Bacteriemia persistente",v:"Hemocultivos + tras >7 días ATB óptimo (descartados focos extracardiacos)"},
+          {l:"Prevención embólica (izquierda)",v:"Vegetaciones ≥10 mm + ≥1 embolia pese a ATB adecuado"},
+          {l:"E. derecha complicada",v:"Vegetaciones tricuspídeas >20 mm con embolias recurrentes"},
+          {l:"E. protésica de alto riesgo",v:"Precoz (<6 m) o S. aureus / BGN no HACEK"}
+        ],
+        notes:["La presencia aislada de vegetaciones ≥10 mm sin otros criterios no determina por sí sola el ingreso en Cardiología."]
+      },
+      {title:"Seguimiento cruzado",icon:"🔄",
+        subs:[
+          {title:"→ Ingresado en MI/EI",items:[
+            {l:"Cardiología valora",v:"Al menos 1 vez · idealmente en ≤48 h"},
+            {l:"Objetivo",v:"Conocer el caso · necesidades de seguimiento · Comité si procede"},
+            {l:"Corporativo interconsultor",v:"Debe figurar en notas de evolución"}
+          ]},
+          {title:"→ Ingresado en Cardiología",items:[
+            {l:"EI valora (Dra. L.)",v:"Idealmente en ≤48 h del ingreso o diagnóstico"},
+            {l:"Corporativo EI",v:"Debe figurar en notas de evolución"}
+          ]}
+        ]
+      },
+      {title:"Teléfonos clave",icon:"📞",tag:"CONTACTOS",tagC:"#1B3A5C",
+        items:[
+          {l:"Cardiología guardia",v:"857361 / 851990"},
+          {l:"MI/EI hospitalización (Dra. M.)",v:"810122",n:"Turno de mañana"},
+          {l:"MI/EI hospitalización (Dr. D.)",v:"851399",n:"Turno de mañana"},
+          {l:"EI referente (Dra. L.)",v:"854103",n:"Mañana + convocatoria Comité extraordinario"},
+          {l:"Guardia MIRG/EI",v:"853402",n:"Tarde / festivos"}
+        ],
+        notes:["Resultados de imagen cardiaca: no se comunican verbalmente salvo hallazgo urgente (absceso, pseudoaneurisma, fístula, dehiscencia protésica). En ese caso contactar directamente con el facultativo responsable del paciente."]
+      },
+      {title:"Comité de Endocarditis",icon:"📅",
+        items:[
+          {l:"Convocatoria",v:"Todos los miércoles · 9:15 h"},
+          {l:"Lugar",v:"Biblioteca de Cardiología · 1ª planta H. General · zona Imagen Cardiaca"},
+          {l:"Extraordinario",v:"Contactar Dra. L. — 854103"}
+        ],
+        notes:["Presentar: endocarditis confirmada con dudas · criterio quirúrgico · decisión multidisciplinar · discrepancia entre servicios · evolución que modifique el plan.","El Comité NO retrasa decisiones urgentes — comunicación directa siempre disponible."]
+      }
+    ]
+  },
+  {
     id:"genetica",title:"Genética",icon:"🧬",color:"#065A82",
     subtitle:"Criterios de derivación a Genética Clínica",
     sections:[
