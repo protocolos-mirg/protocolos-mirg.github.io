@@ -79,6 +79,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 .gene-table tr:nth-child(even) td{background:#f7f9fb}
 .gene-der{text-align:center;font-weight:700;white-space:nowrap}
 .gene-si{color:#2E7D32}.gene-no{color:#C62828}.gene-pero{color:#E65100}
+
+.cat-header{padding:8px 16px 4px;max-width:700px;margin:0 auto;display:flex;align-items:center;gap:8px}
+.cat-label{font-size:11px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--textL)}
+.cat-divider{flex:1;height:1px;background:var(--border)}
+.iframe-wrap{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:999;display:flex;flex-direction:column}
+.iframe-topbar{display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,20px) + 10px) 16px 10px;background:var(--primary);color:#fff;flex-shrink:0}
+.iframe-back{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap}
+.iframe-title{font-size:14px;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iframe-wrap iframe{flex:1;border:none;width:100%}
 </style>
 </head>
 <body>
@@ -971,10 +980,46 @@ const protocols = [
         ]
       }
     ]
+  },
+  {
+    id:"daptomicina",title:"Daptomicina en infecciones por enterococo",icon:"🧫",color:"#1a3a5c",
+    type:"iframe",src:"daptomicina.html",
+    subtitle:"Árbol de decisión · Dosis · Antibiograma CLSI/EUCAST · Seguridad",
+    sections:[]
   }
 ];
 
 protocols.sort((a,b)=>a.title.localeCompare(b.title,'es'));
+// ── CATEGORIES ──────────────────────────────────────────────────────────────
+const categories = [
+  { id:'eeii',      label:'🦠 EEII / Microbiología',     ids:['endocarditis','daptomicina'] },
+  { id:'espec',     label:'🔬 Especialidades externas',   ids:['genetica','oncologia','urologia'] },
+  { id:'gestion',   label:'🏥 Gestión hospitalaria',      ids:['ingresos','econsulta','hado'] },
+  { id:'org',       label:'⚙️ Organización interna',      ids:['horarios','huelga'] },
+  { id:'urgencias', label:'🚨 Urgencias y traslados',     ids:['urgencias','traslados','traslados-cb-c3','noingreso'] }
+];
+
+function getCatLabel(id){
+  for(const c of categories){if(c.ids.includes(id))return c.label;}
+  return '📋 Otros';
+}
+
+// ── RENDER IFRAME ────────────────────────────────────────────────────────────
+function renderIframe(p){
+  app.innerHTML='';
+  const wrap=h('div',{class:'iframe-wrap'});
+  const bar=h('div',{class:'iframe-topbar'},
+    h('button',{class:'iframe-back',onclick:()=>renderHome()},'← Volver'),
+    h('span',{class:'iframe-title'},p.icon+' '+p.title)
+  );
+  const frame=document.createElement('iframe');
+  frame.src=p.src;
+  wrap.appendChild(bar);
+  wrap.appendChild(frame);
+  app.appendChild(wrap);
+}
+
+
 
 // ============ RENDER ENGINE ============
 const $=id=>document.getElementById(id);
@@ -1007,6 +1052,7 @@ function renderHome(filter=''){
   });
 
   app.innerHTML='';
+
   // Header
   const hdr=h('div',{class:'header header-home'},
     h('small',null,'MEDICINA INTERNA'),
@@ -1022,13 +1068,12 @@ function renderHome(filter=''){
   searchDiv.appendChild(inp);
   app.appendChild(searchDiv);
 
-  // List
-  const list=h('div',{class:'list'});
-  if(filtered.length===0){
-    list.appendChild(h('div',{class:'empty'},'No se encontraron resultados para "'+filter+'"'));
-  }
-  filtered.forEach(p=>{
-    const card=h('div',{class:'proto-card',onclick:()=>{openSections={};renderDetail(p);}},
+  // Card builder
+  function makeCard(p){
+    return h('div',{class:'proto-card',onclick:()=>{
+      openSections={};
+      if(p.type==='iframe'){renderIframe(p);}else{renderDetail(p);}
+    }},
       h('div',{class:'proto-icon',style:{backgroundColor:p.color+'18'}},h('span',null,p.icon)),
       h('div',null,
         h('div',{class:'title'},p.title),
@@ -1036,9 +1081,46 @@ function renderHome(filter=''){
       ),
       h('span',{class:'arrow'},'→')
     );
-    list.appendChild(card);
-  });
-  app.appendChild(list);
+  }
+
+  if(fl){
+    // Search mode: flat list
+    const list=h('div',{class:'list'});
+    if(filtered.length===0){
+      list.appendChild(h('div',{class:'empty'},'No se encontraron resultados para "'+filter+'"'));
+    }
+    filtered.forEach(p=>list.appendChild(makeCard(p)));
+    app.appendChild(list);
+  } else {
+    // Normal mode: grouped by category
+    const protoMap={};
+    protocols.forEach(p=>{protoMap[p.id]=p;});
+
+    categories.forEach(cat=>{
+      const catProtos=cat.ids.map(id=>protoMap[id]).filter(Boolean).sort((a,b)=>a.title.localeCompare(b.title,'es'));
+      if(catProtos.length===0)return;
+      app.appendChild(h('div',{class:'cat-header'},
+        h('span',{class:'cat-label'},cat.label),
+        h('span',{class:'cat-divider'})
+      ));
+      const list=h('div',{class:'list'});
+      catProtos.forEach(p=>list.appendChild(makeCard(p)));
+      app.appendChild(list);
+    });
+
+    // Uncategorized
+    const allCatIds=categories.flatMap(c=>c.ids);
+    const uncategorized=protocols.filter(p=>!allCatIds.includes(p.id));
+    if(uncategorized.length>0){
+      app.appendChild(h('div',{class:'cat-header'},
+        h('span',{class:'cat-label'},'📋 Otros'),
+        h('span',{class:'cat-divider'})
+      ));
+      const list=h('div',{class:'list'});
+      uncategorized.forEach(p=>list.appendChild(makeCard(p)));
+      app.appendChild(list);
+    }
+  }
 
   // Footer
   app.appendChild(h('div',{class:'footer'},'Servicio de Medicina Interna'));

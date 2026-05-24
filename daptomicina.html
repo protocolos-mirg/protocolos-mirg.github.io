@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daptomicina en Enterococos — Protocolo Clínico</title>
+<style>
+:root {
+  --azul: #1a3a5c;
+  --azul-med: #2563a8;
+  --azul-claro: #dbeafe;
+  --verde: #166534;
+  --verde-bg: #dcfce7;
+  --ambar: #92400e;
+  --ambar-bg: #fef3c7;
+  --rojo: #991b1b;
+  --rojo-bg: #fee2e2;
+  --gris: #374151;
+  --gris-claro: #f9fafb;
+  --borde: #e5e7eb;
+  --texto: #111827;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f3f4f6; color: var(--texto); min-height: 100vh;
+}
+header {
+  background: var(--azul); color: white;
+  padding: 20px 32px; display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+header h1 { font-size: 1.4rem; font-weight: 700; }
+header p { font-size: 0.8rem; opacity: 0.75; margin-top: 3px; }
+.badge {
+  background: #f59e0b; color: #1c1917; font-size: 0.7rem;
+  font-weight: 700; padding: 4px 10px; border-radius: 999px;
+}
+.alerta {
+  background: #fffbeb; border-left: 4px solid #f59e0b;
+  padding: 12px 18px; margin: 20px 24px 0;
+  border-radius: 0 6px 6px 0; font-size: 0.87rem; color: #78350f;
+}
+.alerta strong { color: #92400e; }
+nav {
+  background: white; border-bottom: 2px solid var(--borde);
+  display: flex; overflow-x: auto; padding: 0 24px;
+}
+.nav-btn {
+  background: none; border: none; border-bottom: 3px solid transparent;
+  padding: 14px 18px; font-size: 0.87rem; font-weight: 600;
+  color: #6b7280; cursor: pointer; white-space: nowrap;
+}
+.nav-btn:hover { color: var(--azul-med); }
+.nav-btn.activo { color: var(--azul-med); border-bottom-color: var(--azul-med); }
+.contenedor { max-width: 860px; margin: 0 auto; padding: 28px 20px; }
+.tab { display: none; }
+.tab.activo { display: block; }
+
+/* ── ÁRBOL ── */
+.arbol { background: white; border-radius: 12px; border: 1px solid var(--borde); overflow: hidden; }
+.q-bloque { border-bottom: 1px solid var(--borde); }
+.q-pregunta { padding: 24px 28px; }
+.q-completado {
+  display: none; padding: 12px 28px;
+  background: #f8fafc; cursor: pointer;
+  align-items: center; gap: 10px;
+}
+.q-completado:hover { background: #f1f5f9; }
+.q-completado .check {
+  width: 20px; height: 20px; background: var(--azul-med);
+  border-radius: 50%; flex-shrink: 0; display: flex;
+  align-items: center; justify-content: center;
+  color: white; font-size: 0.7rem; font-weight: 700;
+}
+.q-completado .texto { font-size: 0.85rem; color: #6b7280; }
+.paso-num { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--azul-med); margin-bottom: 6px; }
+.q-pregunta h2 { font-size: 1.05rem; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
+.q-pregunta p { font-size: 0.84rem; color: #6b7280; margin-bottom: 16px; line-height: 1.5; }
+.opciones { display: flex; flex-wrap: wrap; gap: 10px; }
+button.opcion {
+  border: 2px solid var(--borde); border-radius: 8px;
+  padding: 12px 18px; cursor: pointer; font-size: 0.88rem;
+  font-weight: 600; color: var(--gris); background: white;
+  display: flex; align-items: center; gap: 8px;
+  font-family: inherit;
+}
+button.opcion:hover { border-color: var(--azul-med); color: var(--azul-med); background: #eff6ff; }
+
+/* ── RESULTADO ── */
+#resultado { display: none; }
+.res-header {
+  background: var(--azul); color: white;
+  padding: 20px 28px; display: flex; align-items: flex-start; gap: 14px;
+}
+.res-icono { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+.res-header h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+.res-header p { font-size: 0.84rem; opacity: 0.8; line-height: 1.5; }
+.res-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 18px; }
+.bloque {
+  border-radius: 8px; padding: 16px 18px; border: 1px solid;
+}
+.bloque.dosis { border-color: #93c5fd; background: #eff6ff; }
+.bloque.combo { border-color: #6ee7b7; background: #f0fdf4; }
+.bloque.mic-b { border-color: #c4b5fd; background: #f5f3ff; }
+.bloque.cpk { border-color: #fca5a5; background: #fff1f2; }
+.bloque.aviso { border-color: #fcd34d; background: #fffbeb; }
+.bloque h4 {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; margin-bottom: 8px;
+}
+.bloque.dosis h4 { color: #1d4ed8; }
+.bloque.combo h4 { color: #059669; }
+.bloque.mic-b h4 { color: #7c3aed; }
+.bloque.cpk h4 { color: #dc2626; }
+.bloque.aviso h4 { color: #b45309; }
+.bloque p, .bloque li { font-size: 0.88rem; color: #374151; line-height: 1.6; }
+.bloque ul { padding-left: 16px; }
+.bloque li { margin-bottom: 4px; }
+.dosis-num { font-size: 1.6rem; font-weight: 800; color: #1e40af; }
+.dosis-sub { font-size: 0.82rem; color: #3730a3; margin-top: 2px; }
+.btn-nuevo {
+  background: var(--azul-med); color: white; border: none;
+  border-radius: 8px; padding: 12px 22px; font-size: 0.88rem;
+  font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.btn-nuevo:hover { background: #1d4ed8; }
+
+/* ── TABLAS / TARJETAS ── */
+.tabla-wrap { overflow-x: auto; margin-top: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th { background: var(--azul); color: white; padding: 10px 14px; text-align: left; font-size: 0.8rem; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--borde); vertical-align: top; line-height: 1.5; }
+tr:nth-child(even) td { background: #f8fafc; }
+tr:hover td { background: #f0f9ff; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; }
+.tag-v { background: var(--verde-bg); color: var(--verde); }
+.tag-r { background: var(--rojo-bg); color: var(--rojo); }
+.tag-a { background: var(--ambar-bg); color: var(--ambar); }
+.tag-b { background: var(--azul-claro); color: #1e40af; }
+.card { background: white; border-radius: 10px; border: 1px solid var(--borde); overflow: hidden; margin-bottom: 16px; }
+.card-head { background: var(--gris-claro); padding: 12px 18px; font-size: 0.85rem; font-weight: 700; color: var(--azul); border-bottom: 1px solid var(--borde); }
+.card-body { padding: 16px 18px; font-size: 0.85rem; line-height: 1.7; }
+.card-body ul { padding-left: 18px; }
+.card-body li { margin-bottom: 5px; }
+.seccion { margin-bottom: 28px; }
+.seccion h3 { font-size: 1rem; font-weight: 700; color: var(--azul); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--borde); }
+.semrow { display: flex; align-items: stretch; border-bottom: 1px solid var(--borde); }
+.semrow:last-child { border-bottom: none; }
+.semdot { width: 8px; flex-shrink: 0; }
+.dot-v { background: #22c55e; }
+.dot-a { background: #f59e0b; }
+.dot-r { background: #ef4444; }
+.semcont { padding: 12px 16px; font-size: 0.85rem; line-height: 1.5; }
+.semcont strong { display: block; margin-bottom: 2px; }
+.semcont span { color: #6b7280; }
+.footnote { font-size: 0.78rem; color: #9ca3af; margin-top: 20px; line-height: 1.6; padding: 12px 16px; background: #f9fafb; border-radius: 6px; border: 1px solid var(--borde); }
+@media (max-width: 600px) {
+  header { padding: 16px; }
+  .contenedor { padding: 16px 12px; }
+  .q-pregunta { padding: 20px 18px; }
+  .res-header { padding: 16px 18px; }
+  .res-body { padding: 18px; }
+  .dosis-num { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🧫 Daptomicina en Infecciones Enterocócicas</h1>
+    <p>Protocolo clínico · Hospital Universitario La Paz · Medicina Interna</p>
+  </div>
+  <span class="badge">⚠ USO OFF-LABEL</span>
+</header>
+
+<div class="alerta">
+  <strong>Aviso EUCAST:</strong> EUCAST no establece punto de corte clínico para daptomicina frente a enterococos (categoría "IE" = evidencia insuficiente). Esto <strong>no equivale a contraindicación</strong>. Si tu laboratorio informa "IE", consulta la CMI bruta y aplica este protocolo.
+</div>
+
+<nav id="nav">
+  <button class="nav-btn activo" data-tab="arbol">🌳 Árbol de decisión</button>
+  <button class="nav-btn" data-tab="dosis">💊 Tabla de dosis</button>
+  <button class="nav-btn" data-tab="antibiograma">🔬 Antibiograma</button>
+  <button class="nav-btn" data-tab="seguridad">❤️ Seguridad</button>
+  <button class="nav-btn" data-tab="claves">🔑 Mensajes clave</button>
+</nav>
+
+<div class="contenedor">
+
+<!-- ====== TAB: ARBOL ====== -->
+<div id="tab-arbol" class="tab activo">
+<div class="arbol" id="arbol">
+
+  <!-- Q1 -->
+  <div class="q-bloque" id="bloque-1">
+    <div class="q-completado" id="comp-1">
+      <div class="check">&#10003;</div>
+      <div class="texto"><strong>Paso 1:</strong> <span id="resp-1"></span></div>
+    </div>
+    <div class="q-pregunta" id="preg-1">
+      <div class="paso-num">Paso 1 de 4</div>
+      <h2>¿Qué especie de Enterococcus?</h2>
+      <p>La especie determina el punto de corte CLSI y las expectativas farmacodinámicas.</p>
+      <div class="opciones">
+        <button type="button" class="opcion" data-q="1" data-v="faecalis" data-e="E. faecalis">🔴 E. faecalis</button>
+        <button type="button" class="opcion" data-q="1" data-v="faecium" data-e="E. faecium">🔵 E. faecium</button>
+        <button type="button" class="opcion" data-q="1" data-v="otro" data-e="Otra / Desconocida">⬜ Otra / Desconocida</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-bloque" id="bloque-2" style="display:none">
+    <div class="q-completado" id="comp-2">
+      <div class="check">&#10003;</div>
+      <div class="texto"><strong>Paso 2:</strong> <span id="resp-2"></span></div>
+    </div>
+    <div class="q-pregunta" id="preg-2">
+      <div class="paso-num">Paso 2 de 4</div>
+      <h2>¿Resistencia a vancomicina?</h2>
+      <p>VRE (vanA/vanB) cambia el armamentario terapéutico y el nivel de urgencia.</p>
+      <div class="opciones">
+        <button type="button" class="opcion" data-q="2" data-v="vsu" data-e="VSE — Sensible a vancomicina">✅ VSE (sensible)</button>
+        <button type="button" class="opcion" data-q="2" data-v="vre" data-e="VRE — Resistente a vancomicina">🚫 VRE (resistente)</button>
+        <button type="button" class="opcion" data-q="2" data-v="nd" data-e="Desconocido / Pendiente">❓ Desconocido / Pendiente</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-bloque" id="bloque-3" style="display:none">
+    <div class="q-completado" id="comp-3">
+      <div class="check">&#10003;</div>
+      <div class="texto"><strong>Paso 3:</strong> <span id="resp-3"></span></div>
+    </div>
+    <div class="q-pregunta" id="preg-3">
+      <div class="paso-num">Paso 3 de 4</div>
+      <h2>¿Cuál es el foco de infección?</h2>
+      <p>La endocarditis requiere terapia combinada según las guías ESC 2023.</p>
+      <div class="opciones">
+        <button type="button" class="opcion" data-q="3" data-v="bsi" data-e="Bacteriemia sin endocarditis">🩸 Bacteriemia (sin endocarditis)</button>
+        <button type="button" class="opcion" data-q="3" data-v="endo" data-e="Endocarditis">❤️ Endocarditis</button>
+        <button type="button" class="opcion" data-q="3" data-v="otro_foco" data-e="Pendiente ETE / Otro foco">🔍 Pendiente ETE / Otro foco</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-bloque" id="bloque-4" style="display:none">
+    <div class="q-completado" id="comp-4">
+      <div class="check">&#10003;</div>
+      <div class="texto"><strong>Paso 4:</strong> <span id="resp-4"></span></div>
+    </div>
+    <div class="q-pregunta" id="preg-4">
+      <div class="paso-num">Paso 4 de 4</div>
+      <h2>CMI de daptomicina / ¿Neutropenia?</h2>
+      <p>La CMI es el principal determinante del objetivo farmacodinámico. La neutropenia modifica el umbral de dosis.</p>
+      <div class="opciones">
+        <button type="button" class="opcion" data-q="4" data-v="mic_bajo" data-e="CMI ≤1 mg/L (BMD confirmada)">🟢 CMI &le; 1 mg/L (BMD confirmada)</button>
+        <button type="button" class="opcion" data-q="4" data-v="mic_2_4" data-e="CMI 2–4 mg/L">🟡 CMI 2&ndash;4 mg/L</button>
+        <button type="button" class="opcion" data-q="4" data-v="mic_alto" data-e="CMI ≥8 mg/L (resistente)">🔴 CMI &ge; 8 mg/L (resistente)</button>
+        <button type="button" class="opcion" data-q="4" data-v="mic_nd" data-e="CMI desconocida / pendiente">❓ CMI desconocida</button>
+        <button type="button" class="opcion" data-q="4" data-v="neutro" data-e="Paciente neutropénico">⚡ Neutropenia profunda</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTADO -->
+  <div id="resultado">
+    <div class="res-header">
+      <div class="res-icono" id="res-icono"></div>
+      <div>
+        <h3 id="res-titulo"></h3>
+        <p id="res-contexto"></p>
+      </div>
+    </div>
+    <div class="res-body" id="res-body"></div>
+  </div>
+
+</div><!-- arbol -->
+</div><!-- tab-arbol -->
+
+
+<!-- ====== TAB: DOSIS ====== -->
+<div id="tab-dosis" class="tab">
+  <div class="card">
+    <div class="card-head">💊 Dosificación de daptomicina por escenario clínico</div>
+    <div class="tabla-wrap">
+      <table>
+        <tr><th>Escenario</th><th>Dosis</th><th>Combinacion</th><th>Breakpoint CLSI</th></tr>
+        <tr>
+          <td><strong>VSE E. faecalis</strong> &mdash; BSI<br><small style="color:#6b7280">Beta-lactámicos son primera línea</small></td>
+          <td><span class="tag tag-a">&ge;8 mg/kg/día</span><br><small>Solo si ampicilina no factible</small></td>
+          <td>No de rutina</td>
+          <td>S &le;2 mg/L (6 mg/kg/día)</td>
+        </tr>
+        <tr>
+          <td><strong>VSE E. faecalis</strong> &mdash; Endocarditis</td>
+          <td><span class="tag tag-a">&ge;8&ndash;10 mg/kg/día</span></td>
+          <td>+ beta-lactámico (ESC 2023)</td>
+          <td>S &le;2 mg/L</td>
+        </tr>
+        <tr>
+          <td><strong>VRE E. faecium</strong> &mdash; BSI, CMI &le;1 mg/L confirmada</td>
+          <td><span class="tag tag-b">8&ndash;10 mg/kg/día</span></td>
+          <td>Considerar beta-lactámico</td>
+          <td>SDD &le;4 mg/L (8&ndash;12 mg/kg/día)</td>
+        </tr>
+        <tr>
+          <td><strong>VRE E. faecium</strong> &mdash; BSI, CMI 2&ndash;4 mg/L o desconocida</td>
+          <td><span class="tag tag-r">10&ndash;12 mg/kg/día</span></td>
+          <td>+ beta-lactámico (ampicilina / ceftarolina)</td>
+          <td>SDD &le;4 mg/L</td>
+        </tr>
+        <tr>
+          <td><strong>VRE E. faecium</strong> &mdash; Endocarditis</td>
+          <td><span class="tag tag-r">10&ndash;12 mg/kg/día</span></td>
+          <td>+ beta-lactámico o fosfomicina (ESC 2023)</td>
+          <td>SDD &le;4 mg/L</td>
+        </tr>
+        <tr>
+          <td><strong>VRE E. faecium</strong> &mdash; Neutropénico</td>
+          <td><span class="tag tag-r">12 mg/kg/día</span> preferido</td>
+          <td>+ beta-lactámico si factible</td>
+          <td>SDD &le;4 mg/L</td>
+        </tr>
+        <tr>
+          <td><strong>Cualquier especie</strong> &mdash; CMI &ge;8 mg/L</td>
+          <td><span class="tag tag-r">NO USAR</span></td>
+          <td>Buscar alternativa (linezolid, etc.)</td>
+          <td>R &ge;8 mg/L</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p class="footnote">Datos clínicos íntegramente observacionales; no existen ensayos aleatorizados para esta indicación. Fuente: manuscrito en preparación, Servicio EEII, HULP.</p>
+</div>
+
+
+<!-- ====== TAB: ANTIBIOGRAMA ====== -->
+<div id="tab-antibiograma" class="tab">
+  <div class="seccion">
+    <h3>🔬 Comparación CLSI vs EUCAST</h3>
+    <div class="card">
+      <div class="tabla-wrap">
+        <table>
+          <tr><th>Parámetro</th><th>CLSI (M100S, 35 ed.)</th><th>EUCAST (2025)</th></tr>
+          <tr>
+            <td><strong>E. faecalis</strong></td>
+            <td>S &le;2 mg/L &middot; I=4 mg/L &middot; R &ge;8 mg/L (6 mg/kg/dia)</td>
+            <td><span class="tag tag-a">IE &mdash; evidencia insuficiente</span></td>
+          </tr>
+          <tr>
+            <td><strong>E. faecium</strong></td>
+            <td><strong>SDD</strong> &le;4 mg/L (8&ndash;12 mg/kg/dia) &middot; R &ge;8 mg/L<br><small>Sin categoria "S". SDD obliga a dosis alta + consulta ID.</small></td>
+            <td><span class="tag tag-a">IE &mdash; evidencia insuficiente</span></td>
+          </tr>
+          <tr>
+            <td><strong>Implicación práctica</strong></td>
+            <td>El laboratorio informa S o SDD, guiando la dosis directamente.</td>
+            <td>"IE" no es contraindicación. Usar CMI bruta + este protocolo.</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <h3>⚗️ Consideraciones técnicas del antibiograma</h3>
+    <div class="card">
+      <div class="card-body">
+        <ul>
+          <li><strong>El disco no funciona.</strong> La CMI requiere suplementación con Ca2+ (50 mg/L); la difusión en disco está contraindicada.</li>
+          <li><strong>Variabilidad alta.</strong> Las CMIs varían más de 3 diluciones log2 entre laboratorios y métodos, incluso con BMD de referencia.</li>
+          <li><strong>BMD es el patrón oro.</strong> Los sistemas automatizados (VITEK-2) tienden a leer ~1 dilución por encima de la BMD. Si el resultado está en zona límite (2&ndash;4 mg/L para E. faecium), solicitar BMD de confirmación.</li>
+          <li><strong>Mutaciones LiaFSR.</strong> Cepas con CMI &le;1 mg/L pueden albergar mutaciones LiaFSR con tolerancia in vivo. Si hay fracaso clínico con CMI baja, considerar detección molecular.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <h3>📊 Objetivo farmacodinámico (PD target)</h3>
+    <div class="card">
+      <div class="card-body">
+        <p>El parámetro PK/PD que mejor predice eficacia es la razón <strong>fAUC0-24/CMI</strong>. Objetivo de supervivencia: fAUC/CMI &gt;27.4 (Avery et al, 2019).</p>
+        <div class="tabla-wrap">
+          <table>
+            <tr><th>CMI (mg/L)</th><th>PTA a 10 mg/kg</th><th>PTA a 12 mg/kg</th><th>Interpretación</th></tr>
+            <tr><td>&le;1</td><td><span class="tag tag-v">&gt;90%</span></td><td><span class="tag tag-v">&gt;90%</span></td><td>Objetivo alcanzable</td></tr>
+            <tr><td>2</td><td><span class="tag tag-b">~60&ndash;80%</span></td><td><span class="tag tag-v">&gt;90%</span></td><td>Preferir 12 mg/kg</td></tr>
+            <tr><td>4</td><td><span class="tag tag-r">&lt;20%</span></td><td><span class="tag tag-a">32&ndash;54%</span></td><td>Zona de riesgo &mdash; combinación obligatoria</td></tr>
+            <tr><td>&ge;8</td><td><span class="tag tag-r">&lt;6%</span></td><td><span class="tag tag-r">&lt;6%</span></td><td>No usar daptomicina</td></tr>
+          </table>
+        </div>
+        <p style="margin-top:10px; font-size:0.82rem; color:#6b7280">Solo el 22% de pacientes que reciben &ge;8 mg/kg alcanza el objetivo PD en datos prospectivos (Hwang et al). La CMI es el determinante dominante del target attainment.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ====== TAB: SEGURIDAD ====== -->
+<div id="tab-seguridad" class="tab">
+  <div class="seccion">
+    <h3>❤️ Monitorización de CPK</h3>
+    <div class="card">
+      <div class="card-head">Pauta estándar</div>
+      <div class="card-body">
+        <ul>
+          <li><strong>Dosis &lt;10 mg/kg/día:</strong> CPK semanal.</li>
+          <li><strong>Dosis &ge;10 mg/kg/día:</strong> CPK 2 veces por semana.</li>
+          <li>CPK basal antes de iniciar. Reforzar en insuficiencia renal, estatinas, CPK basal elevada.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="card-head">🚦 Semáforo CPK &rarr; Acción clínica</div>
+      <div class="semrow"><div class="semdot dot-v"></div><div class="semcont"><strong>CPK &lt;3x LSN</strong><span>Continuar sin cambios.</span></div></div>
+      <div class="semrow"><div class="semdot dot-a"></div><div class="semcont"><strong>CPK 3&ndash;10x LSN asintomatica</strong><span>Aumentar frecuencia a 2&ndash;3 veces/semana. Revisar estatinas. No suspender automaticamente.</span></div></div>
+      <div class="semrow"><div class="semdot dot-r"></div><div class="semcont"><strong>CPK &gt;10x LSN o sintomas musculares</strong><span>Suspender daptomicina. Hidratacion IV. Monitorizar funcion renal.</span></div></div>
+      <div class="semrow"><div class="semdot dot-r"></div><div class="semcont"><strong>CPK &gt;2000 U/L (especialmente con &ge;11 mg/kg)</strong><span>Senal clinicamente relevante (Chuang 2022: 3.9% vs 1.1% con 8&ndash;11 mg/kg, p=0.04). Suspender y evaluar rabdomiolisis.</span></div></div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <h3>⚠️ Otros efectos adversos</h3>
+    <div class="card">
+      <div class="tabla-wrap">
+        <table>
+          <tr><th>Efecto</th><th>Frecuencia con dosis altas</th><th>Acción</th></tr>
+          <tr><td>Elevación CPK severa (&gt;2000 U/L)</td><td>3.9% con &ge;11 mg/kg vs 1.1% con 8&ndash;11 mg/kg</td><td>Suspender, evaluar rabdomiólisis</td></tr>
+          <tr><td>Neumonía eosinofílica</td><td>Rara; <strong>no relacionada con la dosis</strong></td><td>Sospechar si deterioro respiratorio inexplicado</td></tr>
+          <tr><td>Hipopotasemia (con fosfomicina)</td><td>46% en cohorte prospectiva</td><td>Monitorizar K+ 2&ndash;3 veces/semana; suplementar profilác.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <h3>🧬 Emergencia de resistencias</h3>
+    <div class="card">
+      <div class="card-body">
+        <ul>
+          <li>Resistencia mediada principalmente por <strong>mutaciones LiaFSR</strong>.</li>
+          <li>Datos in vitro sugieren que 10&ndash;12 mg/kg/día pueden prevenir su emergencia.</li>
+          <li>Exposicion previa a daptomicina es factor de riesgo independiente.</li>
+          <li>La terapia combinada (+ beta-lactamico) puede suprimir la emergencia de resistencia.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ====== TAB: CLAVES ====== -->
+<div id="tab-claves" class="tab">
+  <div class="seccion">
+    <h3>🔑 Mensajes irrenunciables</h3>
+    <div class="card">
+      <div class="card-head" style="background:#fee2e2;color:#991b1b">Dosis de 6 mg/kg/dia: ABANDONAR</div>
+      <div class="card-body">La dosis licenciada de 6 mg/kg/dia es farmacodinamicamente inadecuada para BSI y endocarditis enterococica. Los datos observacionales son consistentes en todas las cohortes. No existe justificacion para usarla en este contexto.</div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-head" style="background:#dcfce7;color:#166534">Dosis de 10&ndash;12 mg/kg/dia para VRE E. faecium</div>
+      <div class="card-body">Rango mas defendible en VRE E. faecium BSI. Cada mg/kg adicional reduce la mortalidad a 28 dias (aOR 0.85 por mg/kg; Chuang 2022). Beneficio especialmente pronunciado en CMI &ge;2 mg/L.</div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-head" style="background:#eff6ff;color:#1d4ed8">Terapia combinada en endocarditis</div>
+      <div class="card-body">Las guias ESC 2023 recomiendan daptomicina <strong>en combinacion con beta-lactamico o fosfomicina</strong>. La sinergia con beta-lactamicos reduce el umbral fAUC/CMI ~50%. Mortalidad en VRE endocarditis: 17% (daptomicina) vs 31% (linezolid); Britt et al.</div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-head" style="background:#fef3c7;color:#92400e">Neutropenia = 12 mg/kg/dia preferido</div>
+      <div class="card-body">En neutropenicos con VRE E. faecium BSI, mortalidad a 14 dias: 41% (daptomicina alta dosis) vs 75% (linezolid; Tsai et al). El efecto bactericida puede ser clave en el huesped profundamente inmunocomprometido.</div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <h3>✅ Lista de verificación antes de prescribir</h3>
+    <div class="card">
+      <div class="card-body">
+        <ul>
+          <li>&#9744; ¿Especie identificada? ¿E. faecalis o faecium?</li>
+          <li>&#9744; ¿VRE/VSE confirmado o pendiente?</li>
+          <li>&#9744; ¿Ecocardiograma realizado o programado?</li>
+          <li>&#9744; ¿CMI solicitada por BMD? (si resultado automatizado en zona límite)</li>
+          <li>&#9744; ¿Dosis &ge;8 mg/kg/día? (ajustada al peso real, máx. 12 mg/kg)</li>
+          <li>&#9744; ¿Combinación con beta-lactámico valorada?</li>
+          <li>&#9744; ¿CPK basal determinada?</li>
+          <li>&#9744; ¿Pauta de monitorización CPK programada?</li>
+          <li>&#9744; ¿Potasio basal si se añade fosfomicina?</li>
+          <li>&#9744; ¿Consulta a Enfermedades Infecciosas documentada?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="footnote">
+    Protocolo basado en: manuscrito "Daptomycin for Enterococcal Bloodstream Infections and Endocarditis" (en preparación, HULP). Evidencia íntegramente observacional; ausencia de ensayos controlados aleatorizados. Las recomendaciones no sustituyen el juicio clínico individualizado. Actualizado: mayo 2026.
+  </p>
+</div>
+
+</div><!-- contenedor -->
+
+<script>
+window.onload = function() {
+
+  // ── Estado ──────────────────────────────
+  var R = {}; // respuestas: R[1..4] = {v, e}
+
+  // ── Navegacion entre tabs ────────────────
+  var navBtns = document.querySelectorAll('.nav-btn');
+  for (var i = 0; i < navBtns.length; i++) {
+    navBtns[i].addEventListener('click', function() {
+      var tabId = this.getAttribute('data-tab');
+      // Ocultar todos los tabs
+      var tabs = document.querySelectorAll('.tab');
+      for (var j = 0; j < tabs.length; j++) {
+        tabs[j].style.display = 'none';
+        tabs[j].className = 'tab';
+      }
+      // Quitar activo de nav
+      for (var k = 0; k < navBtns.length; k++) {
+        navBtns[k].className = 'nav-btn';
+      }
+      // Activar el tab seleccionado
+      var t = document.getElementById('tab-' + tabId);
+      if (t) { t.style.display = 'block'; t.className = 'tab activo'; }
+      this.className = 'nav-btn activo';
+    });
+  }
+
+  // ── Opciones del arbol ───────────────────
+  var opciones = document.querySelectorAll('button.opcion');
+  for (var o = 0; o < opciones.length; o++) {
+    opciones[o].addEventListener('click', function() {
+      var q = parseInt(this.getAttribute('data-q'), 10);
+      var v = this.getAttribute('data-v');
+      var e = this.getAttribute('data-e');
+      responder(q, v, e);
+    });
+  }
+
+  // ── Bloques completados (retroceder) ─────
+  var comps = document.querySelectorAll('.q-completado');
+  for (var c = 0; c < comps.length; c++) {
+    comps[c].addEventListener('click', function() {
+      var bloque = this.parentNode;
+      var n = parseInt(bloque.id.replace('bloque-', ''), 10);
+      retroceder(n);
+    });
+  }
+
+  // ── Funcion responder ────────────────────
+  function responder(q, v, e) {
+    R[q] = { v: v, e: e };
+
+    // Marcar este bloque como completado
+    var preg = document.getElementById('preg-' + q);
+    var comp = document.getElementById('comp-' + q);
+    var resp = document.getElementById('resp-' + q);
+    if (preg) preg.style.display = 'none';
+    if (resp) resp.textContent = e;
+    if (comp) comp.style.display = 'flex';
+
+    // Ocultar resultado si estaba visible
+    var res = document.getElementById('resultado');
+    if (res) res.style.display = 'none';
+
+    // Mostrar siguiente bloque o resultado
+    if (q < 4) {
+      var sig = document.getElementById('bloque-' + (q + 1));
+      if (sig) sig.style.display = 'block';
+    } else {
+      calcularResultado();
+    }
+  }
+
+  // ── Funcion retroceder ───────────────────
+  function retroceder(desde) {
+    for (var i = desde; i <= 4; i++) {
+      delete R[i];
+      var preg = document.getElementById('preg-' + i);
+      var comp = document.getElementById('comp-' + i);
+      var bloque = document.getElementById('bloque-' + i);
+      if (comp) comp.style.display = 'none';
+      if (preg) preg.style.display = 'block';
+      if (i > desde && bloque) bloque.style.display = 'none';
+    }
+    var res = document.getElementById('resultado');
+    if (res) res.style.display = 'none';
+  }
+
+  // ── Nueva consulta ───────────────────────
+  var btnNuevo = document.getElementById('btn-nuevo');
+  if (btnNuevo) {
+    btnNuevo.addEventListener('click', function() { retroceder(1); });
+  }
+
+  // ── Calcular y mostrar resultado ─────────
+  function calcularResultado() {
+    var especie = R[1] ? R[1].v : '';
+    var vre     = R[2] ? R[2].v : '';
+    var foco    = R[3] ? R[3].v : '';
+    var mic     = R[4] ? R[4].v : '';
+
+    var icono = '';
+    var titulo = '';
+    var contexto = '';
+    var bloques = [];
+
+    if (mic === 'mic_alto') {
+      icono = '🚫'; titulo = 'Daptomicina: NO recomendada';
+      contexto = 'CMI ≥8 mg/L — Resistente';
+      bloques.push(aviso('Resistencia confirmada',
+        'No usar daptomicina con CMI &ge;8 mg/L. PTA &lt;6% incluso a 12 mg/kg/dia.' +
+        '<br><br><strong>Alternativas:</strong> Linezolid (con precauciones), tigeciclina segun sensibilidad. Consulta urgente a EEII.'));
+
+    } else if (especie === 'faecalis' && vre === 'vsu' && foco === 'bsi') {
+      icono = '⚠️'; titulo = 'E. faecalis VSE — Bacteriemia';
+      contexto = 'Daptomicina es alternativa, no primera línea';
+      bloques.push(aviso('Considerar beta-lactamicos primero',
+        'Ampicilina es primera linea para E. faecalis VSE BSI. Usar daptomicina solo si beta-lactamicos no son factibles.'));
+      bloques.push(dosis('8 mg/kg/dia o mas', 'Aunque el breakpoint CLSI es 6 mg/kg/dia para CMI &le;2 mg/L, los datos clinicos apoyan &ge;8 mg/kg para BSI grave.'));
+      bloques.push(monitorizacion());
+
+    } else if (especie === 'faecalis' && vre === 'vsu' && foco === 'endo') {
+      icono = '❤️'; titulo = 'E. faecalis VSE — Endocarditis';
+      contexto = 'Ampicilina es primera línea; daptomicina: alternativa con combinación';
+      bloques.push(aviso('Primera linea: ampicilina + ceftriaxona o gentamicina (ESC 2023)',
+        'Valorar daptomicina si beta-lactamicos contraindicados o fallo terapeutico.'));
+      bloques.push(dosis('8-10 mg/kg/dia', '+ beta-lactamico en combinacion (reduce umbral fAUC/CMI ~50%)'));
+      bloques.push(combo('endo'));
+      bloques.push(monitorizacion());
+
+    } else if (especie === 'faecium' && vre === 'vre' && foco === 'bsi' && mic === 'mic_bajo') {
+      icono = '🟢'; titulo = 'VRE E. faecium — Bacteriemia, CMI ≤1 mg/L';
+      contexto = 'CMI baja confirmada por BMD — rango más conservador posible';
+      bloques.push(dosis('8-10 mg/kg/dia', 'CMI &le;1 mg/L: PTA &gt;90% a 10 mg/kg. Verificar que CMI sea por BMD, no por sistema automatizado.'));
+      bloques.push(micBloque('Verificar metodo',
+        'Confirmar CMI por microdilucion en caldo (BMD). Si fue por VITEK-2 u otro automatizado, solicitar BMD confirmatoria.<br><br>' +
+        'Vigilar fracaso clinico: mutaciones LiaFSR pueden dar CMI baja con tolerancia in vivo.'));
+      bloques.push(monitorizacion());
+
+    } else if (especie === 'faecium' && vre === 'vre' && foco === 'bsi' && (mic === 'mic_2_4' || mic === 'mic_nd')) {
+      icono = '🔴'; titulo = 'VRE E. faecium — Bacteriemia';
+      contexto = mic === 'mic_nd' ? 'CMI desconocida: aplicar rango de máxima seguridad' : 'CMI 2–4 mg/L: zona de riesgo farmacodinámico';
+      var subDosis = mic === 'mic_nd'
+        ? 'CMI desconocida: tratar como CMI &ge;2 mg/L hasta tener resultado. Solicitar CMI por BMD urgente.'
+        : 'A CMI 4 mg/L, PTA solo 32&ndash;54% incluso a 12 mg/kg. La combinacion con beta-lactamico es prioritaria.';
+      bloques.push(dosis('10-12 mg/kg/dia', subDosis));
+      bloques.push(combo('bsi'));
+      bloques.push(monitorizacion());
+
+    } else if (especie === 'faecium' && vre === 'vre' && foco === 'endo') {
+      icono = '🔴'; titulo = 'VRE E. faecium — Endocarditis';
+      contexto = 'Escenario de máxima complejidad. ESC 2023 recomienda combinación.';
+      bloques.push(dosis('10-12 mg/kg/dia', 'Mortalidad en VRE endocarditis: 17% (daptomicina alta dosis) vs 31% (linezolid; Britt et al). Preferir 12 mg/kg/dia.'));
+      bloques.push(combo('endo'));
+      bloques.push(monitorizacion());
+
+    } else if (mic === 'neutro') {
+      icono = '⚡'; titulo = 'Paciente neutropénico — VRE BSI / Endocarditis';
+      contexto = 'La neutropenia modifica la efectividad comparativa daptomicina vs linezolid';
+      bloques.push(dosis('12 mg/kg/dia (preferido)', 'Mortalidad a 14 dias: 41% (daptomicina alta dosis) vs 75% (linezolid) en neutropenicos con VRE E. faecium BSI (Tsai et al).'));
+      bloques.push(combo('bsi'));
+      bloques.push(cpkBloque('Monitorizacion intensificada',
+        '<ul><li>CPK 2 veces/semana desde el inicio.</li>' +
+        '<li>Funcion renal: ajustar si CrCl &lt;30 mL/min (considerar cada 48h).</li></ul>'));
+
+    } else if (vre === 'nd' || foco === 'otro_foco') {
+      icono = '❓'; titulo = 'Datos pendientes — Recomendación provisional';
+      contexto = 'Iniciar empíricamente mientras llegan resultados definitivos';
+      bloques.push(aviso('Mientras llegan resultados',
+        'Si se decide iniciar daptomicina empiricamente ante sospecha de VRE, usar <strong>&ge;10 mg/kg/dia</strong> hasta tener especie, antibiograma y ecocardiograma.' +
+        '<br><br>Programar: CMI por BMD, ecocardiograma, hemocultivos de control a las 72h.'));
+      bloques.push(monitorizacion());
+
+    } else {
+      icono = 'ℹ️'; titulo = 'Recomendación general';
+      contexto = etiq(especie, vre, foco);
+      bloques.push(dosis('8 mg/kg/dia o mas', 'Nunca por debajo de 8 mg/kg/dia en BSI o endocarditis enterococica. Individualizar segun CMI.'));
+      bloques.push(monitorizacion());
+    }
+
+    // Boton nueva consulta
+    bloques.push('<button type="button" id="btn-nuevo" class="btn-nuevo">Nueva consulta</button>');
+
+    // Inyectar en el DOM
+    document.getElementById('res-icono').textContent = icono;
+    document.getElementById('res-titulo').textContent = titulo;
+    document.getElementById('res-contexto').textContent = contexto;
+    document.getElementById('res-body').innerHTML = bloques.join('');
+
+    // Mostrar resultado
+    var res = document.getElementById('resultado');
+    res.style.display = 'block';
+
+    // Reasignar listener al boton nuevo (se creo dinamicamente)
+    var btn = document.getElementById('btn-nuevo');
+    if (btn) { btn.addEventListener('click', function() { retroceder(1); }); }
+
+    // Scroll al resultado
+    setTimeout(function() { res.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+  }
+
+  // ── Constructores de bloques HTML ────────
+  function dosis(num, sub) {
+    return '<div class="bloque dosis"><h4>💊 Dosis recomendada</h4>' +
+      '<div class="dosis-num">' + num + '</div>' +
+      '<div class="dosis-sub">' + sub + '</div></div>';
+  }
+  function combo(tipo) {
+    if (tipo === 'endo') {
+      return '<div class="bloque combo"><h4>🧬 Terapia combinada — OBLIGATORIA en endocarditis (ESC 2023)</h4><ul>' +
+        '<li><strong>Primera opcion:</strong> Daptomicina + ampicilina o ceftarolina.</li>' +
+        '<li><strong>Alternativa:</strong> Daptomicina + fosfomicina (si CMI fosfomicina &le;64 mg/L). Monitorizar K+ 2&ndash;3x/semana.</li>' +
+        '<li>La combinacion reduce el umbral fAUC/CMI necesario ~50% frente a monoterapia.</li>' +
+        '</ul></div>';
+    }
+    return '<div class="bloque combo"><h4>🧬 Terapia combinada — Fuertemente recomendada</h4><ul>' +
+      '<li>Anadir <strong>beta-lactamico</strong> (ampicilina o ceftarolina): sinergia in vitro y clinica demostrada.</li>' +
+      '<li>VRE E. faecium BSI + beta-lactamico: composite clinical success aOR 3.19 (p=0.001; Chuang 2023).</li>' +
+      '<li>Si beta-lactamico no factible y fosfomicina sensible (CMI &le;64): alternativa validada.</li>' +
+      '<li>Vigilar hipopotasemia con fosfomicina (46% en cohorte prospectiva).</li>' +
+      '</ul></div>';
+  }
+  function monitorizacion() {
+    return '<div class="bloque cpk"><h4>❤️ Monitorización de seguridad</h4><ul>' +
+      '<li><strong>CPK basal</strong> antes de iniciar.</li>' +
+      '<li>CPK <strong>semanal</strong> con dosis &lt;10 mg/kg; <strong>2 veces/semana</strong> con &ge;10 mg/kg.</li>' +
+      '<li>Hemocultivos de control a las 48&ndash;72h de inicio.</li>' +
+      '<li>Funcion renal (creatinina) 2&ndash;3 veces/semana.</li>' +
+      '</ul></div>';
+  }
+  function aviso(tit, txt) {
+    return '<div class="bloque aviso"><h4>' + tit + '</h4><p>' + txt + '</p></div>';
+  }
+  function micBloque(tit, txt) {
+    return '<div class="bloque mic-b"><h4>' + tit + '</h4><p>' + txt + '</p></div>';
+  }
+  function cpkBloque(tit, txt) {
+    return '<div class="bloque cpk"><h4>' + tit + '</h4>' + txt + '</div>';
+  }
+  function etiq(esp, vre, foc) {
+    var e = esp === 'faecalis' ? 'E. faecalis' : esp === 'faecium' ? 'E. faecium' : 'Especie desconocida';
+    var v = vre === 'vre' ? 'VRE' : vre === 'vsu' ? 'VSE' : 'VRE/VSE pendiente';
+    var f = foc === 'bsi' ? 'Bacteriemia' : foc === 'endo' ? 'Endocarditis' : 'foco pendiente';
+    return e + ' - ' + v + ' - ' + f;
+  }
+
+}; // fin window.onload
+</script>
+</body>
+</html>
