@@ -986,6 +986,207 @@ const protocols = [
     type:"iframe",src:"daptomicina.html",
     subtitle:"Árbol de decisión · Dosis · Antibiograma CLSI/EUCAST · Seguridad",
     sections:[]
+  },
+  {
+    id:"fhcc",title:"FHCC (Crimea-Congo)",icon:"🕷️",color:"#7B241C",
+    subtitle:"Sospecha en Urgencias de Adultos · aislar, valorar, notificar · BORRADOR Ed.1 (pdte. validación)",
+    sections:[
+      {title:"Ante sospecha: 3 pasos inmediatos",icon:"🚨",pinned:true,items:[],
+        notes:[
+          "1 · AÍSLA: distancia >1 m, sin contacto físico. Al paciente: mascarilla quirúrgica + bata impermeable + guantes; que no toque superficies ni abandone el área.",
+          "2 · EPI (tú): bata impermeable, mascarilla FFP2/FFP3, doble par de guantes, gafas estancas. Material en la esclusa de la habitación de aislamiento.",
+          "3 · AVISA (buscas): Referente de Urgencias 857579 + MI-Infecciosas de guardia 859491 (en mañana: Patología Importada 851397). Supervisión de Enfermería: guardia 851121 / mañana 851848 · 851335."
+        ]
+      },
+      {title:"¿Cuándo sospechar?",icon:"❓",tag:"ACTIVAR",tagC:"#C0392B",
+        subs:[
+          {title:"→ Criterio epidemiológico (2 semanas previas)",items:[
+            {l:"Garrapata",v:"Picadura o sospecha de picadura"},
+            {l:"Contacto con caso",v:"Fluidos, muestras o material contaminado de caso confirmado"},
+            {l:"Contacto con animales",v:"Sangre, tejidos o fluidos de animales infectados (veterinario, ganadería, matadero, caza)"},
+            {l:"Medio rural / viaje",v:"Zona con circulación del virus y exposición posible a garrapatas o ganado"}
+          ]},
+          {title:"→ Criterio clínico",items:[
+            {l:"Fiebre brusca",v:"De aparición súbita (preguntar antitérmicos e inmunosupresión)"},
+            {l:"o ≥2 síntomas compatibles",v:"Cefalea, mialgias, conjuntivitis, dolor abdominal, náuseas/vómitos, diarrea"}
+          ]}
+        ],
+        notes:[
+          "Epidemiológico + manifestaciones hemorrágicas = caso probable directo → llamar a Salud Pública sin esperar al hemograma.",
+          "Consultar siempre fuente oficial actualizada (CCAES / Salud Pública CM) antes de descartar el antecedente epidemiológico."
+        ]
+      },
+      {title:"Seco vs húmedo (riesgo de exposición a fluidos)",icon:"💧",
+        subs:[
+          {title:"→ Bajo riesgo (seco)",items:[
+            {l:"Definición",v:"Sin vómitos, diarrea, sangrado ni secreciones visibles"},
+            {l:"Implicación",v:"Traslado controlado a aislamiento + limpieza de las zonas de contacto"}
+          ]},
+          {title:"→ Alto riesgo (húmedo)",items:[
+            {l:"Definición",v:"Con vómitos, diarrea, sangrado o secreciones visibles"},
+            {l:"Implicación",v:"Bloqueo/desalojo de zonas, activar Seguridad + limpieza reforzada"}
+          ]}
+        ]
+      },
+      {title:"Valoración inicial y muestras",icon:"🩸",
+        items:[
+          {l:"Valoración",v:"Preferentemente a distancia (teléfono/intercomunicador) con checklist. Entrar solo si es imprescindible explorar."},
+          {l:"Diferenciales tratables",v:"Fiebre botonosa, Lyme, fiebre recurrente, Debonel/Tibola, tularemia, babesiosis, anaplasmosis"},
+          {l:"Extracción",v:"Una única punción para todas las muestras"}
+        ],
+        subs:[
+          {title:"→ Muestra FHCC (se queda en la habitación)",items:[
+            {l:"Tubos",v:"Sangre completa EDTA 9 ml + suero 8 ml"},
+            {l:"Destino",v:"Custodiada en la habitación; no sale hasta que Salud Pública autorice"}
+          ]},
+          {title:"→ Hemograma (al laboratorio)",items:[
+            {l:"Tubo",v:"EDTA morado 3 ml"},
+            {l:"Antes de enviar",v:"Avisar a Análisis Clínicos de Urgencias 851550 + petición en HCIS indicando la sospecha en el volante"},
+            {l:"Transporte",v:"En mano, triple embalaje, por celador. NUNCA por tubo neumático"}
+          ]}
+        ],
+        notes:[
+          "Plaquetas para considerar el caso: <150.000/µL, o descenso ≥15% respecto a un previo. En repetición (no antes de 6-8 h; 2-4 h si deterioro rápido) también vale una caída absoluta ≥50.000/µL.",
+          "NO coagulación (citrato); NO gasometría en los analizadores de la propia Urgencia."
+        ]
+      },
+      {title:"Notificación a Salud Pública",icon:"📞",tag:"NOTIFICAR",tagC:"#B7950B",
+        items:[
+          {l:"Con manifestaciones hemorrágicas",v:"Llamar directamente, sin esperar al hemograma"},
+          {l:"Resto de casos",v:"Llamar cuando el hemograma confirme trombocitopenia o descenso de plaquetas"},
+          {l:"Laborable 8:00–15:00",v:"91 370 08 88"},
+          {l:"Tardes / noches / findes / festivos",v:"061"}
+        ],
+        notes:["No enviar muestras ni hacer traslados fuera del circuito sin coordinar antes con Salud Pública, Microbiología y los responsables hospitalarios."]
+      },
+      {title:"Si Salud Pública valida el caso (activación hospitalaria)",icon:"🏥",tag:"CONTACTOS",tagC:"#1B3A5C",
+        items:[
+          {l:"Dirección Médica",v:"857009"},
+          {l:"Jefe de Hospital",v:"857338"},
+          {l:"Coordinador de Urgencias (E.T.)",v:"625579066",n:"Tarde/noche/festivo: 857579"},
+          {l:"MI / Infecciosas",v:"851397 (mañana) / 859491 (guardia)"},
+          {l:"Supervisión de Enfermería",v:"851848 · 851335 (mañana) / 851121 (guardia)"},
+          {l:"Microbiología",v:"81841"},
+          {l:"Medicina Preventiva",v:"447246"},
+          {l:"Prevención de Riesgos Laborales",v:"917277245 / 606057816"},
+          {l:"Limpieza / residuos (Encargada)",v:"856290"}
+        ]
+      },
+      {title:"Si la sospecha surge tras enviar muestras",icon:"⚠️",tag:"CONTENCIÓN",tagC:"#7B241C",
+        items:[
+          {l:"Llamar a los labs receptores",v:"Identificar paciente, muestras y determinaciones + avisar de la sospecha de FHCC"},
+          {l:"Inmovilizar",v:"Localizar las muestras y parar el procesamiento. No abrir, centrifugar, alicuotar ni desechar"},
+          {l:"Si ya se procesó",v:"El lab detiene actuaciones, identifica equipos/superficies, registra profesionales y descontamina"},
+          {l:"Si fue por tubo neumático",v:"Avisar a Laboratorio, Supervisión, Preventiva y SPRL para valorar bloqueo del sistema"},
+          {l:"Informar a",v:"Supervisión, Microbiología, Análisis Clínicos, MI-Infecciosas, Preventiva y SPRL"}
+        ]
+      },
+      {title:"Otros circuitos (fase posterior)",icon:"📎",
+        items:[
+          {l:"Menor acompañante",v:"Ambos en el aislamiento de Urgencias de Adultos + avisar a Urgencias Pediátricas 892313"},
+          {l:"Envío al CNM",v:"Solo si Salud Pública lo autoriza: nº de registro → petición GIPI (Microbiología) + Logística 447163 para el transporte"},
+          {l:"Seguimiento de contactos",v:"SPRL vigila accesos e incidentes/accidentes hasta el fin del periodo postexposición"}
+        ]
+      }
+    ]
+  },
+  {
+    id:"rabia",title:"Rabia (profilaxis posexposición)",icon:"🦇",color:"#6C3483",
+    subtitle:"Mordeduras de animales · errores frecuentes · categorías OMS · según PROT-174 Rabia (Ed.3, validado 2026)",
+    sections:[
+      {title:"3 errores a evitar en Urgencias",icon:"⚠️",pinned:true,items:[],
+        notes:[
+          "1 · NO vacunar mordeduras de perro o gato ocurridas en España: habitualmente no requieren profilaxis (España libre de rabia terrestre desde 1978). Excepciones: Ceuta/Melilla, animal importado o no disponible para observación, comportamiento anormal.",
+          "2 · NO omitir la inmunoglobulina en exposición categoría III en no vacunados (murciélago en España, mamífero potencialmente transmisor fuera de España). Poner solo la vacuna es un error.",
+          "3 · Inmunoglobulina bien puesta: máx 20 UI/kg; infiltrar SOLO el volumen que quepa con seguridad en y alrededor de las heridas; el sobrante NO se pone IM en otra zona. Prevé los viales (heridas pequeñas-medianas: <2 viales de 300 UI). Farmacia ha añadido una nota aclaratoria en la prescripción.",
+          "Ante cualquier duda de indicación, dosis o administración: Enf. Tropicales busca 851397 (8-15h L-V) o Infecciosas de guardia."
+        ]
+      },
+      {title:"¿Requiere profilaxis? España vs fuera",icon:"🌍",
+        items:[
+          {l:"España (peninsular e islas)",v:"Libre de rabia terrestre desde 1978. Mordedura de perro/gato sano y observable: habitualmente SIN profilaxis. Observación del animal 14 días"},
+          {l:"Excepciones en España",v:"Ceuta y Melilla; animal importado o no disponible para observación; comportamiento anormal del animal"},
+          {l:"Murciélagos",v:"Riesgo real (lyssavirus EBLV-1). Todo contacto o mordedura de murciélago = categoría III"},
+          {l:"Fuera de España",v:"Zonas endémicas: valorar según categoría. El perro causa ~99% de los casos humanos"},
+          {l:"Transmiten rabia",v:"Perros, gatos, monos, hurones, zorros y murciélagos"},
+          {l:"NO transmiten",v:"Cobayas, hámsters, ratones, ardillas, conejos y liebres"}
+        ]
+      },
+      {title:"Categorías de exposición (OMS)",icon:"📊",tag:"CLAVE",tagC:"#6C3483",
+        subs:[
+          {title:"→ Categoría I (sin exposición)",items:[
+            {l:"Qué es",v:"Tocar o alimentar animales; lamidos sobre piel intacta"},
+            {l:"Actuación",v:"Solo lavado. Sin vacuna ni inmunoglobulina"}
+          ]},
+          {title:"→ Categoría II (exposición)",items:[
+            {l:"Qué es",v:"Mordisqueo de piel descubierta; arañazos o abrasiones menores sin sangrado"},
+            {l:"Actuación",v:"Lavado + vacuna"}
+          ]},
+          {title:"→ Categoría III (exposición grave)",items:[
+            {l:"Qué es",v:"Mordeduras/arañazos transdérmicos; saliva en mucosas; lamido en piel lesionada; contacto directo con murciélago"},
+            {l:"Actuación",v:"Lavado + vacuna + inmunoglobulina (solo si NO vacunado previamente)"}
+          ]}
+        ]
+      },
+      {title:"Lavado y medidas locales",icon:"🚿",
+        items:[
+          {l:"Lavado (en toda exposición)",v:"15 min a chorro fuerte de agua con jabón y cepillo, retirando cuerpos extraños; después povidona yodada"},
+          {l:"Sutura",v:"No suturar la herida salvo que sea inevitable"},
+          {l:"Antibiótico",v:"Amoxicilina/clavulánico si herida en cara/articulación, sucia, con pérdida de tejido o inmunodeprimido (alérgicos: levofloxacino, doxiciclina o cotrimoxazol)"},
+          {l:"Antitetánica",v:"Según antecedentes de vacunación del paciente"}
+        ]
+      },
+      {title:"Inmunoglobulina antirrábica (hRIG)",icon:"💉",tag:"OJO",tagC:"#C0392B",
+        items:[
+          {l:"Cuándo",v:"Solo categoría III en pacientes NO vacunados previamente"},
+          {l:"Dosis",v:"hRIG 20 UI/kg (INMOGAN / BERIRAB, 300 UI/vial). La equina 40 UI/kg no está disponible en España"},
+          {l:"Cómo",v:"Infiltrar en y alrededor de las heridas lo máximo anatómicamente posible (evitando síndrome compartimental), con la 1ª dosis de vacuna, con jeringa y zona distintas a la vacuna"},
+          {l:"Sobrante",v:"NO administrar el volumen restante por vía IM en otra zona"},
+          {l:"Previsión de viales",v:"Calcular cuánta se usará para no tirar excedente: heridas pequeñas-medianas suelen necesitar <2 viales"},
+          {l:"Sin herida obvia / murciélago",v:"Poner IM en el lugar anatómico más próximo a la exposición"},
+          {l:"Si no hay stock",v:"Puede demorarse hasta 7 días tras la 1ª vacuna, pero nunca se retrasa la vacuna"}
+        ],
+        notes:[
+          "No se administra inmunoglobulina a pacientes previamente vacunados de rabia.",
+          "Recurso escaso y de elevado coste: Farmacia ha incorporado una nota aclaratoria en la prescripción."
+        ]
+      },
+      {title:"Pauta de vacunación (PEP)",icon:"📅",
+        subs:[
+          {title:"→ NO vacunado previamente",items:[
+            {l:"Inmunoglobulina",v:"Solo si categoría III"},
+            {l:"Vacuna IM",v:"Días 0, 3, 7 y 14-21 (4 dosis)"},
+            {l:"Alternativa ID",v:"2 dosis intradérmicas los días 0, 3 y 7"}
+          ]},
+          {title:"→ Previamente vacunado",items:[
+            {l:"Inmunoglobulina",v:"NO se administra"},
+            {l:"Vacuna",v:"Días 0 y 3 (IM o ID); o 4 dosis ID el día 0 en zonas distintas"}
+          ]},
+          {title:"→ Inmunodeprimidos",items:[
+            {l:"Pauta",v:"4 dosis IM (0,3,7,14-28) + inmunoglobulina si recibió PEP previa; 5 dosis (0,3,7,14,28) si no. Serología a las 2-4 semanas"}
+          ]}
+        ],
+        notes:[
+          "El día 0 es el de la primera dosis, no necesariamente el de la exposición.",
+          "Reexposición en los 3 meses siguientes a una PEP completa: no se repite la PEP.",
+          "Si la agresión fue por murciélago y se recupera el animal, contactar con Salud Pública para analizarlo; si es negativo, se suspende la pauta si no estaba completa."
+        ]
+      },
+      {title:"Stock, contactos y notificación",icon:"📞",tag:"CONTACTOS",tagC:"#1B3A5C",
+        items:[
+          {l:"Stock Urgencias HULP",v:"Pixis GSUC (H. General): 7 viales de inmunoglobulina humana (300 UI) + 4 dosis de vacuna RABIPUR"},
+          {l:"Supervisor de Enfermería",v:"851121"},
+          {l:"Enf. Tropicales (adultos)",v:"851397",n:"8-15h L-V"},
+          {l:"Patología Importada (facultativos)",v:"665629890 / 635665304"},
+          {l:"Farmacia",v:"917277387 (mañanas) / 855850 · 696223359 (tardes y festivos)"},
+          {l:"Notificar sospecha de caso",v:"Salud Pública <24h: 91 370 08 88 (8-15h) / 061 (resto)"}
+        ],
+        notes:[
+          "Ya NO es necesario notificar a Salud Pública la administración de profilaxis posexposición; sí la sospecha de caso humano o animal (en <24h).",
+          "Vacunación internacional pediátrica: 91 727 7201."
+        ]
+      }
+    ]
   }
 ];
 
@@ -996,7 +1197,7 @@ const categories = [
   { id:'espec',     label:'🔬 Especialidades externas',   ids:['genetica','oncologia','urologia'] },
   { id:'gestion',   label:'🏥 Gestión hospitalaria',      ids:['ingresos','econsulta','hado'] },
   { id:'org',       label:'⚙️ Organización interna',      ids:['horarios','huelga'] },
-  { id:'urgencias', label:'🚨 Urgencias y traslados',     ids:['urgencias','traslados','traslados-cb-c3','noingreso'] }
+  { id:'urgencias', label:'🚨 Urgencias y traslados',     ids:['fhcc','rabia','urgencias','traslados','traslados-cb-c3','noingreso'] }
 ];
 
 function getCatLabel(id){
