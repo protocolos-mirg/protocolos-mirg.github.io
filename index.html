@@ -88,6 +88,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sa
 .iframe-back{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap}
 .iframe-title{font-size:14px;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .iframe-wrap iframe{flex:1;border:none;width:100%}
+.cci-age{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:#fafbfc;border-radius:8px;margin-bottom:6px;font-size:12.5px;font-weight:600}
+.cci-age input{width:90px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:16px;text-align:right}
+.cci-grp{font-size:12px;font-weight:700;color:var(--accent);padding:6px 0 4px;border-bottom:1px solid var(--border);margin:8px 0 5px}
+.cci-item{display:flex;align-items:flex-start;gap:9px;padding:8px 12px;background:#fafbfc;border-radius:8px;margin-bottom:4px;font-size:12.5px;line-height:1.35;cursor:pointer}
+.cci-item input{margin-top:1px;width:17px;height:17px;flex:0 0 auto;accent-color:var(--accent)}
+.cci-item>span:nth-child(2){flex:1}
+.cci-d{display:block;font-size:10.5px;color:#999;margin-top:1px}
+.cci-p{flex:0 0 auto;font-weight:700;color:var(--accent);font-size:12px}
+.cci-res{position:sticky;bottom:8px;background:var(--primary);color:#fff;border-radius:10px;padding:12px 14px;margin-top:10px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.cci-lbl{font-size:11px;opacity:.75}
+.cci-sc{font-size:28px;font-weight:700;line-height:1.1}
+.cci-adj{font-size:11.5px;opacity:.8}
+.cci-dest{font-size:13.5px;font-weight:600;margin-top:2px}
+.cci-btn{margin-top:8px;background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--textL);cursor:pointer}
 </style>
 </head>
 <body>
@@ -1188,6 +1202,156 @@ const protocols = [
       }
     ]
   }
+  ,{
+    id:"tce",title:"TCE (traumatismo craneoencefálico)",icon:"🧠",color:"#2C3E50",
+    subtitle:"Urgencias HULP · indicación de TAC · quién ingresa · calculadora de Charlson · según PROT-175 (validado 16/06/2026)",
+    sections:[
+      {title:"Lo que toca a Medicina Interna",icon:"🏥",pinned:true,items:[],
+        notes:[
+          "1 · A MI: lesión hemorrágica no quirúrgica, <80 años con Charlson ≥3, o adulto con PCI.",
+          "2 · NO se derivan a C3 ni a CB desde Urgencias.",
+          "3 · Éxitus por TCE, aunque sea días después: NO certificado de defunción. Sepelio judicial y partes judiciales (ver Aspectos medicolegales).",
+          "4 · Dudas de destino: mesa de camas; decide Dirección Médica."
+        ]
+      },
+      {title:"Gravedad y alcance",icon:"📏",
+        items:[
+          {l:"TCE leve",v:"GCS 14-15 (a los ~30 min de la lesión) sin lesión intracraneal importante en imagen",n:"Si el TAC muestra lesión intracraneal significativa, deja de considerarse leve aunque el GCS sea 14-15"},
+          {l:"TCE moderado",v:"GCS 9-13"},
+          {l:"TCE grave",v:"GCS ≤8"},
+          {l:"Incluye",v:"Mayores de 16 años diagnosticados de TCE en Urgencias"},
+          {l:"Excluye",v:"TCE en el contexto de politraumatismo con lesiones en otros órganos o sistemas"}
+        ]
+      },
+      {title:"Indicación de TAC craneal",icon:"🩻",tag:"NICE",tagC:"#2874A6",
+        items:[
+          {l:"Informe",v:"Radiología informa el TAC en ≤1 h"}
+        ],
+        subs:[
+          {title:"→ TAC en la PRIMERA HORA (TCE leve, >16 años)",items:[
+            {l:"GCS",v:"<15 a las 2 h de la lesión, aunque haya sospecha o evidencia de intoxicación por depresores del SNC"},
+            {l:"Fractura",v:"Sospecha de fractura abierta o hundida. Cualquier signo de fractura de base: hemotímpano, ojos de panda, fuga de LCR por oído o nariz, signo de Battle"},
+            {l:"Neurológico",v:"Convulsión postraumática · déficit neurológico focal"},
+            {l:"Vómitos",v:"Más de un episodio"}
+          ]},
+          {title:"→ TAC en las PRIMERAS 8 HORAS",items:[
+            {l:"Requisito",v:"Pérdida de conciencia o amnesia + al menos uno de los factores siguientes"},
+            {l:"Edad",v:"≥65 años"},
+            {l:"Coagulación",v:"Trastorno hemorrágico o de la coagulación, incluida medicación anticoagulante o antiagregante"},
+            {l:"Mecanismo peligroso",v:"Atropello de peatón o ciclista, eyección de un vehículo, caída de >1 m o de 5 escalones"},
+            {l:"Amnesia retrógrada",v:">30 min de lo ocurrido justo antes del traumatismo"},
+            {l:"Sin cuidador",v:"Vive solo y no se asegura quien vigile la evolución neurológica"},
+            {l:"Neurocirugía previa",v:"Incluida válvula de derivación ventriculoperitoneal"}
+          ]},
+          {title:"→ TCE moderado o grave y TAC de control",items:[
+            {l:"GCS ≤13",v:"TAC urgente en todos"},
+            {l:"TAC de control",v:"Si deterioro clínico (descenso de 2 puntos en GCS o nuevos signos neurológicos), salvo que el pronóstico o la situación funcional no vayan a cambiar la actitud"}
+          ]}
+        ]
+      },
+      {title:"TCE leve: ubicación y observación",icon:"🪑",
+        items:[
+          {l:"Ubicación",v:"Consultas ambulantes de Urgencias"},
+          {l:"TAC sin sangrado",v:"Alta a domicilio con recomendaciones"},
+          {l:"Crisis postraumática",v:"Sala de observación 8-12 h + IC a NEUROLOGÍA"},
+          {l:"Síntomas de conmoción",v:"Sala de sillones 8-12 h + IC a NEUROLOGÍA"},
+          {l:"Intoxicación por depresores del SNC",v:"Observación hasta que desaparezcan los síntomas de intoxicación"},
+          {l:"Anticoagulado o antiagregado",v:"Mismo manejo. Con TAC normal, alta. NO se recomienda modificar el tratamiento de base",n:"Queda a criterio del responsable según riesgo/beneficio. Serie del centro: >9.000 TCE leves con TAC normal, incluidos anticoagulados y antiagregados, sin complicaciones en 24 h"},
+          {l:"Patología neurológica de base",v:"Preguntar el estado basal a familia o técnicos. GCS bajo basal y sin cambios: manejo como TCE leve. Si hay duda entre basal y TCE: TAC; sin sangrado, alta"}
+        ]
+      },
+      {title:"TCE moderado o grave",icon:"🚨",tag:"URGENTE",tagC:"#C0392B",
+        items:[
+          {l:"Ubicación",v:"Box de reanimación · protocolo ATLS"},
+          {l:"UCI",v:"Interconsulta OBLIGATORIA en todo TCE moderado-grave",n:"Con preaviso extrahospitalario, Medicina Intensiva está presente en el box"},
+          {l:"Descartar",v:"Hipoglucemia, hiperglucemia, intoxicaciones, causas metabólicas"},
+          {l:"Intubación",v:"GCS ≤8, vía aérea no protegida, SpO2 ≤90% pese a O2, o signos de herniación. Objetivo PaO2 >60 mmHg"},
+          {l:"Evitar",v:"Hipoxia, hipoventilación, hiperventilación e hipotensión. Monitorización continua"},
+          {l:"Signos de herniación",v:"Asimetría pupilar, midriasis arreactiva, decorticación o descerebración, depresión respiratoria, tríada de Cushing: medidas inmediatas"},
+          {l:"Analítica",v:"Hemograma, iones, glucosa, coagulación, alcoholemia y tóxicos en orina. Revertir la coagulopatía de inmediato"},
+          {l:"Ácido tranexámico",v:"1 g IV en 10 min + 1 g IV en 8 h",n:"Indicado en GCS 9-13 en las 3 primeras horas. Razonable en grave con pupilas reactivas y en leve con hemorragia intracraneal (beneficio incierto)"}
+        ]
+      },
+      {title:"¿Quién ingresa?",icon:"🛏️",tag:"CLAVE",tagC:"#2C3E50",
+        subs:[
+          {title:"→ Con indicación quirúrgica",items:[
+            {l:"Destino",v:"NEUROCIRUGÍA gestiona la intervención y decide la ubicación con Medicina Intensiva"}
+          ]},
+          {title:"→ Sin indicación quirúrgica, con tratamiento coadyuvante (corticoides, antiepilépticos)",items:[
+            {l:"Charlson ≤2, cualquier edad",v:"NEUROCIRUGÍA",n:"Excepto adultos con parálisis cerebral infantil"},
+            {l:">80 años y Charlson ≥3",v:"GERIATRÍA",n:"Si se considera seguro, traslado a Cantoblanco"},
+            {l:"<80 años y Charlson ≥3, o adulto con PCI",v:"MEDICINA INTERNA",n:"Sin derivación a C3 ni CB desde Urgencias"}
+          ]},
+          {title:"→ Sin tratamiento coadyuvante ni opciones de rehabilitación",items:[
+            {l:"Posible donante",v:"IC a Medicina Intensiva, que avisa a coordinación de trasplantes"},
+            {l:"Éxitus previsible <24 h",v:"Permanece en Urgencias con acompañamiento familiar y adecuación a tratamiento paliativo"},
+            {l:">24 h · <80 años · Charlson ≥3",v:"MEDICINA INTERNA, sin traslado a otros centros"},
+            {l:">24 h · >80 años · Charlson ≥3",v:"GERIATRÍA, posible traslado a Cantoblanco si estable"}
+          ]}
+        ],
+        notes:[
+          "Cada servicio decide si precisa ingreso o si se plantea alta a domicilio con servicios paliativos.",
+          "El PROT-175 no asigna servicio a los pacientes de 80 años exactos: llevar a mesa de camas."
+        ]
+      },
+      {title:"Calculadora de Charlson",icon:"🧮",type:"charlson",
+        charlson:[
+          {k:"iam",p:1,l:"Infarto de miocardio",d:"Antecedente documentado, no solo cambios ECG"},
+          {k:"icc",p:1,l:"Insuficiencia cardiaca"},
+          {k:"vasc",p:1,l:"Enfermedad arterial periférica",d:"Claudicación, bypass, isquemia aguda, aneurisma aórtico ≥6 cm"},
+          {k:"acv",p:1,l:"Enfermedad cerebrovascular",d:"Ictus o AIT con secuelas mínimas"},
+          {k:"dem",p:1,l:"Demencia"},
+          {k:"epoc",p:1,l:"Enfermedad pulmonar crónica"},
+          {k:"conect",p:1,l:"Enfermedad del tejido conectivo",d:"LES, artritis reumatoide, polimiositis, polimialgia reumática…"},
+          {k:"ulc",p:1,l:"Úlcera péptica"},
+          {k:"hepl",p:1,g:"hep",l:"Hepatopatía leve",d:"Sin hipertensión portal (p. ej. hepatitis crónica)"},
+          {k:"dm",p:1,g:"dm",l:"Diabetes sin lesión de órgano diana"},
+          {k:"hemi",p:2,l:"Hemiplejia"},
+          {k:"renal",p:2,l:"Enfermedad renal moderada o grave",d:"Creatinina >3 mg/dL, diálisis, trasplante o uremia"},
+          {k:"dmo",p:2,g:"dm",l:"Diabetes con lesión de órgano diana",d:"Retinopatía, nefropatía o neuropatía"},
+          {k:"tum",p:2,g:"tum",l:"Tumor sólido sin metástasis",d:"En los últimos 5 años"},
+          {k:"leu",p:2,l:"Leucemia",d:"Aguda o crónica"},
+          {k:"lin",p:2,l:"Linfoma"},
+          {k:"hepg",p:3,g:"hep",l:"Hepatopatía moderada o grave",d:"Cirrosis con hipertensión portal"},
+          {k:"met",p:6,g:"tum",l:"Tumor sólido metastásico"},
+          {k:"sida",p:6,l:"SIDA",d:"Enfermedad definitoria de sida, no solo infección por VIH"}
+        ],
+        notes:[
+          "Índice de Charlson original (1987). Dentro de cada pareja (diabetes, hepatopatía, tumor) solo cuenta la opción más grave: la calculadora desmarca la otra.",
+          "El PROT-175 no especifica si el Charlson se ajusta por edad. Como el protocolo usa la edad por separado (corte en 80 años), el destino se calcula con el índice SIN ajustar; el ajustado se muestra solo como referencia. Pendiente de confirmar con los autores."
+        ]
+      },
+      {title:"Recomendaciones al alta (TCE leve)",icon:"🏠",
+        items:[
+          {l:"Acompañado",v:"Al menos durante las primeras 24 h"},
+          {l:"Golpe con hinchazón",v:"Hielo envuelto en un paño; si aumenta pese a ello, volver al hospital"},
+          {l:"Dieta",v:"Según apetencia. Sin alcohol ni fármacos que produzcan sueño"},
+          {l:"Suturas",v:"Revisión en su centro de salud en 3-4 días"},
+          {l:"Antitetánica",v:"Si se ha administrado, consultar con Atención Primaria"}
+        ],
+        subs:[
+          {title:"→ Consultar o volver al hospital si aparece",items:[
+            {v:"Somnolencia o dificultad para despertarle"},
+            {v:"Náuseas o vómitos repetidos (en escopetazo)"},
+            {v:"Convulsiones"},
+            {v:"Mareo de intensidad creciente"},
+            {v:"Cefalea creciente, persistente o que no cede con analgésicos suaves"},
+            {v:"Pérdida de fuerza o adormecimiento de alguna parte del cuerpo"},
+            {v:"Confusión o conducta no adecuada"},
+            {v:"Visión doble o borrosa, o movimientos oculares anormales"},
+            {v:"Incapacidad para hablar con normalidad"}
+          ]}
+        ]
+      },
+      {title:"Aspectos medicolegales",icon:"⚖️",
+        items:[
+          {l:"Parte judicial de lesiones",v:"Lo rellena el servicio que asume el ingreso o el cuidado del paciente",n:"Si el juzgado o las FFOOPP lo piden antes de decidir el servicio, lo rellena Urgencias"},
+          {l:"Fallecimiento por TCE",v:"Con independencia del tiempo transcurrido desde su llegada: sin certificado de defunción. Sepelio judicial + parte de éxitus de causa desconocida (HCE, monográficos) + parte judicial de ingreso y fallecimiento",n:"Enviar al juzgado de guardia e incorporar a la HCE el resguardo del fax"},
+          {l:"Documentación",v:"Las instrucciones dadas, por escrito en la historia clínica. Asegurar la contestación de todas las interconsultas"}
+        ]
+      }
+    ]
+  }
 ];
 
 protocols.sort((a,b)=>a.title.localeCompare(b.title,'es'));
@@ -1330,6 +1494,70 @@ function renderHome(filter=''){
   if(filter){const i=app.querySelector('.search input');if(i){i.focus();i.setSelectionRange(filter.length,filter.length);}}
 }
 
+// Calculadora de Charlson (sección type:"charlson"). Estado global para que sobreviva al redibujado de renderDetail.
+let charlsonState={edad:'',sel:{},pci:false};
+function renderCharlson(items){
+  const wrap=h('div',{class:'cci'});
+  const res=h('div',{class:'cci-res'});
+  function score(){return items.reduce((a,it)=>a+(charlsonState.sel[it.k]?it.p:0),0);}
+  function upd(){
+    const sc=score(), age=parseInt(charlsonState.edad,10);
+    let adj='', dest='';
+    if(!isNaN(age)){
+      const ap=age>=80?4:age>=70?3:age>=60?2:age>=50?1:0;
+      adj='Ajustado por edad: '+(sc+ap)+' (referencia)';
+    }
+    if(isNaN(age)) dest='Introduce la edad para orientar el destino';
+    else if(age<16) dest='Menor de 16 años: fuera del alcance del PROT-175';
+    else if(charlsonState.pci) dest='→ MEDICINA INTERNA (adulto con parálisis cerebral infantil)';
+    else if(sc<=2) dest='→ NEUROCIRUGÍA (Charlson ≤2)';
+    else if(age<80) dest='→ MEDICINA INTERNA · sin derivación a C3 ni CB';
+    else if(age>80) dest='→ GERIATRÍA · posible traslado a Cantoblanco';
+    else dest='80 años exactos: el PROT-175 no asigna servicio → mesa de camas';
+    res.innerHTML='';
+    res.appendChild(h('div',{class:'cci-lbl'},'Charlson (sin ajustar por edad)'));
+    res.appendChild(h('div',{class:'cci-sc'},String(sc)));
+    if(adj)res.appendChild(h('div',{class:'cci-adj'},adj));
+    res.appendChild(h('div',{class:'cci-lbl',style:{marginTop:'8px'}},'Destino si lesión hemorrágica no quirúrgica con tratamiento coadyuvante'));
+    res.appendChild(h('div',{class:'cci-dest'},dest));
+  }
+  const inp=h('input',{type:'number',id:'cci-edad',min:'0',max:'120',inputmode:'numeric',placeholder:'años'});
+  inp.value=charlsonState.edad;
+  inp.addEventListener('input',()=>{charlsonState.edad=inp.value;upd();});
+  wrap.appendChild(h('div',{class:'cci-age'},h('label',{for:'cci-edad'},'Edad del paciente'),inp));
+  const boxes={};
+  [1,2,3,6].forEach(pts=>{
+    const grp=items.filter(it=>it.p===pts);
+    if(!grp.length)return;
+    wrap.appendChild(h('div',{class:'cci-grp'},pts+(pts===1?' punto':' puntos')));
+    grp.forEach(it=>{
+      const cb=h('input',{type:'checkbox'});
+      cb.checked=!!charlsonState.sel[it.k];
+      boxes[it.k]=cb;
+      cb.addEventListener('change',()=>{
+        charlsonState.sel[it.k]=cb.checked;
+        if(cb.checked&&it.g){items.forEach(o=>{if(o.g===it.g&&o.k!==it.k){charlsonState.sel[o.k]=false;boxes[o.k].checked=false;}});}
+        upd();
+      });
+      const txt=h('span',null,it.l);
+      if(it.d)txt.appendChild(h('span',{class:'cci-d'},it.d));
+      wrap.appendChild(h('label',{class:'cci-item'},cb,txt,h('span',{class:'cci-p'},'+'+it.p)));
+    });
+  });
+  wrap.appendChild(h('div',{class:'cci-grp'},'Otro criterio del PROT-175 (no puntúa)'));
+  const pci=h('input',{type:'checkbox'});
+  pci.checked=charlsonState.pci;
+  pci.addEventListener('change',()=>{charlsonState.pci=pci.checked;upd();});
+  wrap.appendChild(h('label',{class:'cci-item'},pci,h('span',null,'Adulto con parálisis cerebral infantil')));
+  wrap.appendChild(res);
+  wrap.appendChild(h('button',{class:'cci-btn',onclick:()=>{
+    charlsonState={edad:'',sel:{},pci:false};
+    inp.value='';pci.checked=false;Object.values(boxes).forEach(b=>b.checked=false);upd();
+  }},'Borrar'));
+  upd();
+  return wrap;
+}
+
 function renderDetail(p){
   app.innerHTML='';
 
@@ -1430,6 +1658,8 @@ function renderDetail(p){
         tbl.appendChild(tbody);
         body.appendChild(tbl);
       }
+
+      if(s.type==='charlson'&&s.charlson){body.appendChild(renderCharlson(s.charlson));}
 
       if(s.items&&s.items.length>0){
         s.items.forEach(it=>{
